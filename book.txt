@@ -1,2 +1,2 @@
-Chapter000_Introduction/index.txt
-Chapter001_RolesDeploymentTargetsAndEnvironments/index.txt
+Chapter000.md
+Chapter001.md
