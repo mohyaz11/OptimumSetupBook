@@ -1,8 +1,8 @@
 # Octopus Deploy Optimum Setup Book
 This repo is used to store the open source book on how to setup an Octopus Deploy Server to scale up and out.  
 
-[Introduction](manuscript/Chapter000.md)
-[Chapter 1 - Roles, Deployment Targets, and Environments Oh My](manuscript/Chapter001.md)
+- [Introduction](manuscript/Chapter000.md)
+- [Chapter 1 - Roles, Deployment Targets, and Environments Oh My](manuscript/Chapter001.md)
 
 To add to this book please do the following.  These are requirements in order for everything to be picked up by LeanPub.
 
