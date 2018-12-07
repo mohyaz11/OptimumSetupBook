@@ -1,0 +1,7 @@
+Octopus Deploy is a complex product.  It offers a lot of functionality.  It was designed to help reinforce best deployment practices such as building artifacts once, using the same deployment process for each environment, or restricting access to production machines to name a few.  While at the same time offering users such as yourself the flexibility so Octopus Deploy can meet your companies needs.  But that flexibility is a double-edged sword.  
+
+All the authors of this ebook are solution architects at Octopus Deploy focused on customer success.  We meet with customers every week to discuss what is working for them, what isn’t working for them and offer recommendations.  We have seen...some interesting configurations with Octopus Deploy.
+
+What we found was there is a “point of no return” where a configuration which sort of worked with a couple of deployment targets, projects and users, runs into major problems when scaling up to hundreds or even thousands of targets projects and users.  That is why this book was written, to provide some guidelines and other best practices to use when configuring Octopus Deploy in your company.  
+
+This book is written for anyone who has had some experience with Octopus Deploy but it looking to level-up their knowledge.  If are brand new to Octopus Deploy, don’t worry, we have an excellent getting started guide found here if you just learning about Octopus Deploy.  Once you have an understanding of how Octopus Deploy works this book will make a lot more sense.  
