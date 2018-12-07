@@ -14,18 +14,18 @@ The recommended approach to configuring environments is to follow your company�
 
 A good rule of thumb for environments is to keep it under a dozen.  For our personal Octopus instances our environments are Dev, Test, Pre-Prod, Production, SpinUp and SpinDown.  That seems to cover 99% of our possible scenarios.
 
-![](Chapter001Resources/environmentlist.png)
+![](images/chapter001-environmentlist.png)
 
 
 A lot of the customers we work with have machines in multiple data centers.  They don’t want to deploy to all of them at the same time.  Our recommendation is to use the multi-tenancy feature in Octopus Deploy so you can control which data center gets which version of the code.
 
-![](Chapter001Resources/multitenancyenvironments.png)
+![](images/chapter001-multitenancyenvironments.png)
 
 We have an excellent guide in our documentation on how to get you set this solution set up.
 
 A single deployment target can be tied to more than one environment.  Most of our customers don’t do this, but the functionality is there.  
 
-![](Chapter001Resources/singletarget-multipleroles.png)
+![](images/chapter001-singletarget-multipleroles.png)
 
 ## Roles
 
@@ -33,27 +33,27 @@ Roles are tags assigned to a deployment target.  A deployment target can have 1 
 
 For example, a machine has the role of “OctoStudy-DB.”  This indicates that this machine is used to deploy database changes for the application “OctoStudy.”
 
-![](Chapter001Resources/machine-with-specific-roles.png)
+![](images/chapter001-machine-with-specific-roles.png)
 
 In the OctoStudy project, when I want to deploy database changes I assign those steps to the role “OctoStudy-DB.”
 
-![](Chapter001Resources/using-specific-machine-roles.png)
+![](images/chapter001-using-specific-machine-roles.png)
 
 
 Octo Horror: We have seen instances where customers will assign very generic roles such as “IIS-Server” or “DB-Server.”  They then set their project steps to deploy to “IIS-Server” because all of the web applications are hosted on a single IIS Server.  This does not scale well.  If one of the applications needs to be moved to another server then a lot of steps in the project need to change.
 
 Our recommendation for roles is to create both generic roles and specific roles.  Going back to the previous deployment machine for OctoStudy.  A good set of roles for that machine would be “DB-Jumpbox”, “OctoStudy-DB” and “OctoStudy.”  
 
-![](Chapter001Resources/machine-with-multiple-roles.png)
+![](images/chapter001-machine-with-multiple-roles.png)
 
 “OctoStudy-DB” is used in the project process.
 
-![](Chapter001Resources/using-specific-machine-roles.png)
+![](images/chapter001-using-specific-machine-roles.png)
 
 While the other two roles are used for grouping and organization.  When set, you can now see all the machines used for “OctoStudy” or for “DB-JumpBox” by using the advanced filters.
 
-![](Chapter001Resources/searching-machines-used-by-application.png)
+![](images/chapter001-searching-machines-used-by-application.png)
 
 Having a single machine be used for multiple applications is more than fine.  Just please be sure to include all the necessary roles so you are prepared in the future to move machines around.
 
-![](Chapter001Resources/single-machine-multiple-applications-roles.png)
+![](images/chapter001-single-machine-multiple-applications-roles.png)
