@@ -10,9 +10,10 @@ This repo is used to store the open source book on how to setup an Octopus Deplo
 - Chapter 6 - Trust everyone to do their jobs right, but verify them (setting up subscriptions)
 - Chapter 7 - Offloading work onto workers
 - Chapter 8 - Let's talk multi-tenancy
-- Chapter 9 - What is Data Center, why do I need it and when should I upgrade?
-- Chapter 10 - Octopus Maintenance 101 (SQL Server Maintenance, Machine Policies, etc)
-- Chapter 11 - Keeping Octopus Deploy up to date
+- Chapter 9 - Spaces...what are they good for (almost everything!)
+- Chapter 10 - What is Data Center, why do I need it and when should I upgrade?
+- Chapter 11 - Octopus Maintenance 101 (SQL Server Maintenance, Machine Policies, etc)
+- Chapter 12 - Keeping Octopus Deploy up to date
 
 To add to this book please do the following.  These are requirements in order for everything to be picked up by LeanPub.
 
