@@ -26,7 +26,7 @@ We recommend configuring your environments to match your company’s terminology
 
 Keep the list of environments under a dozen or so.  Have the standard four or five environments, such as Dev, Test, Staging and Production.  Also add in SpinUp, TearDown and Maintenance.  Those additional environments will help cover you when it is time to build up servers, tear down applications or if you want to use Octopus to perform some scheduled maintenance tasks like taking a backup of logs in production.  Keeping the number of environments low helps with configuring life cycles, channels, security, and so on.  They also keep your dashboard easy to follow.  When we encounter customers with hundreds of environments the number one complaint we hear is "this isn't scaling all that well" or "our dashboard seems to scroll horizontally forever."
 
-![](images/chapter001-environmentlist.png)
+![](images/chapter001/environmentlist.png)
 
 Don't worry about the order of the environments or adding in machines just yet.  That will come a bit later.  For now we just want to get our environments created.  
 
@@ -36,11 +36,11 @@ In the world of the Azure, AWS, Google Cloud and others to want to be able to de
 
 A common scenario we have seen is customers deploy to an on-premise data center for dev, test and staging, but the code is hosted in data centers in Illinois and Texas.  Before pushing to production, they like to run some sanity checks in a staging environment in Illinois and Texas.  If you did environment per data center that would end up being seven environments.  When in reality you only want four.  
 
-![](images/chapter001-multitenancyenvironments.png)
+![](images/chapter001/multitenancyenvironments.png)
 
 Because we don't have any targets or projects setup at this particular point in time, this is rather easy to accomplish.  For now, we will just add two new tenants to Octopus Deploy.  This is accomplished by clicking on the tenant link at the top of the screen and then clicking add tenant in the top right corner.
 
-![](images/chapter001-datacentertenants.png)
+![](images/chapter001/datacentertenants.png)
 
 Don't worry, we will be coming back to them in a later chapter when we start setting up our first multiple data centers project.  Just know that they are there when you need them.
 
@@ -56,11 +56,11 @@ Imagine if we had five clients, an internal testing customer, Coca-Cola, Ford, N
 
 This is where the multi-tenancy feature really shines for our customers.  It allows them to keep the number of environments low while at the same time have the ability to create a unique workflow per client.
 
-![](images/chapter001-multitenantapplication.png)
+![](images/chapter001/multitenantapplication.png)
 
 Fow now we are just going to create those five customers we talked about in this example, Internal, Coca-Cola, Ford, Nike and Starbucks.
 
-![](images/chapter001-alltenants.png)
+![](images/chapter001/alltenants.png)
 
 ## Lifecycles
 
@@ -68,11 +68,11 @@ Now that we have our environments set up (along with our tenants) it is time to 
 
 In the previous section we defined seven environments, Development, Testing, Staging, Production, SpinUp, TearDown and Maintenance.  
 
-![](images/chapter001-environmentlist.png)
+![](images/chapter001/environmentlist.png)
 
 For 90% of the applications we plan on deploying with Octopus Deploy, we only need Development, Testing, Staging and Production.  We need to adjust the default lifecycle to support that.  This is accomplished by going to library -> lifecycles, selecting the default lifecycle and adding in those four phases.
 
-![](images/chapter001-defaultlifecycle.png) 
+![](images/chapter001/defaultlifecycle.png) 
 
 ### Default Lifecycle Retention Policy
 
@@ -82,11 +82,11 @@ In reality...it doesn't make sense to keep every release and every deployment un
 
 That is where retention policies are used.  They dictate how long a release is kept on both the server and the tentacle.  Our recommendation is to set the default retention policy to keep five releases by default.
 
-![](images/chapter001-defaultretentionpolicy.png)
+![](images/chapter001/defaultretentionpolicy.png)
 
 You can override that retention policy for a specific environment.  Which is why for production we recommend increasing that limit to 10.  If you deploy once a week, this will keep 10 weeks worth of production deployments.  Which should cover you for quite a while.
 
-![](images/chapter001-retentionpolicies.png)
+![](images/chapter001/retentionpolicies.png)
 
 > <img src="images/professoroctopus.png" style="float: left; padding-top: 15px;"> If this is your first time applying retention policies then start with a large number (say 600) and work down to your desired number.  Periodically Octopus will automatically apply retention policies.  This task blocks other deployments.  Starting with a large retention policy and going small will allow you to slowly remove releases without blocking deployments.
 
@@ -96,13 +96,13 @@ Emergencies happen.  A critical bug is found in production which must be fixed r
 
 For this we recommend creating a emergency bug fix lifecycle.  This lifecycle will only have two phases, staging and production.  The retention policies will be the same, 5 for staging and 10 for production.  What this will do is allow you to configure your project to handle an emergency deployment.  You still need a place to test your changes, which is why staging was chosen.  
 
-![](images/chapter001-emergencybugfixlifecycle.png)
+![](images/chapter001/emergencybugfixlifecycle.png)
 
 ### Maintenance and other Lifecycles
 
 You will notice that we haven't included the other three environments we created, SpinUp, TearDown and Maintenance.  There should be custom lifecycles for those environments.  For retention policies, limit them to 2 releases for all environments.
 
-![](images/chapter001-alllifecycles.png)
+![](images/chapter001/alllifecycles.png)
 
 > <img src="images/professoroctopus.png" style="float: left;"> The infrastructure as code lifecycle is useful for automating the adding of VMs and other infrastructure.  It has a way of throwing random errors, so the SpinUp phase is set as optional.  This will allow you to tear everything down when that occurs and start again.    
 
