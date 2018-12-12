@@ -108,4 +108,4 @@ You will notice that we haven't included the other three environments we created
 
 ## Conclusion
 
-In this chapter we walked through of how to set up the backbone of Octopus Deploy, the environments and lifecycles.  In addition we walked through how to configure retention policies to help keep your Octopus Deploy instance lean and mean.  In the next chapter we will walk through adding our first set of deployment targets for a single project.
+In this chapter we walked through of how to set up the backbone of Octopus Deploy, the environments and lifecycles.  In addition we walked through how to configure retention policies to help keep your Octopus Deploy instance lean and mean.  In the next chapter we are going to walk through setting up a simple project and configuring deployment targets for that.
