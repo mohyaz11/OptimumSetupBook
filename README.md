@@ -19,5 +19,5 @@ To add to this book please do the following.  These are requirements in order fo
 
 1) To add a new chapter please please create a file in the manuscript folder called chapter[number].md
 2) All images must be added into the folder images found in the manuscript folder
-3) The file name for the image should be chapter[number]-image-name.png
+3) The file name for the image should be [sectionname]-[imagename].png
 4) Add that chapter to book.txt in the manuscript folder.  Please follow the existing examples. 
