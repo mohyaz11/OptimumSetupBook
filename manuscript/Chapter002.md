@@ -68,3 +68,26 @@ It is also a good idea to have a couple of other library sets to handle some non
 
 ![](images/projectconfiguration-globalvariables.png)
 
+### OctoFX-Database Project
+
+The first project we are going to configure is the OctoFX-Database project.  If we follow the recommendations from earlier in this chapter we are going to assume that the SQL Server is running but this database and required user does not exist.  This means we are going to have steps in place to check to see if the database exists as well the necessary user for the environment.  If they don't exist then we will need to create them.  In addition, we want to build some trust in the process, this can be done by having a manual intervention for a DBA to approve.
+
+Before adding in steps to the process we need to add a reference to the library variable sets we created earlier.
+
+![](images/projectconfiguration-databasevariablesets.png)
+
+Next, we are going to add in the manual intervention for the DBAs to approve.  If you are configuring a fresh instance of Octopus Deploy you likely haven't had the chance to configure a DBA team yet.  That is okay, for now, just put in Octopus Administrators or a team which already exists.  We will get to configuring teams in a later chapter.
+
+![](images/projectconfiguration-dbaapprovaldatabase.png)
+
+> <img src="images/professoroctopus.png" style="float: left;"> This project deploy a database package using DBUp, a free database deployment tool.  Some tools provide the ability to generate a difference report prior to deployments which Octopus can store as an artifact and a DBA can download and review.  In that case it makes more sense to have the manual intervention occur after that report has been generated.
+
+A number of community step templates have been created to help with some of this database scaffolding.  We are going to be using the SQL - Create Database If Not Exists step template to create the database if it doesn't exist.  We are going to be using variables out of the library sets we brought in previously.  For now we are going to execute this script on a tentacle with the role "OctoFX-DB."  Later in the book we will convert this over to using workers.
+
+![](images/projectconfiguration-createdatabaseifnotexists.png)
+
+There are few more maintenance tasks to add, such as creating the SQL Login if not exists, assigning that user to the database and assigning them to a role.  Keep in mind, all of the steps being added are occuring before an actual deployment happens.  Without even doing a deployment we have added in five steps.  And that is just to deploy the database.  Imagine if this project also deploy a website, a windows service and other components.  The project would become very hard to manage.  
+
+![](images/projectconfiguration-databaseprojectbeforedeployment.png)
+
+Now we are ready to configure the database deployment.  As you most likely learned when creating a PoC or other deployment projects, you need to package up the database into either a NuGet or a Zip file.  In this book we haven't configured anything to push the packages to Octopus Deploy's internal package feed for it to deploy.  However, the deploy a package step requires us to specify a package.  The way we are going to short-circuit this chicken/egg scenario is by using variables.    
