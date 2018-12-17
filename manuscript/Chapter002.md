@@ -90,4 +90,40 @@ There are few more maintenance tasks to add, such as creating the SQL Login if n
 
 ![](images/projectconfiguration-databaseprojectbeforedeployment.png)
 
-Now we are ready to configure the database deployment.  As you most likely learned when creating a PoC or other deployment projects, you need to package up the database into either a NuGet or a Zip file.  In this book we haven't configured anything to push the packages to Octopus Deploy's internal package feed for it to deploy.  However, the deploy a package step requires us to specify a package.  The way we are going to short-circuit this chicken/egg scenario is by using variables.    
+Now we are ready to configure the database deployment.  As you most likely learned when creating a PoC or other deployment projects, you need to package up the database into either a NuGet or a Zip file.  In this book we haven't configured anything to push the packages to Octopus Deploy's internal package feed for it to deploy.  However, the deploy a package step requires us to specify a package.  The way we are going to short-circuit this chicken/egg scenario is by using variables.  In a later chapter we will worry about getting the packages uploaded, but for now we want to just set a variable.
+
+![](images/projectconfiguration-dbprojectvariablepackage.png)
+
+> <img src="images/professoroctopus.png" style="float: left;"> Using a variable to reference a package also makes it easier to clone this project to use with another application.
+
+Now that we have our package referenced as a variable, we can add the step to deploy package and run the scripts on the database.
+
+![](images/projectconfiguration-referencepackageasvariable.png)
+
+Finally, we are done with the database deployment process.  The process itself is fairly simple, there might be some more approvals or some additional steps you will want to add.  Again, the idea is to keep all the database deployment work in this specific project.
+
+![](images/projectconfiguration-finaldatabaseprocess.png)
+
+Don't spend too much time on the actual steps being done in the process.  The major takeaways from this are the database project handles everything required to create, configure and deploy a database.  You might be using a different tool (like Redgate or RoundhousE) to do your deployments which include some additional features.
+
+### OctoFX-WebUI Project
+
+Now it is time to move onto deploying the UI.  Unlike the previous section, we will not be walking through all the necessary steps you need to do to configure your project.  We will follow the same rules as before, the project will do all the necessary work to deploy the web application as if it was the first time, it only handles web deployments.
+
+That being said, do not forget to reference the variable sets in this particular project just like you did with the database deployment project.
+
+![](images/projectconfiguration-weblibrarysets.png)
+
+Below is the process we put together to deploy the web application.  First it gets approval from the web admins to do the deployment, then it will do a rolling deploy across all the machines.
+
+![](images/projectconfiguration-webapplicationprocess.png)
+
+The rolling deployment is done by clicking on the three "..." and then selecting "add child step."
+
+![](images/projectconfiguration-addchildsetp.png)
+
+Once the child step has been added and saved you can click on the main parent step and configure a rolling deployment.  You can control the number of concurrent machines being deployed to during the rolling deployment in this step as well.
+
+![](images/projectconfiguration-rollingdeployments.png)
+
+Just like with the database project, do not get too hung up on the steps.  We are not saying you need to do these steps in order to deploy a web application.  We just wanted to show you how we would configure a simple IIS web application deployment.  The most important thing to take away from this section is the WebUI project is only concerned about deploying the WebUI and it will work if it is the first time, 10th time, or 1000th time deploying to a machine.  
