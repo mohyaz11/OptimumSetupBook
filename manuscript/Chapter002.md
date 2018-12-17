@@ -18,6 +18,8 @@ Rather than have a single project to deploy all three components, each component
 
 Octopus Deploy provides a mechanism for a project to call other projects.  This will allow you to set up a orchestrator, or what we like to call a traffic cop, to deploy your projects in a specific order.
 
+> <img src="images/professoroctopus.png" style="float: left;"> This will also allow you to isolate your code in your source control repository or have separate builds for each component.  This way your CI/CD pipeline only has to build and deploy something which actually changed rather than building and deploying the actual application.  This also has an added benefit of reducing the build and deployment times.  
+
 ### Projects should be responsible for setting up what it needs to run
 
 Imagine you are working on a greenfield application for six months.  It only exists in your development and testing environments.  Now it is time to deploy to staging.  The web admins have set up a web server running IIS for you using a base image.  The DBAs have created an account for the application to use.  What about the configuration?  What should the database name be?  
@@ -127,3 +129,7 @@ Once the child step has been added and saved you can click on the main parent st
 ![](images/projectconfiguration-rollingdeployments.png)
 
 Just like with the database project, do not get too hung up on the steps.  We are not saying you need to do these steps in order to deploy a web application.  We just wanted to show you how we would configure a simple IIS web application deployment.  The most important thing to take away from this section is the WebUI project is only concerned about deploying the WebUI and it will work if it is the first time, 10th time, or 1000th time deploying to a machine.  
+
+### OctoFX-TrafficCop Project
+
+The Traffic Cop project will be configured to call the OctoFX-Database project and then the OctoFX-WebUI project.    

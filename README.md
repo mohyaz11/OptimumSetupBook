@@ -3,8 +3,8 @@ This repo is used to store the open source book on how to setup an Octopus Deplo
 
 - [Introduction](manuscript/Chapter000.md)
 - [Chapter 1 - Chapter 1: Environments, Lifecycles and Retention Policies Oh My!](manuscript/Chapter001.md)
-- Chapter 2 - Finally...we get to a project and deployment targets (simple project and deployment targets)
-- Chapter 3 - Breaking up the band, er project into pieces for fine grained deployments (breaking up the project, using project groups, and deploy a release step)
+- [Chapter 2 - Finally...we get to a projects](manuscript/Chapter002.md)
+- Chapter 3 - Everything you wanted to know about deployment targets (but were afraid to ask)
 - Chapter 4 - Oh variables and library sets, you so crazy (sharing variables between projects using library sets)
 - Chapter 5 - Stopping your developers from deploying to production (creating various groups and allowing specific permissions per environment)
 - Chapter 6 - Trust everyone to do their jobs right, but verify them (setting up subscriptions)
