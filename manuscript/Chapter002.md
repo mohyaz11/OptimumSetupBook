@@ -132,4 +132,52 @@ Just like with the database project, do not get too hung up on the steps.  We ar
 
 ### OctoFX-TrafficCop Project
 
-The Traffic Cop project will be configured to call the OctoFX-Database project and then the OctoFX-WebUI project.    
+The Traffic Cop project is the coordinator.  It knows the order to invoke the Database and WebUI projects.  This project is useful for times when the entire OctoFX application needs to be deployed.  This way you can still have a single project to schedule and deploy later.
+
+We have added manual interventions to the Database and WebUI projects.  And it makes sense to have them if you are just deploying the database or you are just deploying the WebUI.  It doesn't make a whole lot of sense to get approval for a WebUI deployment after the database has been deployed.  In an ideal world those approvals would come before the deployments even started.  Which is what we are going to do.  
+
+First we need to add a couple of variables to the database project.  
+
+![](images/projectconfiguration-deployareleasedatabaseprojectvariables.png)
+
+Next we want to set the run condition on the manual intervention to look at the Project.Approval.ManualInterventionRequired variable.  If it is set to true then that step will run, when false it will skip that step.
+
+![](images/projectconfiguration-deployareleasedatabasemanualintervention.png)
+
+Let's repeat the same thing for the WebUI project.
+
+![](images/projectconfiguration-deployareleasewebuivariables.png)
+
+Then make the same change to the run condition on the manual intervention step.
+
+![](images/projectconfiguration-deployareleasemanualinterventionweb.png)
+
+Now we can configure the traffic cop project.  First things first, add in the same library sets as the other two projects.
+
+![](images/projectconfiguration-trafficcopvariableset.png)
+
+Next we need to add in the manual interventions.  If you look closely at the screenshot you will see this new icon appear in the process.
+
+![](images/projectconfiguration-deployareleasemanualintervention.png)
+
+This is because I set the start trigger to be parallel to the previous step.  What this means is you won't have to wait for a DBA to approve prior to the web admin approving it.  The web admin can approve the deployment and then the DBA.
+
+![](images/projectconfiguration-manualinterventionparallel.png)
+
+Now we can add in a deploy a release step for the database.  Make note of the variable being sent in.  In this case it is set to false.  That means the manual intervention on the database project will be skipped (because it has already been approved by the time it gets here).
+
+![](images/projectconfiguration-deploydatabaserelease.png)
+
+And now we can repeat the same thing for the WebUI project.
+
+![](images/configurationproject-deployareleaseweb.png)
+
+The final process in this example will look like this.
+
+![](images/projectconfiguration-trafficcopprocess.png)
+
+The important takeaway of this section is necessarily the individual steps rather than some of the core concepts.  We have a project which can coordinate the releases of other projects.  In addition, the approvals are before the first deployment occurs.  Finally, we can have multiple approvals occur at the same time.  
+
+## Conclusion
+
+We had to cover quite a bit with this chapter...and it was only about setting up projects!  Just like setting up environments, projects form another key element in Octopus Deploy.  Getting them started on the right foot is very important to helping your Octopus Deploy instance scale.  We have talked to customers who have projects with 200+ steps deploying 80+ packages and each deployment takes well over an hour.  That is very prone to error and just doesn't scale all that well.  We want to help you avoid that.  In the next chapter we will be moving off of projects and focusing on setting up tentacles and target roles.
