@@ -2,6 +2,7 @@
 This repo is used to store the open source book on how to setup an Octopus Deploy Server to scale up and out.  
 
 - [Introduction](manuscript/Introduction.md)
+- [Chapter 0 - Terms](manuscript/Terms.md)
 - [Chapter 1 - Configuring Your Environments](manuscript/Environments.md)
 - [Chapter 2 - Lifecycles](manuscript/Lifecycles.md)
 - [Chapter 3 - Retention Policies](manuscript/RetentionPolicies.md)

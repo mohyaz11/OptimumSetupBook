@@ -1,4 +1,5 @@
-Introduction.md.md
+Introduction.md
+Terms.md
 Environments.md
 Lifecycles.md
 RetentionPolicies.md
