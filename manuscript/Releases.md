@@ -70,4 +70,94 @@ The Major, Minor, Patch and Build number are all integer values.  The Qualifier 
 
 ## Creating the release
 
-We are going to first create a release to deploy the database changes.  No sense in deploying code if there isn't a database to connect to.  This can be 
+We are going to first create a release to deploy the database changes.  No sense in deploying code if there isn't a database to connect to.  This can be done by going to the project page and clicking on the create release button.
+
+![](images/releasecreation-createreleasebutton.png)
+
+Before clicking on the save button, we want to pause on the screen and walk through what each value means.  
+
+![](images/releasecreation-createreleasescreen.png)
+
+The first option is the version number for this release.  By default, Octopus Deploy is using a version number defined by the template which you can configure by going to the settings screen on the project.  
+
+![](images/releasecreation-versionstrategy.png)
+
+We recommend leaving that as is.  When you set up the integration with the build server you can configure the plug-in to specify the build number when creating a release.  When manually creating releases through the UI (typically done to test out changes to the process) the default option will create a new version for you with requiring you to have to make a bunch of changes to the version number.
+
+![](images/releasecreation-buildserverreleasenumber.png)
+
+The next option on the release creation screen is the package selection section.  By default Octopus Deploy will select the latest version it can find.  But there are cases when you want to select a specific version.  To do that you can click on the select version button.
+
+![](images/releasecreation-selectspecificpackageversion.png)
+
+Finally there are the release notes.  The release notes support markdown syntax.  Because we are just testing out this deployment process for the first time, we are going to skip entering in anything into the release notes.  We recommend including as much information as you think as necessary for each release.  Some ideas include:
+
+- All Git Commits since the last deployment
+- Links to your internal tracking system such as Jira.  
+- Detailed description of changes
+- Git Commit Hash which triggered the deployment
+
+## Deploying the release
+
+Clicking the save button on the release will take you to the release overview screen.  From here you can view a lot of information about the release, such as what environments it has been deployed to, what variables have been snapshotted, what packages are being deployed, any artifacts created as well as the deployment history.
+
+![](images/releasecreation-predevdeployment.png)
+
+We don't really need to do anything on this screen, so we can proceed to the deploy to development by clicking on the `Deploy to Development...` button.  When you do that you will be taken to another screen to select some options.  Just like the release creation screen we want to take a moment to walk you through each of the options.
+
+![](images/releasecreation-firstdeployment.png)
+
+The first section we will look at is allows you to schedule when the deployment will occur.  This allows you to have a web admin or a DBA schedule a deployment to production at 7:00 PM and not have to be online when the deployment occurs.  If they are like most web admins and DBAs we have worked with they are really busy and they only want to be involved with a deployment when something bad happens.
+
+![](images/releasecreation-scheduledeployment.png)
+
+The next section allows you to configure if any steps are disabled with this deployment.  We don't recommend using this feature for regular deployments.  But if you are testing something out and it keeps failing on a specific step then disabling steps will decrease the turn around time.  
+
+![](images/releasecreation-excludesteps.png)
+
+> <img src="images/professoroctopus.png" style="float: left;"> Excluding steps using this interface provides a nice alternative to disabling the steps in the process.  This will allow you to turn off steps without changing your process, which requires a new release to be created.  
+
+The next section configures how the Octopus Server will handle a failure.  You have a couple of options when it comes to failures.  You can fail the deployment.  Or you can tell the Octopus Server to pause and wait for input when a failure occurs.  Guided failures are useful when you have a deployment step which randomly fails and you want to be notified of it so you can choose what to do with the step (skip it, retry or abort the deployment).  
+
+![](images/releasecreation-failuremode.png)
+
+> <img src="images/professoroctopus.png" style="float: left;"> After a process is configured and tested the chances of it failing are very slim.  Typically we see a failure occur because a permission on a database got changed, a file share isn't available or something else directly unrelated to the deployment.  Those types of failures require an external change (fix the database permission) and then a retry will work.
+
+The final section is the package download option.  We recommend leaving this option alone.  The only reason you would want to force a download of the package is for debugging purposes.  Just like any other cache, using the package cache should speed up the overall deployment process.
+
+![](images/releasecreation-packagedownload.png)
+
+Because this is the first time we are running this deployment process we should leave all those options alone and click on the `deploy` button at the top right corner of the screen.
+
+## First Deployment
+
+And unsurprisingly, the deployment failed.  A real surprise would be if the deployment was successful on the first try.  Almost every project fails on the first release.  Do not get frustrated when that happens.  Believe us, it happens to everyone.
+
+![](images/releasecreation-deploymenterror.png)
+
+By clicking on the error message on the overview screen we can dive right into the error message and see where the failure happened.  It is making mention of the unable to find the instance to deploy to.  Based on the fact the deployment was successful in the previous steps, this leads us to believe there might be a problem with some variables that were configured.
+
+![](images/releasecreation-errorlog.png)
+
+After a few adjustments to the variables, everything is now working!
+
+![](images/releasecreation-deploymentsuccessful.png)
+
+Now that we have a successful release we should take a moment to look at the task log and in particular the highlighted section below.
+
+![](images/releasecreation-logoptions.png)
+
+By changing the log level from info to verbose you can get a lot more detail about each step.  For successful deployments this isn't very useful.  It should really be used for debugging purposes or when a failure occurs.
+
+![](images/releasecreation-verboselog.png)
+
+Clicking on the `Raw` button will allow you to view the log without any of the formatting.  This view shows both the verbose and info log levels as well as any errors.  
+
+![](images/releasecreation-rawlog.png)
+
+Finally the `Download` button will download the logs so they can be zipped up and emailed to support.  
+
+## Conclusion
+
+We've finally done it.  We finally have Octopus Deploy deploying code to a target.  The next step in this process is configuring your build server to automatically create these releases.  From there we can move onto more advanced topics such as tenants, workers and other features.
+
