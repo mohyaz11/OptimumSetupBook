@@ -2,3 +2,4 @@ Introduction.md.md
 EnvironmentsLifeCyclesRetentionPolicies.md
 Projects.md
 DeploymentTargets.md
+Releases.md
