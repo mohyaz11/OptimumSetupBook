@@ -6,49 +6,25 @@ In previous chapters we got the environment scaffolding put together, then we cr
 
 Octopus Deploy will deploy code using what is known as a release.  When a release is created the project, variables, and packages being used are snapshotted.  You then deploy that release to the various environments and servers.  The idea behind a release is the core concept of Octopus Deploy, you build your code once, and you deploy that same code to all environments.  The same is true of the release.  The release is created once and that same release is deployed to all environments.
 
-In order deploy the code we will first need to package it.  Octopus Deploy supports a wide variety of package formats, including but not limited to NuGet packages, Tar packages, as well as Docker Images, Jar files and Zip files.  Choose the package type which matches your application type, use NuGet or Zip for .NET applications, JAR for Java, Docker images for Docker, etc.
+## Creating the first release
 
-## Packaging Applications on the build server
+At this point we do not have our build server integration set up.  Which is okay, we don't need to do that at this very second.  An easy way to test our deployment process for the Web UI is to go to a development web server and zip up the application folder.  This will let us test our deployment process without having to worry about configuring the build server and getting that connection wired up.
 
-The build server, Jenkins, TeamCity, TFS/Azure DevOps, Bamboo, AppVeyor, etc, is the one typically responsible for packaging applications and pushing that package to Octopus Deploy.  It is possible to package a folder without using a build server, but for the purposes of this book, we are assuming the build server is the one who is packaging the applications.
+For this first release I have created two packages, one for the website project and another for the database project.  For the website we went out to the dev server and packaged up the website into a zip file.  
 
-The primary reason the build server is responsible for packaging the application is because the build server monitors your source control for any changes.  Once a change is detected the build server goes into action.  
+![](images/releasecreation-packagestoupload.png)
 
-Octopus Deploy is build server agnostic.  It does not care where it gets the packages from.  All it cares about is that it gets a package to deploy.  In fact, we have written plug-ins for many of the popular build servers.  For the build servers where we don't have a plug-in we have created a command line application called `octo.exe`.  The plug-ins are wrappers for that command line application, so you will get the same functionality as the plug-ins.  
+Now we just need to upload them to the Octopus Server.  This can be done by going to Library -> Packages and clicking the upload packages button in the top right.
 
-We don't think it is practical to have screenshots for every build server we integrate with.  New build servers and tools are being added all the time.  Rather than that we have a series of recommendations for build server integration.
+![](images/releasecreation-uploadpackages.png)
 
-### Build Server Process 
+Now we have some packages to work with.
 
-Our recommended build server process is:
+![](images/releasecreation-uploadedpackages.png)
 
-1) Pull down changes
-2) Build Code
-3) Run Static Analysis
-4) Run Unit Tests
-5) Package application
-6) Push package to Octopus Deploy
-7) Create and deploy release in Octopus Deploy
-8) Run integration tests
+Before diving into the release let's talk about everyone's favorite subject, version numbers.  
 
-If any of the preceding steps fail then the build server will fail the build.  This ensures, at a bare minimum, that when Octopus Deploy gets any changes we know the code successfully passed analysis and unit tests.  
-
-Also, do not start packaging and pushing the packages until all tests have completed and passed.  This way the build server doesn't waste time packaging something that fails on a test step.  
-
-> <img src="images/professoroctopus.png" style="float: left;"> Analysis and tests get exponentially more expensive as you move farther away from the build server.  In terms of time, fixing a problem because of analysis failure is much less expensive than fixing a problem in production.  Unit tests should be self-contained, repeatable and fast.  While integration tests are more "soup to nuts" tests which require external components such as a database or file system.  They tend to be much slower and more expensive to maintain. We've seen some projects with 10,000+ unit tests and a couple of hundred integration tests.  The unit tests took a few minutes to run while the integration tests took 10+ minutes to run.  If there is a problem in the code it should fail as fast as possible.  
-
-### One Source Control Repository or Multiple Source Control Repositories?
-
-If you recall, the OctoFX project has two components, a database and a UI.  The question then comes up, should both components be in the same source control repository or should there be multiple source control repositories.  The answer to that depends on the build server chosen.  Several build servers have the ability to only trigger builds if files in a specific directory are changed.  For example, the source control repository has two folders
-
-- src
-- db
-
-The src folder contains all the C# code, while the db contain all the database scripts.  You can configure your build server to have two builds, one to watch for changes to the db folder and another to watch for changes to the src folder.  
-
-This gets a little trickier if you both the C# code and the database scripts are in the same solution.  In that case you would want to build a specific project rather than building the entire solution.
-
-### Version Numbers
+## Version Numbers
 
 The technology you're working with will, in some cases, determine the type of versioning scheme that you choose. We recommend using Semantic Versioning for your applications, unless you are deploying artifacts to a Maven repository, in which case you will need to use Maven Versions.
 
@@ -76,6 +52,10 @@ We also support pragmatic versioning, as not every version can fit into three nu
 
 Octopus Deploy also supports pre-release tags, for example `1.5.2.3-rc.1`.  
 
+As you can see after uploading the packages the package versions are `1.0.0.1`.  This is because Octopus Deploy read the version number from the file name.
+
+![](images/releasecreation-versiondetails.png)
+
 Strictly speaking about SemVer 2.0, a version like `1.5.2-rc.1` is considered a "pre-release" and `1.5.2` would be considered a "full release".  In practice, these concepts carry weight when you are talking about hierarchies of application dependencies like classical NuGet packages or NPM dependencies. This kind of strict semantic versioning enables dependency management tooling to interpret what kind of changes each package version represents. For example, they can automatically protect your software, by preventing accidental upgrades to pre-release versions, or versions that might introduce breaking changes.
 
 A typical Maven version string is split into 5 parts:
@@ -88,15 +68,6 @@ A typical Maven version string is split into 5 parts:
 
 The Major, Minor, Patch and Build number are all integer values.  The Qualifier can hold any value, although some qualifiers do have special meaning.
 
-### Building and Packaging using Versioning Schemes
+## Creating the release
 
-The Major, Minor and Patch, of the version should be stored somewhere in the source control repository or in a variable on the build server.  This provides a source of truth for the version numbers.
-
-> <img src="images/professoroctopus.png" style="float: left;"> When compiling or building the code those values should be used to version the .dlls or .jar files or any other compiled item.  This will allow you to easily see what version is on a specific server.  
-
-For packaging the application to ship to Octopus Deploy you should also include a build number.  For example, if you compiled `1.5.2` then you should include the build number, say 1000, in the package name `1.5.2.1000` or `1.5.2-Build1000` depending on your own internal versioning guidelines.  
-
-> <img src="images/professoroctopus.png" style="float: left;"> Including the build number with your package allows you to have multiple builds for the same version.  Very rarely will a version have a single build which makes it all the way to production.
-
-## Releases
-
+We are going to first create a release to deploy the database changes.  No sense in deploying code if there isn't a database to connect to.  This can be 
