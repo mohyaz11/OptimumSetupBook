@@ -1,19 +1,21 @@
 # Octopus Deploy Optimum Setup Book
 This repo is used to store the open source book on how to setup an Octopus Deploy Server to scale up and out.  
 
-- [Introduction](manuscript/Introduction.md.md)
-- [Chapter 1 - Chapter 1: Environments, Lifecycles and Retention Policies Oh My!](manuscript/EnvironmentsLifeCyclesRetentionPolicies.md)
-- [Chapter 2 - Finally...we get to a projects](manuscript/Projects.md)
-- [Chapter 3 - Everything you wanted to know about deployment targets, roles and machine policies (but were afraid to ask)](manuscript/DeploymentTargets.md)
-- [Chapter 4 - Let's deploy some code!](manuscript/Releases.md)
-- Chapter 5 - Stopping your developers from deploying to production (creating various groups and allowing specific permissions per environment)
-- Chapter 6 - Trust everyone to do their jobs right, but verify them (setting up subscriptions)
-- Chapter 7 - Offloading work onto workers
-- Chapter 8 - Let's talk multi-tenancy
-- Chapter 9 - Spaces...what are they good for (almost everything!)
-- Chapter 10 - What is Data Center, why do I need it and when should I upgrade?
-- Chapter 11 - Octopus Maintenance 101 (SQL Server Maintenance, Machine Policies, etc)
-- Chapter 12 - Keeping Octopus Deploy up to date
+- [Introduction](manuscript/Introduction.md)
+- [Chapter 0 - Terms](manuscript/Terms.md)
+- [Chapter 1 - Configuring Your Environments](manuscript/Environments.md)
+- [Chapter 2 - Lifecycles](manuscript/Lifecycles.md)
+- [Chapter 3 - Retention Policies](manuscript/RetentionPolicies.md)
+- [Chapter 4 - Everything you wanted to know about deployment targets, roles and machine policies (but were afraid to ask)](manuscript/DeploymentTargets.md)
+- [Chapter 5 - Let's deploy some code!](manuscript/Releases.md)
+- Chapter 6 - Stopping your developers from deploying to production (creating various groups and allowing specific permissions per environment)
+- Chapter 7 - Trust everyone to do their jobs right, but verify them (setting up subscriptions)
+- Chapter 8 - Offloading work onto workers
+- Chapter 9 - Let's talk multi-tenancy
+- Chapter 10 - Spaces...what are they good for (almost everything!)
+- Chapter 11 - What is Data Center, why do I need it and when should I upgrade?
+- Chapter 12 - Octopus Maintenance 101 (SQL Server Maintenance, Machine Policies, etc)
+- Chapter 13 - Keeping Octopus Deploy up to date
 
 To add to this book please do the following.  These are requirements in order for everything to be picked up by LeanPub.
 

@@ -1,5 +1,8 @@
-Introduction.md.md
-EnvironmentsLifeCyclesRetentionPolicies.md
+Introduction.md
+Terms.md
+Environments.md
+Lifecycles.md
+RetentionPolicies.md
 Projects.md
 DeploymentTargets.md
 Releases.md
