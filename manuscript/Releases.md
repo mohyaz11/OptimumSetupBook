@@ -129,7 +129,7 @@ The final section is the package download option.  We recommend leaving this opt
 
 Because this is the first time we are running this deployment process we should leave all those options alone and click on the `deploy` button at the top right corner of the screen.
 
-## First Deployment
+## First Database Project Deployment
 
 And unsurprisingly, the deployment failed.  A real surprise would be if the deployment was successful on the first try.  Almost every project fails on the first release.  Do not get frustrated when that happens.  Believe us, it happens to everyone.
 
@@ -157,6 +157,52 @@ Clicking on the `Raw` button will allow you to view the log without any of the f
 
 Finally the `Download` button will download the logs so they can be zipped up and emailed to support.  
 
+## First WebUI Project Deployment
+
+The database project has been deployed.  Next up is the WebUI project.  Just like with the database project, we are going to create a release for the WebUI project.  
+
+![](images/releasecreation-createwebrelease.png)
+
+And we will go ahead and deploy that to dev. And just like the database project it took a couple of times to get it to work.
+
+![](images/releasecreation-successfuldeploymentweb.png)
+
+Now for the moment of truth, checking the website to make sure it actually deployed.  Which we can see it did.  
+
+![](images/releasecreation-website.png)
+
+In looking at the dashboard, we can see both projects were successfully deployed to the development environment.
+
+![](images/releasecreation-dashboard.png)
+
+## First Traffic Cop Deployment
+
+If you recall from earlier, the Traffic Cop project doesn't deploy to the Development environment.  This is because we configured it use a special lifecycle which skips Development and starts with Testing.  The reason for this is because in most CI/CD scenarios the build server is the one creating the releases for the Database and WebUI project.  The build server wouldn't create the Traffic Cop release because not all releases will be deploying both applications.  There are several scenarios where only a database change is needed (sproc bug fix, new index, etc) or only a code fix is needed (bug fix, updating css, etc).  
+
+![](images/releasecreation-trafficcopprocess.png)
+
+Because this is the first time this project is being deployed via Octopus Deploy it makes sense to take advantage of the traffic cop project.  Let's first start with creating the release.  
+
+One thing you will notice the project will first try to create a release version of `0.0.1` but the projects it is deploying are currently on release `0.0.2`.  We recommend keeping versioning the traffic cop release so it matches the same Major.Minor.Patch release.  For example, if you have deployed `1.5.2.1` to the WebUI and `1.5.2.10` to the Database then the first release for the Traffic Cop should be `1.5.2.1`, or `1.5.2-Release1`.  
+
+![](images/releasecreation-createtrafficcoprelease.png)
+
+Because the lifecycle skips dev, the release will allow you to go directly to staging.  Please note, the version of the projects being deployed is included in the snapshot.  If you were to create a new WebUI release or a new Database release then you would need to create a new TrafficCop release.
+
+![](images/releasecreation-trafficcopreleasedetails.png)
+
+And unlike before, the first release of TrafficCop works because we sorted out any issues in Dev.
+
+![](images/releasecreation-trafficcopsuccessfulrelease.png)
+
+Taking a look at the dashboard shows the successful results.
+
+![](images/releasecreation-dashboardaftertesting.png)
+
+And the website successfully loads.
+
+![](images/releasecreation-successfultestsite.png)
+
 ## Conclusion
 
-We've finally done it.  We finally have Octopus Deploy deploying code to a target.  The next step in this process is configuring your build server to automatically create these releases.  From there we can move onto more advanced topics such as tenants, workers and other features.
+We've finally done it.  We finally have Octopus Deploy deploying code to a target.  Even better the code successfully loads.  The only downside is all the releases we did in this chapter were done through the UI.  This is okay for testing purposes.  However, we need to configure the build server to automatically create the WebUI and Database releases to add more automation into the CI/CD pipeline.

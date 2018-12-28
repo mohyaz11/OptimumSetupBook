@@ -176,8 +176,22 @@ The final process in this example will look like this.
 
 ![](images/projectconfiguration-trafficcopprocess.png)
 
+In a typical CI/CD setup the Database and WebUI projects will be automatically deployed to the development environment by the build server.  This makes for an interesting scenario, as when should the Traffic Cop project come into the mix?  Not every Database and WebUI release will be promoted to a testing environment.  And you won't be deploying both projects all the time, only some of the time.  If the application were using something like Entity Framework without any stored procedures, then it could be entirely possible to only have WebUI changes.  Even for a major release.  
+
+Because of that, a unique lifecycle should be created for the Traffic Cop projects.  This lifecycle will skip the development environment and start at testing.
+
+![](images/projectconfiguration-trafficcoplifecycle.png)
+
+To change the default lifecycle for the project you would go to the process screen and click the `Change` button next to the lifecycle.  
+
+![](images/projectconfiguration-changetrafficcoplifecycle.png)
+
+Now the default lifecycle for the project will be the "Traffic Cop Lifecycle."
+
+![](images/projectconfiguration-trafficcopnewprocess.png)
+
 The important takeaway of this section is necessarily the individual steps rather than some of the core concepts.  We have a project which can coordinate the releases of other projects.  In addition, the approvals are before the first deployment occurs.  Finally, we can have multiple approvals occur at the same time.  
 
 ## Conclusion
 
-We had to cover quite a bit with this chapter...and it was only about setting up projects!  Just like setting up environments, projects form another key element in Octopus Deploy.  Getting them started on the right foot is very important to helping your Octopus Deploy instance scale.  We have talked to customers who have projects with 200+ steps deploying 80+ packages and each deployment takes well over an hour.  That is very prone to error and just doesn't scale all that well.  We want to help you avoid that.  In the next chapter we will be moving off of projects and focusing on setting up tentacles and target roles.
+We had to cover quite a bit with this chapter...and it was only about setting up projects!  Just like setting up environments, projects form another key element in Octopus Deploy.  Getting them started on the right foot is very important to helping your Octopus Deploy instance scale.  We have talked to customers who have projects with 200+ steps deploying 80+ packages and each deployment takes well over an hour.  That is very prone to error and just doesn't scale all that well.  Hopefully with these suggestions you can avoid a similar setup!

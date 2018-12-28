@@ -60,4 +60,4 @@ It is possible to configure the Octopus Deploy server to automatically create a 
 
 ## Conclusion
 
-There we have it.  We now have an entire CI/CD pipeline, from check-in all the way to deployment covered.  So far we have covered a fairly simple application and deployment scenario.  And we don't even have permissions configured.  In upcoming chapters we will dive into more advanced features such as permissions, tenants, workers.
+By integrating a build server into the mix we now have an entire CI/CD pipeline.  If you have any takeaway from this chapter it is you should build your application once and then deploy those same build artifacts across all your servers.  This ensures what you tested in your testing or QA environment is the exact same code which is going to be run in production.  
