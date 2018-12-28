@@ -6,3 +6,4 @@ RetentionPolicies.md
 Projects.md
 DeploymentTargets.md
 Releases.md
+MultiDataCenter.md

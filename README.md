@@ -10,6 +10,7 @@ This repo is used to store the open source book on how to setup an Octopus Deplo
 - [Everything you wanted to know about deployment targets, roles, and machine policies (but were afraid to ask)](manuscript/DeploymentTargets.md)
 - [Let's deploy some code!](manuscript/Releases.md)
 - [Packaging applications on your build server](manuscript/packagingapplications.md)
+- [Deploying to Multiple Data Centers](manuscript/MultiDataCenter.md)
 - Stopping your developers from deploying to production (creating various groups and allowing specific permissions per environment)
 - Trust everyone to do their jobs right, but verify them (setting up subscriptions)
 - Offloading work onto workers
