@@ -1,4 +1,4 @@
-# Chapter 1: Environments
+# Environments
 
 An interesting fact about artists is they will create what is known as a "study."  This is a sample work to try out new techniques or colors.  The size of the work is much smaller, perhaps 8"x10" compared to the final piece which could be 8'x10'.  They have no intention of selling them (though some of them do if the piece is successful enough).  The reason we bring this is up is because that is how we view a proof of concept with Octopus Deploy.  Great to learn how Octopus Deploy works and get a deployment working, but a new fresh install should be done to ensure from the beginning you have configured everything properly.
 

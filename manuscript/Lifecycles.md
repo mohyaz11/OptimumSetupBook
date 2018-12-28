@@ -1,4 +1,4 @@
-# Chapter 2: Lifecycles
+# Lifecycles
 
 Now that we have some environments, how can we tell Octopus the order of the environments that we want to deploy our applications to? This is where lifecycles comes into play. Lifecycles let you define a promotion path for your applications as well as automate deployments and set retention policies.
 

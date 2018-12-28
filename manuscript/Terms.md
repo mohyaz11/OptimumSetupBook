@@ -1,4 +1,4 @@
-# Chapter 0: Terms
+# Terms
 
 Let's start off by defining some terms and what they mean in the Octopus world. This might match up with your own terminology or they might differ slightly, but it'll help to have some understanding of what we mean by by Release and Project and so on as we work through the upcoming chapters.
 

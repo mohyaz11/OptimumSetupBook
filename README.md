@@ -2,14 +2,14 @@
 This repo is used to store the open source book on how to setup an Octopus Deploy Server to scale up and out.  
 
 - [Introduction](manuscript/Introduction.md)
-- [Chapter 0 - Terms](manuscript/Terms.md)
-- [Chapter 1 - Configuring Your Environments](manuscript/Environments.md)
-- [Chapter 2 - Lifecycles](manuscript/Lifecycles.md)
-- [Chapter 3 - Retention Policies](manuscript/RetentionPolicies.md)
-- [Chapter 4 - Finally...we get to a projects](manuscript/Projects.md)
-- [Chapter 5 - Everything you wanted to know about deployment targets, roles and machine policies (but were afraid to ask)](manuscript/DeploymentTargets.md)
-- [Chapter 6 - Let's deploy some code!](manuscript/Releases.md)
-- [Chapter 7 - Packaging applications on your build server](manuscript/packagingapplications.md)
+- [Terms](manuscript/Terms.md)
+- [Configuring Your Environments](manuscript/Environments.md)
+- [Lifecycles](manuscript/Lifecycles.md)
+- [Retention Policies](manuscript/RetentionPolicies.md)
+- [Finally...we get to a projects](manuscript/Projects.md)
+- [Everything you wanted to know about deployment targets, roles and machine policies (but were afraid to ask)](manuscript/DeploymentTargets.md)
+- [Let's deploy some code!](manuscript/Releases.md)
+- [Packaging applications on your build server](manuscript/packagingapplications.md)
 - Stopping your developers from deploying to production (creating various groups and allowing specific permissions per environment)
 - Trust everyone to do their jobs right, but verify them (setting up subscriptions)
 - Offloading work onto workers

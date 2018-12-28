@@ -1,4 +1,4 @@
-# Chapter 3: Retention Policies
+# Retention Policies
 
 I've reviewed a number of Octopus Deploy server configurations for Data Center customers in the past year, and the first thing that I ask to see is usually the retention policies. Setting appropriate retention policies are an easy win and they are usually not changed from the default during a trial and not revisited after setting up a production configuration.
 

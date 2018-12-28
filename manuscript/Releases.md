@@ -160,4 +160,3 @@ Finally the `Download` button will download the logs so they can be zipped up an
 ## Conclusion
 
 We've finally done it.  We finally have Octopus Deploy deploying code to a target.  The next step in this process is configuring your build server to automatically create these releases.  From there we can move onto more advanced topics such as tenants, workers and other features.
-
