@@ -1,24 +1,24 @@
 # Everything you wanted to know about deployment targets, roles and machine policies (but were afraid to ask)
 
-We have the environments and project processes.  Now we need to configure a couple of deployment targets.  Deployment targets are what you will deploy the code to.  A deployment target is typically a Windows VM running a small windows service known as a tentacle.  The Octopus Deploy server connects to that tentacle and instructs it to do work.  But a deployment target is not just a tentacle.  As time has gone on we have added more and more deployment targets types.  Now there are Windows Targets, SSH Connections (for Linux machines), Azure Targets, Kubernetes Clusters, Offline Drops and Cloud Regions.  That list keeps growing and growing.  We are willing to bet that by the time you read this book that list will have changed.
+We have the environments and project processes.  Now we need to configure a couple of deployment targets.  Deployment targets are what you will deploy the code to.  Originally, deployment targets were Windows VMs running the tentacle windows service.  The Octopus Deploy server connects to that tentacle and instructs it to do work.  But a deployment target is not just a tentacle.  As time has gone on we have added more and more deployment targets types.  Now there are Windows Targets, SSH Connections (for Linux machines), Azure Targets, Kubernetes Clusters, Offline Drops and Cloud Regions.  That list keeps growing and growing.  We are willing to bet that by the time you read this book that list will have changed.
 
-When you were setting up a proof of concept or a pilot project chances are you didn't much thought to the add target form.  We know we didn't.  We just wanted to add a machine into Octopus so we could start defining our deployment process and getting some code pushed out.  When registering a deployment target there is the standard "what environment should this target be placed in" option, but you are also given a few other options, such as roles, machine policies, and tenants that tend to create some confusion and the opportunity for some misconfigurations.  
+When you were setting up a proof of concept or a pilot project chances are you didn't much thought to the add target form.  We know we didn't.  We wanted to get to defining our deployment process.  All we cared about was which environment the machine is registered in. We didn't give much thought to roles, machine policies or tenants.  Unfortunately, that is where we see a lot of misconfiguration.  
 
 ![](images/deploymenttargets-emptyform.png)
 
 ## Naming
 
-Naming.  Easy to learn.  Hard to master.  A good machine name will describe the machine and its purpose in a succinct manner.  You might have your own internal naming conventions for machines, and that is great, use that if possible.  The problem a lot of people will run into is when they are naming PaaS targets such as Kubernetes, Azure Web Apps and Service Fabric clusters.
+Naming.  Easy to learn.  Hard to master.  A good machine name will describe the machine and its purpose in a succinct manner.  You might have your own internal naming conventions for VMs. If that is already in place, use that.  Naming conventions tend to not apply to PaaS targets such as Kubernetes, Azure Web Apps and Service Fabric clusters.
 
-If each application gets its own set of resources or its own machine, a good naming guideline to follow is [EnvironmentPrefix]-[AppName]-[Component]-[Number].  Or [EnvironmentPrefix]-[AppName][Component][Number].  For example, the machine hosting the OctoFX Website in Dev would be named `d-octofx-web-01`.
+If each application gets its own set of resources or its own machine, a good naming guideline to follow is [EnvironmentPrefix]-[AppName]-[Component]-[Number].  Or [EnvironmentPrefix]-[AppName][Component][Number].  For example, the machine hosting the OctoFX Website in Dev would be `d-octofx-web-01`.
 
 ![](images/deploymenttarget-name.png)
 
-If you have multiple applications sharing the same resources then having a succinct name describing the type of apps it hosts is key.  For internal websites on test a good name would be `t-internal-web-01`.
+If you have a web server hosting many websites a succinct name is important.  For internal websites on test a good name would be `t-internal-web-01`.
 
 ## Roles
 
-Roles are a little trickier and tend to trip up a lot of people.  If you remember when we created the deployment process we had to pick a role for the step to run on.  How it works with Octopus Deploy is it will grab all the machines for that role and run the script on that machine.
+Roles are a little trickier and tend to trip up a lot of people.  If you remember when we created the deployment process we had to pick a role for the step to run on.  During a deployment, Octopus Deploy will grab all machines with that role and run the deployments on those machines.
 
 All too often we run across scenarios where a customer has created a role called `IIS-Server` because they only had one or two servers hosting all their web applications.  This worked fine until they decided to move a small subset of applications to a new server.  They tried using the same role, `IIS-Server` but when they went to deploy they had all the projects being deployed to both the new and the old servers.  
 
@@ -32,7 +32,7 @@ For the database the roles would be `OctoFX` and `OctoFX-DB`.
 
 ![](images/deploymenttargets-dabaseroles.png)
 
-The reason we recommend including the role `OctoFX` is for organization and searching.  Tou can then use the filtering functionality on the deployment target page to find all the machines being used for OctoFX deployments.  
+The reason we recommend including the role `OctoFX` is for organization and searching.  Using the filtering functionality on the deployment target page you can see all the machines for OctoFX.
 
 ![](images/deploymenttargets-rolefilter.png)
 
@@ -40,33 +40,29 @@ The roles `OctoFX-Web` and `OctoFX-DB` are what is being used in the deployment 
 
 ![](images/deploymenttarget-processexample.png)
 
-If you wanted to keep track of all the IIS Servers in your infrastructure then by all means add the role `IIS-Server`.  Just don't have any steps specifically target that role.
+If you wanted to keep track of all the IIS Servers in your infrastructure then by all means add the role `IIS-Server`.  Don't have any steps target that role.
 
 In the event you have several applications being hosted on the same target then you can add a role for each application.
 
 ![](images/deploymenttarget-multipleroles.png)
 
-It does feel a bit tedious to constantly be adding roles to an existing target, but it makes changes in your infrastructure much easier to change.  If new servers are created to move a subset of applications over all you need to do is remove those roles from the old machine and add them to the new machine.  You don't have to adjust your deployment process or create a new release.  In fact, once the roles are added you can re-run the deployment for the environment and the new machines will get the latest and greatest code (in later chapters we will discuss triggers on how to automate this).    
+It does feel a bit tedious to be adding roles to an existing target, but it makes changes in your infrastructure much easier to change.  For example, two new servers are created for a subset of applications.  You only need to remove the roles from the old servers and add them to the new ones.  You don't have to adjust your deployment process or create a new release.  In fact, once the roles are added you can re-run the deployment for the environment and the new machines will get the latest and greatest code.  In later chapters we will discuss triggers on how to automate this.    
 
-> <img src="images/professoroctopus.png" style="float: left;"> Adding dozens upon dozens of application roles to a single target might be an indication that server is trying to host too much.  If you have the resources consider splitting up the server.  
+> <img src="images/professoroctopus.png" style="float: left;"> Adding dozens upon dozens of application roles to a single target is a good litmus test the server is doing too much.  If you have the resources consider splitting up the server.  
 
 ## Tenants
 
-The last piece of the add deployment target form is the tenants section.  This will allow you to specify if the target should be used for tenant deployments.  If the deployment target is going to be used for a specific tenant then it would make sense to adjust the name [EnvironmentPrefix]-[TenantName]-[AppName]-[Component]-[Number].  So `d-ford-octofx-web-01` if we wanted the machine to deploy the OctoFX website for Ford to Dev.
+The last piece of the add deployment target form is the tenants section.  We will be covering tenants in later chapters.  The major takeaway for this chapter is this will allow you to specify if the target is for tenant deployments.  If the deployment target is for a specific tenant then it would make sense to adjust the name [EnvironmentPrefix]-[TenantName]-[AppName]-[Component]-[Number].  Use `d-ford-octofx-web-01` if we wanted the machine to deploy the OctoFX website for Ford to Dev.
 
 It is possible for a deployment target to be used for both non-tenant deployments as well tenant deployments.  This typically done for virtual machines which host lots of applications and tenants.  This is not something we would recommend in production, but it is possible.  It would make more sense in the lower environments when the resources tend to be more limited.
 
-In the scenario where you are using tenants to deploy to multiple data centers this is where you would specify the data center this deployment target is for.  
-
-![](images/deploymenttargets-datacentertenant.png)
-
 ## Machine Policies
 
-One screen and concept we have danced around for the past several chapters is machine policies.  You probably noticed it on the left hand menu and didn't think much of it.
+So far we have been dancing around for the past several chapters is machine policies.  You probably noticed it on the left hand menu and didn't think much of it.
 
 ![](images/deploymenttargets-machinepoliciesmenu.png)
 
-Periodically the Octopus Deploy server needs to make sure that it can still connect to all the deployment targets doing what is known as a health check. It does this because a lot of our users want to know about problems with a machine prior to doing a deployment.  If a system admin can fix a minor problem before it becomes a major problem then it is well worth the effort.  It also does this as a sanity check and also to make sure the server has crashed or is about to run out of space.  By default health checks are performed every hour.  And by default all machines are added into the default machine policy.  And finally by default if Octopus is unable to connect to the machine it will throw an error and fail the health check.  All of this is configurable on the machine policy screen.
+The Octopus Deploy server needs to make sure that it can still connect to all the deployment targets.  We call that a health check.  It runs periodically on the Octopus Deploy server.  It does this because a lot of our users want to know about problems with a machine prior to doing a deployment.  If a system admin can fix a minor problem before it becomes a major problem then it is well worth the effort.  It also does this as a sanity check and also to make sure the server has crashed or is about to run out of space.  By default health checks are performed every hour.  If the Octopus Server cannot connect to the machine it will fail the health check.  All machines are added to the default machine policy when no policy is specified.  This is configurable on the machine policy screen.
 
 ![](images/deploymenttargets-defaultmachinepolicy.png)
 
@@ -74,9 +70,9 @@ When a machine policy performs a health check it queues a task on the Octopus Se
 
 ![](images/deploymenttargets-machinepolicy.png)
 
-Having all the deployment targets on the same machine policy is not a big deal when you only have a couple of dozen of machines.  The health checks are quick.  It really starts to cause problems when you have thousands of machines.  A health check could take hours to complete.  It can only connect to 10 machines at a time to perform the health check, it can take a while to finish up.  
+Using the default machine policy for less than a hundred machines is fine.  The health checks are quick.  It starts to cause problems when you have thousands of machines.  A health check could take hours to complete.  It can only connect to 10 machines at a time to perform the health check, it can take a while to finish up.  
 
-You also might have a group of machines which are flaky and tend to go up and down.  Perhaps they are test instances or they are hosted on a client's site and your connection is spotty.  You anticipate them to fail once in a while.  You shouldn't change your default machine policy to account for one or two spotty machines.  The other machines in the machine policy should be running.  You want to know about those if they go down.
+You also might have a group of machines which are flaky and tend to go up and down.  Perhaps they are test instances or they are hosted on a client's site and your connection is spotty.  You expect them to fail once in a while.  You shouldn't change your default machine policy to account for one or two spotty machines.  The other machines in the machine policy should be running.  You want to know about those if they go down.
 
 Our recommendation is to create several machine policies.  Some possible strategies are:
 
@@ -85,7 +81,7 @@ Our recommendation is to create several machine policies.  Some possible strateg
 3) Machine policy per tenant (if the tenant is hosting their own servers and you deploy to them)
 4) Transient Machine Policy (for machines which tend to go offline randomly)
 
-If you are going the machine policy per environment you could change the time between checks to be something large for dev, say once a day, while production stays at once an hour.  And maybe you know that development machines tend to go up and down at random, so you can change those to not fail the health check.  
+If you go the machine policy per environment we recommend changing the times between health checks.  Something large for dev, say once a day, while production stays at once an hour. This is because dev is deployed to several times per day.  While production is deployed to once a day or once a week. Dev machines tend to go up and down at random, so you can change those to not fail the health check.  
 
 ![](images/deploymenttarget-multiplemachinepolicies.png)
 
@@ -97,9 +93,9 @@ You change the machine policy for a specific deployment target by going to the d
 
 ## Automating tentacle installation
 
-The tentacle is an MSI you have to install on a VM.  To get going with the PoC you probably downloaded the tentacle onto the server, manually installed it, and manually configured it.  Then you went back to the Octopus Deploy UI and registered the target with the Octopus Deploy server.  For a few tentacles that isn't terrible.  Once you get above 20 or so machines you realize rather quickly that doesn't scale.
+The tentacle is an MSI you have to install on a VM.  To get your Poc going you probably went the manual route.  Download the MSI onto the VM, install it and configure it.  Then you went back to the Octopus Deploy UI and registered the target with the Octopus Deploy server.  For a few tentacles that isn't terrible.  Once you get above 20 or so machines you realize that doesn't scale.
 
-We strongly recommend creating a process to automate the tentacle installation.  If you are using Azure or AWS you can leverage Azure Resource Manager Templates (ARM Templates) or CloudFormation to spin up new virtual machines and bootstrap them using a PowerShell script.  
+We recommend creating a process to automate the tentacle installation.  If you are using Azure you can leverage Azure Resource Manager Templates (ARM Templates).  For AWS, you can leverage or CloudFormation to spin up new virtual machines.  Both processes support running a PowerShell script to bootstrap them.  
 
 > <img src="images/professoroctopus.png" style="float: left;"> CloudFormation templates allow you to include PowerShell directly in them.  ARM templates require you to use the custom script extension.  We recommend using Google to find the latest examples.  
 
@@ -113,9 +109,9 @@ Regardless of the technology you are using, you will need a PowerShell script to
 
 Param(    
     [string]$octopusServerUrl,    
-    [string]$octopusApiKey,	
-	[string]$octopusServerThumbprint,
-	[string]$instanceName,	
+    [string]$octopusApiKey,    
+    [string]$octopusServerThumbprint,
+    [string]$instanceName,    
     [string]$registrationName,
     [string]$environment,
     [string]$tenant,
@@ -151,7 +147,7 @@ Write-Host "Going to use port $tentacleListenPort"
 Write-Output "Open port $tentacleListenPort on Windows Firewall" 
 & netsh.exe firewall add portopening TCP $tentacleListenPort "Octopus Tentacle $instanceName" 
 if ($lastExitCode -ne 0) { 
-	throw "Installation failed when modifying firewall rules" 
+    throw "Installation failed when modifying firewall rules" 
 } 
 
 $tentacleHomeDirectory = "C:\Octopus\$instanceName" 
@@ -162,42 +158,42 @@ $rolesToRegister = $roles -split "," | foreach { "--role `"$($_.Trim())`"" }
 $rolesToRegister = $rolesToRegister -join " "
 
 if ([string]::IsNullOrWhiteSpace($tenant) -eq $false){
-	$tenantToRegister = "--tenant `"$tenant`""
+    $tenantToRegister = "--tenant `"$tenant`""
 }
 
 & .\tentacle.exe create-instance --instance $instanceName --config $tentacleConfigFile --console | Write-Output
 if ($lastExitCode -ne 0) { 
-	throw "Installation failed on create-instance" 
+    throw "Installation failed on create-instance" 
 } 
 & .\tentacle.exe configure --instance $instanceName --home $tentacleHomeDirectory --console | Write-Output
 if ($lastExitCode -ne 0) { 
-	throw "Installation failed on configure home directory" 
+    throw "Installation failed on configure home directory" 
 } 
 & .\tentacle.exe configure --instance $instanceName --app $tentacleAppDirectory --console | Write-Output
 if ($lastExitCode -ne 0) { 
-	throw "Installation failed on configure app directory" 
+    throw "Installation failed on configure app directory" 
 } 
 & .\tentacle.exe configure --instance $instanceName --port $tentacleListenPort --console | Write-Output
 if ($lastExitCode -ne 0) { 
-	throw "Installation failed on configure port" 
+    throw "Installation failed on configure port" 
 } 
 & .\tentacle.exe new-certificate --instance $instanceName --console | Write-Output
 if ($lastExitCode -ne 0) { 
-	throw "Installation failed on creating new certificate" 
+    throw "Installation failed on creating new certificate" 
 } 
 & .\tentacle.exe configure --instance $instanceName --trust $octopusServerThumbprint --console | Write-Output
 if ($lastExitCode -ne 0) { 
-	throw "Installation failed on configure trust with server" 
-} 	                  
+    throw "Installation failed on configure trust with server" 
+}                       
 & .\tentacle.exe service --instance $instanceName --install --start --console | Write-Output
 if ($lastExitCode -ne 0) { 
-	throw "Installation failed on service install" 
+    throw "Installation failed on service install" 
 } 
 $cmd = "& .\tentacle.exe register-with --instance `"$instanceName`" --server $octopusServerUrl $rolesToRegister --environment `"$environment`" --name $registrationName $tenantToRegister --publicHostName $ipAddress --apiKey $octopusApiKey --comms-style TentaclePassive --force --console --policy=`"$machinePolicy`""
 Write-Host $cmd
 Invoke-Expression $cmd | Write-Host
 if ($lastExitCode -ne 0) { 
-	throw "Installation failed on register-with" 
+    throw "Installation failed on register-with" 
 } 
 ```
 
@@ -228,11 +224,11 @@ choco install dotnetcore-windowshosting -y
 
 The creation of the deployment targets is now automated.  The next step is to set up a project trigger which will see when a new machine is added for a specific role and then automatically deploy to that machine.  This way the entire process is automated, from machine creation to deployment.  
 
-Before we get going on creating the triggers lets take a quick step back and think about what this means.  In the previous chapters we setup three projects.  
+Before we get going on creating the triggers lets take a quick step back and think about what this means.  In the previous chapters, we set up three projects.  
 
 ![](images/deploymenttargets-allprojects.png)
 
-Of those three projects which one is most likely going to have a new machine added to it for scale?  Probably the OctoFX-WebUI project.  If you add a new machine to a SQL Server cluster the DBAs will go through the effort of getting everything synced up as that is required by SQL Server.  And you typically are not adding new machines willy nilly to a SQL Cluster.  But adding new machines into a webfarm for the OctoFX-WebUI project is a lot more plausible.  Maybe to handle some additional load.  Maybe to replace an existing machine.  OctoFX-WebUI is where we are going to add the trigger.
+Of those three projects which one is most likely going to have a new machine added to it for scale?  Probably the OctoFX-WebUI project.  If you add a new machine to a SQL Server cluster the DBAs will go through the effort of getting everything synced up as that is required by SQL Server.  And you typically are not adding new machines willy-nilly to a SQL Cluster.  But adding new machines into a web farm for the OctoFX-WebUI project is a lot more plausible.  Maybe to handle some additional load.  Maybe to replace an existing machine.  OctoFX-WebUI is where we are going to add the trigger.
 
 This is done by going to the project and selecting the triggers option in the left hand menu.
 
