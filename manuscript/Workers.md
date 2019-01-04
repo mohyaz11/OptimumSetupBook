@@ -48,8 +48,66 @@ That is it!  We have now configured the first worker pool.  Go ahead and repeat 
 
 ## Workers
 
-Adding workers to a worker pool is just like adding a deployment target to an environment.  At the time of this writing only three types of deployment targets are supported with worker pools, polling tentacles, listening tentacles and SSH targets.  
+Adding workers to a worker pool is just like adding a deployment target to an environment.  At the time of this writing only three types of deployment targets are supported with worker pools, polling tentacles, listening tentacles and SSH targets.  In fact, it is the same tentacle you have always installed on a VM.  The primary difference is how it is registered with the Octopus Deploy server.
+
+The form to add a worker is very similar adding a tentacle target.  The difference in the form is instead of adding the tentacle to an environment and assigning it a role, you assign it to a worker pool.
+
+![](images/workers-addworkerpoolform.png)
+
+For naming convention we recommend going with [workertype]-worker-[number].  For example, `database-worker-01`.  
 
 ## Changing Project Steps to Use Worker Pools
 
-## Disabling the Default Worker
+Now that we have added worker pools you will notice the execution location in the UI has changed.  The text previously said "Run on the Octopus Server" now says "Run once on a worker".  As well "Run on the Octopus Server on behalf of the deployment target" now reads "Run on a worker on behalf of each deployment target."
+
+![](images/workers-newexecutionlocation.png)
+
+For this demo we are going to be switching all the database steps over to run on the newly created database worker pool.  The reason we are doing this is because the steps are using SQL Authentication, not Windows Authentication, to log into the SQL Server.
+
+![](images/workers-sqlauthentication.png)
+
+To change it, we change the execution location to be "Run once on a worker" and change the worker pool to be "Database Worker Pool."
+
+![](images/worker-changingexecutionlocation.png)
+
+You might be asking yourself, why would I change the database steps over to running on a worker pool?  There are several reasons for that.  Right now, we have multiple deployment targets to handle my database deployments.  When we look at our demo instance we can see there are 12 targets just for database deployments.
+
+![](images/workers-databasetargets.png)
+
+The license we are using for the test instance is limited to 250 machines.  So that means almost 5% of the license is consumed by those deployment targets.  In addition, database deployments are not manipulating the server like an IIS or Windows Server deployment does.  It needs to communicate to a SQL Server using port 1433.  Because of that, multiple concurrent deployments can occur at once.  Workers allow that.  
+
+The updated process no longer uses deployment targets.  It now uses workers.
+
+![](images/workers-newdatabaseprocess.png)
+
+You will notice the last step is running a PowerShell script rather than the deploy a package step.  A new feature added in 2018.8.0 was the ability to reference packages in the run a script step.  
+
+![](images/workers-deploydatabasechanges.png)
+
+The reference a package feature allows you to specify a package from a feed.  It also allows you to extract the package after downloading it.  Typically users don't extract a package if all they want to do is copy it to a file share or something like that.
+
+![](images/workers-referenceapackagemodal.png)
+
+Because you can reference a package we also added in the ability to do the configuration transforms.  
+
+![](images/workers-runascriptconfigurefeatures.png)
+
+You can reference the package's extracted path in the script.  In this case we are using DBUp, which means we can execute the console application in the package to do the upgrade.  
+
+![](images/workers-runascriptpackagepowershell.png)
+
+With this flexibility, it is now possible to move quite a bit of steps from deployment targets over to workers.  The benefit is they are not counted against your license.  This also leaves deployment targets free to do actual deployments to IIS or Windows Services.
+
+## Disabling Executing Scripts on Octopus Server
+
+Now that we have our worker pools configured and projects updated, we can now go in and turn off the default worker on the Octopus Server.  This will prevent any script from running on the Octopus Server.  
+
+> <img src="images/professoroctopus.png" style="float: left;"> Only do this after you have added worker pools and changed existing projects to use them.  This could break a lot of deployments.
+
+![](images/workers-disablebuiltinworker.png)
+
+Now all scripts have to run on an external worker.
+
+## Conclusion
+
+Workers allow you to speed up and scale out your Octopus Deploy server with some minor configuration changes.  This allows your Octopus Deploy server to focus on orchestration.  Before workers, if you wanted to do Kubernetes deployments you would need to install KubeCtl on the Octopus Server.  This required a restart of the service because KubeCtl adds a value into the path.  By removing Kubernetes deployments from the Octopus Server we have also eliminated the need to install additional software on the server.  That should decrease the likelihood of any downtime.
