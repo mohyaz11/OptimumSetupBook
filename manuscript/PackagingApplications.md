@@ -58,6 +58,22 @@ We recommend having the build server create and deploy a release to a lower envi
 
 It is possible to configure the Octopus Deploy server to automatically create a release when a package is pushed, however it only works if a very specific set of conditions are met, such as only using the internal NuGet feed, not using variables for package ids, and so on.  As your Octopus Deploy instance is used by more and more people within your company you will often find those conditions very constricting.  Automatic release creation using Octopus Deploy should be treated as an exception rather than a rule.
 
+## Build Server Permissions
+
+Your build server will need to communicate with the Octopus Deploy server.  In order to do that it will need to use an API Key of a user in Octopus Deploy.  The user should be a service account and not a user account in Octopus Deploy.  This can be done during the user creation process.  You need to click the `The user is a service account` checkbox.
+
+![](images/packagingapplications-serviceaccountcreation.png)
+
+Service accounts don't have passwords.  They only have API Keys.  If an API Key is compromised then all you need to do is delete it.  Password resets are slightly harder.  Also, service accounts are not tied to a specific user.  Often times we have seen a person configure the CI/CD pipeline using an API Key tied to their user account.  When they leave the company the typical clean-up process runs and disables the user account.  Then all the builds start failing because they are unable to deploy.
+
+It is also a good idea to limit what the service account can do.  We recommend creating a custom role for your build server service account which we will call `Build Server Role`.
+
+![](images/packagingapplications-buildserverrole.png)
+
+Create a new team and assign the user and the role to that team.  You can also limit which environments that team can deploy to.  This also helps lock down what that service account can do.
+
+![](images/packagingapplications-buildserverteam.png)
+
 ## Conclusion
 
 By integrating a build server into the mix we now have an entire CI/CD pipeline.  If you have any takeaway from this chapter it is you should build your application once and then deploy those same build artifacts across all your servers.  This ensures what you tested in your testing or QA environment is the exact same code which is going to be run in production.  
