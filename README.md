@@ -19,7 +19,7 @@ This repo is used to store the open source book on how to setup an Octopus Deplo
 - Trust everyone to do their jobs right, but verify them (setting up subscriptions)
 - [Offloading work onto workers](manuscript/workers.md)
 - Spaces...what are they good for (almost everything!)
-- What is Data Center, why do I need it and when should I upgrade?
+- [What is Data Center, why do I need it and when should I upgrade?](manuscript/DataCenter.md)
 - Octopus Maintenance 101 (SQL Server Maintenance, Machine Policies, etc)
 - Keeping Octopus Deploy up to date
 
