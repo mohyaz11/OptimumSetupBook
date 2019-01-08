@@ -11,7 +11,7 @@ This repo is used to store the open source book on how to setup an Octopus Deplo
 - [Let's deploy some code!](manuscript/Releases.md)
 - [Packaging applications on your build server](manuscript/packagingapplications.md)
 - [Let's talk multi-tenancy](manuscript/MultiTenancyIntro.md)
-- Deploying to Multiple Customers
+- [Deploying to Multiple Customers](manuscript/MultiTenancyApps.md)
 - [Deploying to Multiple Data Centers](manuscript/MultiDataCenter.md)
 - Deploying Feature Branches
 - [Configuring Emergency Bug Fix Deployments](manuscript/EmergencyBugFixes.md)

@@ -55,3 +55,7 @@ Library set variable templates are similar to project template variables.  The m
 And just like project template variables, those variables are defined at the tenant level.
 
 ![](images/multitenancy-variablesettemplateused.png)
+
+## Conclusion
+
+Multi-Tenancy is where Octopus Deploy really shines.  In this chapter we went over what is multi-tenancy.  In addition, we went through the common approaches taken to make an application multi-tenant.  In the next few chapters we are going to walk through some common uses of the multi-tenancy feature in Octopus Deploy.
