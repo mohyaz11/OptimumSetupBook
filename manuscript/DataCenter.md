@@ -41,3 +41,5 @@ Finally the Data Center license is considered the "best in breed" license.  Of t
 ## Conclusion
 
 Octopus Standard Edition is great when you are getting started with Octopus Deploy.  We've found that once customers hit 300 machines or so they move from beginners to advanced users.  They also start running into the initial limits, such as the 5 concurrent task cap.  Because they don't have the ability to scale horizontally they start to scale vertically.  We have now priced Data Center more aggressively so you can start using it at the 100 machine level.  This will allow you to configure Octopus Deploy to scale much earlier than before.  
+
+Some good indicators you need Data Center are you have more than 100 machines, you need to have more than 5 concurrent tasks running, you are doing hundreds of deployments a day, or you worry about the single point of failure in the CD pipeline.

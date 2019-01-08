@@ -1,4 +1,4 @@
-# Octopus Deploy Optimum Setup Book
+# Configuring your Octopus Deploy Server to scale with you
 This repo is used to store the open source book on how to setup an Octopus Deploy Server to scale up and out.  
 
 - [Introduction](manuscript/Introduction.md)
@@ -14,7 +14,7 @@ This repo is used to store the open source book on how to setup an Octopus Deplo
 - Deploying to Multiple Customers
 - [Deploying to Multiple Data Centers](manuscript/MultiDataCenter.md)
 - Deploying Feature Branches
-- Configuring Emergency Bug Fix Deployments
+- [Configuring Emergency Bug Fix Deployments](manuscript/EmergencyBugFixes.md)
 - Stopping your developers from deploying to production (creating various groups and allowing specific permissions per environment)
 - Trust everyone to do their jobs right, but verify them (setting up subscriptions)
 - [Offloading work onto workers](manuscript/workers.md)
