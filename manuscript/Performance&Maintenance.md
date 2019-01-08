@@ -14,9 +14,9 @@ Octopus
 
 It's key to keep Octopus up to date and there is a section which covers this in more detail but we are continually working to ensure Octopus performs to a high standard and we will always recommend upgrading to the latest version. 
 
-There is a section dedicated to upgrade
-
 > An example, many customers have saw reported speed improvements of their deployments after upgrading from earlier versions of Octopus **3.x** to the latest versions. 
+
+> <img src="images/professoroctopus.png" style="float: left;">There is a Chapter dedicated to upgrading Octopus. 
 
 ### Retention Policies
 
@@ -99,8 +99,6 @@ Follow these tips to tune and maintain the performance of your Octopus:
    * We try to make Polling Tentacles as efficient as possible, but by their very nature, they can place the Octopus Server under high load just handling the incoming connections.
 12. Reduce the frequency and complexity of automated health checks using machine policies.
 13. Disable automatic indexing of the built-in package repository if not required.
-
-
 
 ## Troubleshooting Common Issues
 
