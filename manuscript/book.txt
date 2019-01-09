@@ -7,3 +7,6 @@ Projects.md
 DeploymentTargets.md
 Releases.md
 MultiDataCenter.md
+Spaces.md
+Performance&Maintenance.md
+Upgrade.md
