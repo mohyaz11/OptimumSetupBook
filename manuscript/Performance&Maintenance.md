@@ -112,7 +112,7 @@ Look to see if the performance problem occurs, and goes away, on a regular basis
    * If you are seeing these operations take a long time it indicates your SQL Server is struggling under load, or your network connection from Octopus to SQL Server is saturated.
    * Check the maintenance plan for your SQL Server. See tips above.
    * Test an extremely simple query like SELECT * FROM OctopusServerNode. If this query is slow it indicates a problem with your SQL Server.
-   * est a more complex query like SELECT * FROM Release ORDER BY Assembled DESC. If this query is slow it indicates a problem with your SQL Server, or the sheer number of Releases you are retaining.
+   * Test a more complex query like SELECT * FROM Release ORDER BY Assembled DESC. If this query is slow it indicates a problem with your SQL Server, or the sheer number of Releases you are retaining.
    * Check the network throughput between the Octopus Server and SQL Server by trying a larger query like SELECT * FROM Events.
 4. Task Logs are taking a long time to load, or your deployments are taking a long time: The size of your task logs might be to blame.
 See tips above.
@@ -153,6 +153,8 @@ In addition to answering those questions, please collect and attach the followin
 5. Attach the raw task logs for any tasks exhibiting the performance problem, or that may have been running at the same time as the performance problem.
 6. If the performance problem is causing high CPU utilization on the Octopus Server, please record and attach a performance trace.
 7. If the performance problem is causing high memory utilization on the Octopus Server, please record and attach a memory trace.
+
+Please email mailto:Support@Octopus.com
 
 
 
