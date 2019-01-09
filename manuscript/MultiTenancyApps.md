@@ -23,10 +23,40 @@ A good rule of thumb is to configure targets to only be used for tenanted deploy
 
 In a perfect world each tenant would get their own web server and database server.  In the real world that is not very cost effective.  Especially when it comes to hosting VMs on a cloud provider such as AWS or Azure.  Don't be afraid to tie multiple tenants to the same machine.  Octopus Deploy allows 1 to N number of tenants.  
 
-## Project Configuration
-
-## Project Template Variables
+![](images/multitenancyapp-deploymenttargetconfig.png)
 
 ## Tenant Tags
+
+Tenant tags are a way to group tenants together.  To support our scenarios we are going to be creating two tenant tag sets, one called `Release` and the other called `Custom Features`.  This can be accomplished by going to the Library -> Tenant Tag Sets page.  
+
+![](images/multitenancyapp-tenanttags.png)
+
+When creating the tenant tags it is possible to assign each tag a color.  We recommend doing this when it makes sense.  The `Release` tenant tag is a great example.  Red for Alpha customers as they are used to risk.  Yellow for beta testers as they are okay with some limited risk.  Blue for stable customers as they want no risk.
+
+![](images/multitenancyapp-tenanttagscolors.png)
+
+Now we can go back to each of our tenants and assign them the various tenant tags.  For this example we will be assigning the following tenant tags:
+
+1. Internal - Alpha Release, Custom Branding Custom Features
+2. Coca-Cola - Beta Release, Custom Branding Custom Features
+3. Nike - Alpha Release, no custom features
+4. Ford - Stable Release, no custom features
+5. Starbucks - Stable Release, Custom Branding Custom Features
+
+![](images/multitenancyapp-tenantswithtags.png)
+
+If you are using custom colors for your tenant tags, the tenant overview screen provides a quick overview of which tenants are assigned which tag.  
+
+![](images/multitenancyapp-alltenants.png)
+
+You can also apply filters based on Tenant Tags on the tenant screen.  This will help find all the customers assigned to a specific tag.
+
+![](images/multitenancyapp-tenanttagfilter.png)
+
+## Project Configuration
+
+
+
+## Project Template Variables
 
 ## Conclusion
