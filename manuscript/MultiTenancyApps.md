@@ -55,8 +55,88 @@ You can also apply filters based on Tenant Tags on the tenant screen.  This will
 
 ## Project Configuration
 
+Now that we have that scaffolding out of the way, we can now move onto the project configuration.  First we need to go each project we want to make multi-tenant and enable multi-tenant deployments.  We selecting the option `Require a tenant for all deployments`.  As we go through this configuration we will make use of tenant specific variables.  Requiring a tenant for all deployments will ensure consistency across your deployments.  You don't have some deployments without a tenant and some with.
+
+> <img src="images/professoroctopus.png" style="float: left;"> A lot of times our customers want to enable allowing deployments with or without a tenant because they want to test internally first.  Creating a set of internal tenants will accomplish the same goal while keeping your deployments consistent.
+
+![](images/multitenancyapp-projectconfiguration.png)
+
+Next we want to go to each tenant and link them to the projects to deploy to.  For this demo we will using the following scenarios for the customers.
+
+1. Internal - This is our internal testing customer.  They are in the alpha release group because they are always testing new features.  Because they are an internal testing customer they have access to all environments.
+2. Coca-Cola - This is a customer who wants to try out new features but they don't want to be on the bleeding edge.  They are beta testers.  Due to the increased risk of being a beta tester they have machines in testing, staging and production.
+3. Nike - this is our customer who always wants to be on the cutting edge.  This includes some risk.  To help mitigate the risk they have been given resources in the testing environment as well as staging and production.
+4. Ford - this is our most risk adverse customer.  They only want the most stable releases.  They want to test all releases prior to going to production.  They have access to staging and production.
+5. Starbucks - this customer doesn't have a lot of tolerance for risk.  Sometimes they want to test changes prior to going to production.  Sometimes they don't.  They have access to staging and production.
+
+We link up these customers to their projects by going to the tenants screen and clicking the `connect project` button.
+
+![](images/multitenancyapp-connectproject.png)
+
+After connecting up Coca-Cola to our projects the screen will look like something like this:
+
+![](images/multitenancyapp-connectedproject.png)
+
+Now we just need to repeat for the remaining four customers.  Based on the scenarios described earlier, the project overview screen should look something like the the one below.  The text which says "filter required" indicates the project can deploy to that tenant for that environments.
+
+![](images/multitenancyapp-projectoverview.png)
+
+## Project Variable Templates
+
+For a moment, lets jump over to the WebUI project for OctoFX.  Diving into the step which deploys to IIS we can see that every tenant, at the moment, will be deploying to the same web application.  That...is not ideal.
+
+![](images/multitenancyapp-deploytoiisoriginal.png)
+
+A far better solution is the the customer gets their own custom sub-domain on their own set of servers.  Majority of the time, we can set a default value, but in some cases the tenant should have the ability to override that default value.  To accomplish this we are going to be using project template variables.  You get to this screen by going to the variables section and selecting the project templates option on the left.
+
+![](images/multitenancyapp-projecttemplates.png)
+
+From here we are going to create a new variable to store the sub-domain name.  We are going to use the tenant name and the application name as a default value for this variable.
+
+![](images/multitenancyapp-projecttemplatevariablemodal.png)
+
+After saving the variable we can see what it ends up looking like.
+
+![](images/multitenancyapp-postprojecttemplate.png)
+
+That variable can now be used by the Deploy to IIS step.
+
+![](images/multitenancyapp-iissettingswithprojectvariable.png)
+
+For the majority of the tenants the default value is perfectly fine.  But in other cases we want to overwrite that variable.  For example, maybe in production we want to call the domain name for Coca-Cola `productionoctofxcoke.octopusdemos.app` instead of `productionoctofxcoca-cola.octopusdemos.app`.  By going back to tenant screen and changing the variables we can.
+
+![](images/multitenancyapp-overwriteprojectvariable.png)
+
+## Tenant Specific Variables
+
+Each one of these customers gets their own set of resources.  Including a SQL Server.  If you recall, we have multiple projects, one for the database and the other for the web site.  We want to share this information between the web project and the database project.  We could go the project variable route, but that would mean duplicating data.  The chances of remembering to change both is very slim.  
+
+In an earlier chapter we set up a variable set for the OctoFx application share values between the two projects.  We are going to be making some changes to that to support multi-tenancy.
+
+![](images/multitenancyapp-octofxvariableset.png)
+
+First, we are going to go to the variable template section on this screen and add in variables to store the tenant short name.  That will be used to create the database name and the user.  Then we will create a template for each environment.  
+
+![](images/multitenancyapp-variablesetvariabletemplates.png)
+
+With those values we can now update the variable set to use them.  
+
+![](images/multitenancyapp-usingvariabletemplatesforlibrary.png)
+
+Because we didn't specify a default value for any of those variable templates we see orange icons for each tenant on the tenant screen.  
+
+![](images/multitenancyapp-missingvalues.png)
+
+Drilling into the tenant and we see which variables are missing.
+
+![](images/multitenancyapp-missingcommonvariables.png)
+
+Now we just need to go through and fill out the variables for each tenant.
+
+![](images/multitenancyapp-populatedcommonvariables.png)
+
+> <img src="images/professoroctopus.png" style="float: left;"> Adding variables to one or two tenants at a time isn't too terrible.  But this doesn't scale well when trying to work with 100s of tenants.  It would be a good idea to automate tenant setup using the API.
 
 
-## Project Template Variables
 
 ## Conclusion
