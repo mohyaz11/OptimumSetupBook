@@ -10,6 +10,8 @@ Workers.md
 MultiTenancyIntro.md
 MultiTenancyApps.md
 MultiDataCenter.md
+EmergencyBugFixes.md
+TeamSecurity.md
 Spaces.md
 DataCenter.md
 Performance&Maintenance.md
