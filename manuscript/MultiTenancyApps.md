@@ -103,7 +103,7 @@ That variable can now be used by the Deploy to IIS step.
 
 ![](images/multitenancyapp-iissettingswithprojectvariable.png)
 
-For the majority of the tenants the default value is perfectly fine.  But in other cases we want to overwrite that variable.  For example, maybe in production we want to call the domain name for Coca-Cola `productionoctofxcoke.octopusdemos.app` instead of `productionoctofxcoca-cola.octopusdemos.app`.  By going back to tenant screen and changing the variables we can.
+For the majority of the tenants the default value is perfectly fine.  But in other cases we want to overwrite that variable.  For example, maybe in production we want to call the domain name for Coca-Cola `productionoctofxcoke.octopusdemos.com` instead of `productionoctofxcoca-cola.octopusdemos.com`.  By going back to tenant screen and changing the variables we can.
 
 ![](images/multitenancyapp-overwriteprojectvariable.png)
 
@@ -137,6 +137,67 @@ Now we just need to go through and fill out the variables for each tenant.
 
 > <img src="images/professoroctopus.png" style="float: left;"> Adding variables to one or two tenants at a time isn't too terrible.  But this doesn't scale well when trying to work with 100s of tenants.  It would be a good idea to automate tenant setup using the API.
 
+## Binding Steps To Tenant Tags
 
+At the beginning of the chapter we created the tenant tag set to handle custom branding.  Because we added tenant tags you will now see a new condition in the UI.  This condition allows you to filter which tenant tags will run this step.
+
+![](images/multitenancyapp-tenanttagcondition.png)
+
+The process will also show the step will only be run for tenants with that specific tenant tag.
+
+![](images/multitenancyapp-tenanttagprocess.png)
+
+> <img src="images/professoroctopus.png" style="float: left;"> Tenant tags are like roles, meaning it is treated as an OR for the runtime condition.  Not an AND.  Specifying two tenant tags will run that step for all tenants with either tag, not bot tags.  
+
+Our recommendation with using this feature is to only use one tenant tag if at all possible.  If necessary, create an additional tenant tag, or create a new tenant tag set.
+
+## Creating the first releases
+
+Everything required has been updated or created.  It is time for the moment of truth, creating a release and deploying it to the development environment.
+
+The database release was successful.
+
+![](images/multitenancyapp-databasesuccessfulrelease.png)
+
+The website release was successful.
+
+![](images/multitenancyapp-websitereleasesuccessful.png)
+
+And if we go to the website we just deployed we can see that is successfully running.
+
+![](images/multitenancyapp-websiteuisuccess.png)
+
+But that was just to our internal testing website and just to development, which only has a single tenant.  An interesting thing about tenants is you have to specify the version you want to deploy.  For example, if we create a release for the traffic cop project we still don't see the deploy button.  This is because we have to select a version from the drop down.
+
+![](images/multitenancyapp-trafficcoprelease.png)
+
+Now we see deploy buttons for the tenants with a testing environment.
+
+![](images/multitenancyapp-projectoverviewfilteredrelease.png)
+
+We can also group these tenants by the `Release` tenant tag we created earlier.
+
+![](images/multitenancyapp-projectoverviewgroupby.png)
+
+Once we do that the overview screen shifts again.
+
+![](images/multitenancyapp-groupbyrelease.png)
+
+When you are ready to deploy a release you can choose to deploy by tenant tag, by tenant name or both.  At the bottom of the screen is a handy tenant preview to see which tenants will be deployed to.
+
+![](images/multitenancyapp-deployrelease.png)
+
+It is important to point out that each tenant deployment is a unique task.  This allows you to deploy to multiple tenants at the same time.
+
+![](images/multitenancyapp-multipledeploymentsoverviewscreen.png)
 
 ## Conclusion
+
+There were quite a number of changes we made to get this project ready for multi-tenancy.  Some of the changes were a result of some shortcuts we took when we first setup the project in earlier chapters.  For example, changing the website from being a web application under "default web site" to being a unique website with a sub-domain.  Other changes were due to how multi-tenancy is setup, such as adding tenant tags.  But with these changes were able to support all of these scenarios.
+
+1. Each of our customers have their own web servers and database.  They get the same code.  The deployment process should be the same.  The only difference is the destination server and some variables such as the database server and user.
+2. We should be able to choose when a customer gets a specific version of our code.  Some of our customers want to be on the cutting edge, their tolerance for risk is high.  They have no problem being the "guinea pig" for a new feature.  Some of our other customers have a low risk tolerance.  They only want to be on the stable version. 
+3. We should be able to group our customers into different release rings, such as Alpha, Beta and Stable.  This allows us to release new versions of code to multiple customers at once.
+4. Some of our customers have custom branding.  During deployments we need to have the ability to run an additional step to add in the branding.  
+
+This only scratches the surface of what you can do with multi-tenancy.  In the next chapter we are going to walk through how to setup an application to be deployed across multiple data centers.
