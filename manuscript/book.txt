@@ -10,4 +10,7 @@ Workers.md
 MultiTenancyIntro.md
 MultiTenancyApps.md
 MultiDataCenter.md
+Spaces.md
 DataCenter.md
+Performance&Maintenance.md
+Upgrade.md

@@ -18,10 +18,10 @@ This repo is used to store the open source book on how to setup an Octopus Deplo
 - [Configuring Emergency Bug Fix Deployments](manuscript/EmergencyBugFixes.md)
 - Stopping your developers from deploying to production (creating various groups and allowing specific permissions per environment)
 - Trust everyone to do their jobs right, but verify them (setting up subscriptions)
-- Spaces...what are they good for (almost everything!)
+- [Spaces...what are they good for (almost everything!)](manuscript/Spaces.md)
 - [What is Data Center, why do I need it and when should I upgrade?](manuscript/DataCenter.md)
-- Octopus Maintenance 101 (SQL Server Maintenance, Machine Policies, etc)
-- Keeping Octopus Deploy up to date
+- [Octopus Performance & Maintenance 101 (SQL Server Maintenance, Machine Policies, etc)](manuuscript/Performance&Maintenance.md)
+- [Keeping Octopus Deploy up to date](manuscript/Upgrade.md)
 
 To add to this book please do the following.  These are requirements in order for everything to be picked up by LeanPub.
 
