@@ -1,4 +1,4 @@
-# Everything you wanted to know about deployment targets, roles and machine policies (but were afraid to ask)
+# Everything you wanted to know about deployment targets and roles (but were afraid to ask)
 
 We have the environments and project processes.  Now we need to configure a couple of deployment targets.  Deployment targets are what you will deploy the code to.  Originally, deployment targets were Windows VMs running the tentacle windows service.  The Octopus Deploy server connects to that tentacle and instructs it to do work.  But a deployment target is not just a tentacle.  As time has gone on we have added more and more deployment targets types.  Now there are Windows Targets, SSH Connections (for Linux machines), Azure Targets, Kubernetes Clusters, Offline Drops and Cloud Regions.  That list keeps growing and growing.  We are willing to bet that by the time you read this book that list will have changed.
 
@@ -55,41 +55,6 @@ It does feel a bit tedious to be adding roles to an existing target, but it make
 The last piece of the add deployment target form is the tenants section.  We will be covering tenants in later chapters.  The major takeaway for this chapter is this will allow you to specify if the target is for tenant deployments.  If the deployment target is for a specific tenant then it would make sense to adjust the name [EnvironmentPrefix]-[TenantName]-[AppName]-[Component]-[Number].  Use `d-ford-octofx-web-01` if we wanted the machine to deploy the OctoFX website for Ford to Dev.
 
 It is possible for a deployment target to be used for both non-tenant deployments as well tenant deployments.  This typically done for virtual machines which host lots of applications and tenants.  This is not something we would recommend in production, but it is possible.  It would make more sense in the lower environments when the resources tend to be more limited.
-
-## Machine Policies
-
-So far we have been dancing around for the past several chapters is machine policies.  You probably noticed it on the left hand menu and didn't think much of it.
-
-![](images/deploymenttargets-machinepoliciesmenu.png)
-
-The Octopus Deploy server needs to make sure that it can still connect to all the deployment targets.  We call that a health check.  It runs periodically on the Octopus Deploy server.  It does this because a lot of our users want to know about problems with a machine prior to doing a deployment.  If a system admin can fix a minor problem before it becomes a major problem then it is well worth the effort.  It also does this as a sanity check and also to make sure the server has crashed or is about to run out of space.  By default health checks are performed every hour.  If the Octopus Server cannot connect to the machine it will fail the health check.  All machines are added to the default machine policy when no policy is specified.  This is configurable on the machine policy screen.
-
-![](images/deploymenttargets-defaultmachinepolicy.png)
-
-When a machine policy performs a health check it queues a task on the Octopus Server.  That is a blocking task for any deployments.  The server needs to make sure the machines are there before it can deploy code.
-
-![](images/deploymenttargets-machinepolicy.png)
-
-Using the default machine policy for less than a hundred machines is fine.  The health checks are quick.  It starts to cause problems when you have thousands of machines.  A health check could take hours to complete.  It can only connect to 10 machines at a time to perform the health check, it can take a while to finish up.  
-
-You also might have a group of machines which are flaky and tend to go up and down.  Perhaps they are test instances or they are hosted on a client's site and your connection is spotty.  You expect them to fail once in a while.  You shouldn't change your default machine policy to account for one or two spotty machines.  The other machines in the machine policy should be running.  You want to know about those if they go down.
-
-Our recommendation is to create several machine policies.  Some possible strategies are:
-
-1) Machine policy per environment
-2) Machine policy per data center
-3) Machine policy per tenant (if the tenant is hosting their own servers and you deploy to them)
-4) Transient Machine Policy (for machines which tend to go offline randomly)
-
-If you go the machine policy per environment we recommend changing the times between health checks.  Something large for dev, say once a day, while production stays at once an hour. This is because dev is deployed to several times per day.  While production is deployed to once a day or once a week. Dev machines tend to go up and down at random, so you can change those to not fail the health check.  
-
-![](images/deploymenttarget-multiplemachinepolicies.png)
-
-> <img src="images/professoroctopus.png" style="float: left;"> Each machine policy health check is a unique task.  This will allow you to multi-thread your health checks.  If you are using Octopus Deploy's High Availability functionality (available with data center licenses) the health checks can now be spread across multiple nodes.  
-
-You change the machine policy for a specific deployment target by going to the deployment target screen.
-
-![](images/deploymenttarget-configuremachinepolicy.png)
 
 ## Automating tentacle installation
 
@@ -248,6 +213,4 @@ And with a simple click of the save button we have the trigger configured.
 
 ## Conclusion
 
-We now have deployment targets configured and ready for code to be pushed to them.  By using specific roles we have also positioned ourselves so if we do make changes to the infrastructure we don't have to make changes to our projects.  And we have set up multiple machine policies to ensure we have a high signal to noise ratio if/when Octopus Deploy cannot connect to a tentacle.  Production is checked the most because typically that has the least number of deployments.  An environment such as development is getting deployed to hundreds of times a day and if a machine were to go down most people would know about it but it would have the smallest impact on the business.  Finally we wrapped discussing some techniques to automate tentacle installation and automatically redeploying releases new machines come online.
-
-In our next chapter we will get to packaging up code and finally deploying it!
+We now have deployment targets configured and ready for code to be pushed to them.  By using specific roles we have also positioned ourselves so if we do make changes to the infrastructure we don't have to make changes to our projects.  We now have targets to deploy to, in our next chapter we will talk about how to get code out to them.

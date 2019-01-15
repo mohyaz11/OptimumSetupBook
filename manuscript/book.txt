@@ -15,4 +15,5 @@ TeamSecurity.md
 Spaces.md
 DataCenter.md
 Performance&Maintenance.md
+MachinePolicies.md
 Upgrade.md
