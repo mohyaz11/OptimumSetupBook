@@ -19,6 +19,7 @@ This repo is used to store the open source book on how to setup an Octopus Deplo
 - [Stopping your developers from deploying to production](manuscript/TeamSecurity.md)
 - Trust everyone to do their jobs right, but verify them (setting up subscriptions)
 - [Spaces...what are they good for (almost everything!)](manuscript/Spaces.md)
+- [Spinning up Deployment Targets and deploying to them automatically using Infrastructure as Code](manuscript/IaC.md)
 - [What is Data Center, why do I need it and when should I upgrade?](manuscript/DataCenter.md)
 - [Octopus Performance & Maintenance 101 (SQL Server Maintenance, Machine Policies, etc)](manuuscript/Performance&Maintenance.md)
 - [Making sure your server can connect to deployment targets using machine policies](manuscript/MachinePolicies.md)

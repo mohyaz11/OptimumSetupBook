@@ -13,6 +13,7 @@ MultiDataCenter.md
 EmergencyBugFixes.md
 TeamSecurity.md
 Spaces.md
+IaC.md
 DataCenter.md
 Performance&Maintenance.md
 MachinePolicies.md
