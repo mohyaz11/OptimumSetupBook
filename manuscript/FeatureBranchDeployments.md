@@ -60,9 +60,97 @@ To the WebUI Deployments:
 
 We recommend driving your process using variables for this very reason.  We can change around those variables and not have to worry too much about our process.  That being said, there might be a couple of new variables we will have to use.  
 
-### Using Output Parameters
+### The case against using tenants
 
-There are two approaches to this.  Approach #1 leverages tenants.  Each feature branch becomes a tenant.  At first blush, this makes the most sense.  The problem is, that doesn't scale all that well.  Feature branches have a finite lifespan, perhaps a few days or maybe a couple of weeks.  You will be adding/removing tenants.  Yes, it is possible to automate that using the API, but that is fairly brittle.  You also might have hundreds of projects on your octopus server.  You could have hundreds or even thousands of tenants for feature branches.  If you are working on a SaaS product which is already multi-tenant, that could be very confusing to see so many additional tenants.  With that many projects, there is a good chance for feature branch naming collision.  Unless you come up with a naming standard where the feature branch has to include the name of the project.  Finally, when do you clean-up that tenant and all the additional resources?  
+There are two approaches to deploying feature branches.  The first approach to consider is using tenants.  Each feature branch becomes a tenant.  
 
-Approach #2 will use the pre-release tag on the package.  A step will be added into each project which supports feature branch deployments.  That step will look for the pre-release tag and if it is detected it will set an output variable.  That output variable will then be used by all the other steps in the process.  Let's walk through setting that up.
+At first blush, this makes the most sense.  The problem is, that doesn't scale all that well.  Feature branches have a finite lifespan, perhaps a few days or maybe a couple of weeks.  You will be adding/removing tenants quite often.  Yes, it is possible to automate that using the API, but that is fairly brittle.  
 
+You also might have hundreds of projects on your octopus server.  You could have hundreds or even thousands of tenants for feature branches.  If you are working on a SaaS product which is already multi-tenant, that could be very confusing to see so many additional tenants.  With that many projects, there is a good chance for feature branch naming collision.  Unless you come up with a naming standard where the feature branch has to include the name of the project.  
+
+The last issue is tenant clean-up.  If you happen to have a tenant name collision, when should the clean-up occur?  How would you schedule something like that?  
+
+### Using output variables
+
+Rather than using tenants for feature branches, we will be using the release name to drive all of this.  At the start of the process we will have a PowerShell step to set an output variable based on the release name.  The PowerShell script will only run on the channel we created for feature branch deployments.  
+
+![](images/featurebranches-powershellscript.png)
+
+Here is the PowerShell script for you to use on your own server.
+
+```
+$releaseNumber = $OctopusParameters["Octopus.Release.Number"]
+
+if ($releaseNumber.IndexOf("-") -gt 0){
+	Write-Host "Feature Branch Detected"
+	$featureBranchName = $releaseNumber.SubString($releaseNumber.IndexOf("-") + 1)
+    $featureBranchName = $featureBranchName.ToLower().Replace(" ", "")     
+} else {
+	Write-Host "Feature Branch Not Detected, setting suffix variable to be empty"    
+    $featureBranchName = ""    
+}
+
+Set-OctopusVariable -name "FeatureBranchName" -value $featureBranchName
+```
+
+We recommend putting that script into a step template.  This will allow you to share this PowerShell script with multiple projects.
+
+![](images/featurebranches-powershellassteptemplate.png)
+
+Add that step template to your process and configure it to only run for the feature branch channel.  That step should appear before other steps because it will be setting an output variable every other step will need to use.  Also, notice the manual intervention step is configured to only run for default channels.  This will allow you to deploy the feature branch to staging without having to get approval.  The idea of this is to get to staging to get feedback as fast as possible.  It is not long living.  
+
+![](images/featurebranches-processwithfeaturebranchstep.png)
+
+That step will set a output variable, `FeatureBranchName`.  The syntax to get that variable is: `Octopus.Action[Get Feature Branch Name].Output.FeatureBranchName`.  That is a bit much to remember.  And if the step name were to ever change you would have to go back through all the steps and change that name.  
+
+We recommend creating a variable to store that output variable.  
+
+![](images/featurebranches-outputvariableasvariable.png)
+
+With that variable created we can modify a couple of other variables to make use of that.
+
+![](images/featurebranches-usingoutputvariable.png)
+
+In this particular example, we created a new variable to store the database name.  We just need to adjust any steps which make use of that variable.  
+
+![](images/featurebranches-changeddatabasestep.png)
+
+A good rule of thumb is to use project variables to reference variable set variables.  This way, if you do need to overwrite the variable at a local level, for whatever reason, you can, and you don't have to go through the exercise of updating all your steps.
+
+For each project you wish to do this for, you will need to repeat the process of adding the new step and making any variable adjustments.
+
+## Creating Feature Branch Release
+
+When you create a feature branch release you will need to specify the channel.  In the UI this is done by selecting the channel from the drop down list.
+
+![](images/featurebranches-createrelease.png)
+
+On the build server you will need to specify the channel through the plug-in.  Most build servers support the ability to pass variables in.  We recommend you writing a script to check the branch you are on.  If you are on the master branch then specify the default channel.  If you are on any other branch then specify the feature branch channel.  
+
+![](images/featurebranches-buildserverplugin.png)
+
+In addition, you will need to update the step which sets the version of the package to use the name of the branch as a pre-release tag.
+
+![](images/featurebranches-packageapplication.png)
+
+## Deploying Feature Branch Releases
+
+Deploying feature branch releases is just like any other deployment.  Except this time it will be dynamically change a few values during the deployment to account for the feature branch name.
+
+![](images/featurebranch-deployment.png)
+
+The overview screen will now show the feature branches which have been deployed.
+
+![](images/featurebranches-projectoverviewscreen.png)
+
+## Teardown Feature Branch
+
+The final step will be to tear down everything which has been built up for the feature branch.  In this example it will be running a script on the SQL Servers to find the databases which have been created by the feature branch process and delete them.  Note the environment for this step is `TearDown` and it is for the feature branch channel only.  Also note all the other steps in this process skip the `TearDown` environment.
+
+![](images/featurebranches-teardown.png)
+
+If your build server supports it, kicking off a build or pushing a deployment to teardown when a branch is merged into master or deleted would be a good way to automate the clean-up process.  
+
+## Conclusion
+
+With some minor modifications it is possible to start deploying feature branches using Octopus Deploy.  This allows you to get feedback quickly from your business owners, QA, or external users without requiring you to merge into master.  With this approach it will support as many feature branches as you would like and you can tear them as needed.  
