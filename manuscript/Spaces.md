@@ -38,12 +38,38 @@ This is great because now you can put teams in control of their own space. They 
 
 ## The Default Space
 
-When you configure a new Octopus Server, it will come with a single space named "Default." Not only will it be named "Default," but it will be designated as the Default Space. This is important because if you are using any API requests that do not specity the Space ID, the server will assume that you are acting on the Default Space.
+When you configure a new Octopus Server, it will come with a single space named "Default." Not only will it be named "Default," but it will be designated as the Default Space. This is important because if you are using any API requests that do not specify the Space Id, the server will assume that you are acting on the Default Space.
 
-Everything we have done so far, has been added to the Default Space.
-
-## Creating Your First Space
+Everything we have done so far, has been added to the Default Space. Let's look at how we can set up new spaces.
 
 ## Switching Between Spaces
 
-The navigation bar lets you easily jump between spaces. Instead of seeing dozens or hundreds of unrelated projects and other Octopus resources, you'll just see the resources for that space.
+You can easily jump between spaces using the navigation bar. The left most item on the navigation bar displays the name of the space you are in. If you click on that name, you can choose to switch to one of your other spaces.
+
+![](images/spaces-add-space.png)
+
+## Creating Your First Space
+
+Since we haven't created any other spaces yet, you will have the option to add a new space when you click on the space switcher. This button will take you to the Spaces page and from there you can click Add Space to bring up the Add Space Dialog.
+
+![](images/spaces-add-space-dialog.png)
+
+Give the space a name and then choose the Space Managers. You can choose a combination of individual users or teams to be space managers. Not that if you do not choose yourself to be a manager, you won't be able to switch to the space until one of the managers gives you access.
+
+Once you've saved that space, you'll be taken to the space page. Here you can change the name, managers, description, and also the logo. Yes! You can have a different logo for each space!
+
+## Space Teams and System Teams
+
+First, can we start with just how fun it is to say Space Team?
+
+Now that that is out of the way, let's give some users access to the space. Currently, only the space managers have access to the space. You will assign teams to the space to give other users access.
+
+![](images/spaces-add-team.png)
+
+The first type of team is a Space Team. This is a team that exists only within the space it is created in and cannot be seen from other spaces. For example, you can create a Developers team within each space.
+
+The second type of team is a System Team. This is a team that exists outside of spaces and can be given access to multiple spaces. Octopus Administrators is an example of a system team. You can also create your own system teams. For example, you might create a QA team that has access to multiple spaces.
+
+## Conclusion
+
+In this chapter, we introduced spaces, what they can do for your teams, and how to create and configure one.
