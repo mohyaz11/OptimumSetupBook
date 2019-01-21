@@ -103,7 +103,7 @@ Add that step template to your process and configure it to only run for the feat
 
 That step will set a output variable, `FeatureBranchName`.  The syntax to get that variable is: `Octopus.Action[Get Feature Branch Name].Output.FeatureBranchName`.  That is a bit much to remember.  And if the step name were to ever change you would have to go back through all the steps and change that name.  
 
-We recommend creating a variable to store that output variable.  
+We recommend creating a variable to store that output variable.  Scope that output variable to the feature branch deployment channel.  Scope an empty variable to the default channel.
 
 ![](images/featurebranches-outputvariableasvariable.png)
 
