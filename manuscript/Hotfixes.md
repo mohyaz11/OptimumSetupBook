@@ -1,4 +1,4 @@
-# Emergency Bug Fixes
+# Hotfixes
 
 Production is hosed and you need to get a hotfix out quickly. You could make those changes directly to the production database or files, but that's risky and time consuming. And we already have this great automated deployment pipeline. We just need to configure it for these scenarios. Luckily, we've gone part of the work earlier when we set up our lifecycles. Let's look at the next piece of the puzzle with channels.
 
@@ -6,7 +6,7 @@ Production is hosed and you need to get a hotfix out quickly. You could make tho
 
 Channels let you configure your project releases to take different paths. The main way this happens is that you can assign different lifecycles to each channel. You can limit what versions of packages are available for releases in each channel. You can also scope certain steps and variables to different channels, but for this chapter, we're going to focus on lifecycles and package version rules.
 
-## Creating the Emergency Bug Fix Channel
+## Creating the Hotfix Channel
 
 Let's navigate over to our OctoFx-Database project and then click on Channels in the project menu.
 
