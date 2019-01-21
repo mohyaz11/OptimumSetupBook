@@ -1,6 +1,6 @@
 # Hotfixes
 
-Production is hosed and you need to get a hotfix out quickly. You could make those changes directly to the production database or files, but that's risky and time consuming. And we already have this great automated deployment pipeline. We just need to configure it for these scenarios. Luckily, we've gone part of the work earlier when we set up our lifecycles. Let's look at the next piece of the puzzle with channels.
+Production is hosed and you need to get a hotfix out quickly. What do you do? You could make those changes directly to the production database or files, but that's risky and time consuming. And we already have this great automated deployment pipeline. We just need to configure it for these scenarios. Luckily, we've gone part of the work earlier when we set up our lifecycles. Let's look at the next piece of the puzzle with channels.
 
 ## Channels
 

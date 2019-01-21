@@ -58,7 +58,11 @@ Because errors and issues can arise when building up infrastructure, especially 
 
 ### Maintenance Lifecycle
 
-TODO
+The last lifecyle we created was a Maintenance lifecycle. The Maintenance lifecycle and environment will be used for projects that run maintenance tasks such as backups or software upgrades. It can really be used for any tasks that you want to run on a regular basis and want the same benefits that Octopus provides for your application deployments.
+
+Even though we have grouped all of the machines for these tasks in the Maintenance environment, you could also split them up into the Development, Testing, Staging, and Production environments if you want to run the tasks for machines in those environments at different times.
+
+Whichever you choose, you know the steps now so go ahead and create that lifecycle with the phases that you want.
 
 ## Conclusion
 
