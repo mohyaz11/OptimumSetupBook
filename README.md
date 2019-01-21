@@ -15,7 +15,7 @@ This repo is used to store the open source book on how to setup an Octopus Deplo
 - [Deploying to Multiple Customers](manuscript/MultiTenancyApps.md)
 - [Deploying to Multiple Data Centers](manuscript/MultiDataCenter.md)
 - [Deploying Feature Branches](manuscript/FeatureBranchDeployments.md)
-- [Configuring Emergency Bug Fix Deployments](manuscript/EmergencyBugFixes.md)
+- [Configuring Emergency Bug Fix Deployments](manuscript/HotFixes.md)
 - [Stopping your developers from deploying to production](manuscript/TeamSecurity.md)
 - Trust everyone to do their jobs right, but verify them (setting up subscriptions)
 - [Spaces...what are they good for (almost everything!)](manuscript/Spaces.md)
