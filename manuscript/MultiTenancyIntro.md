@@ -30,7 +30,7 @@ Tag sets allow you to group tenants together.  You can deploy all tenants in a t
 
 ### Project Template Variables
 
-Project template variables allow you to specify a variable which a tenant can change.  A perfect example would be a connection string or a database server.  With project templates you define them at the project level. 
+Project template variables allow you to specify a variable which a tenant can change.  A perfect example would be a connection string or a database server.  With project templates you define them at the project level.
 
 ![](images/multitenant-projectemplateoverview.png)
 

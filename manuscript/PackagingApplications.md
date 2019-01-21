@@ -10,7 +10,7 @@ Octopus Deploy is build server agnostic.  It does not care where it gets the pac
 
 We don't think it is practical to have screenshots for every build server we integrate with.  New build servers and tools are being added all the time.  Rather than that we have a series of recommendations for build server integration.
 
-## Build Server Process 
+## Build Server Process
 
 Our recommended build server process is:
 

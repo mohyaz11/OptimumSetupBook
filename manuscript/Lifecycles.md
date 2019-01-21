@@ -36,15 +36,15 @@ Now that those changes are in, we have a good default lifecycle for deploying ou
 
 ## Other Lifecycles
 
-### Emergency Bug Fix Lifecycle
+### Hotfix Lifecycle
 
 What happens when there's a critical bug in production that needs to be fixed quickly? Deploying to a Development and Testing environment might take too much time but you still need follow good deployment practices and validate the change prior to pushing to production. We often see changes like these go directly to a Staging environment and then to Production after being validated.
 
-For this we recommend creating a emergency bug fix lifecycle. Our bug fix lifecycle will only have two phases, Staging and Production, though yours might be different to account for your internal policies and how your team decides to handle hotfixes. In a later chapter, we'll look at how to configure your project to use this lifecycle in addition to the default, but for now we'll be content with configuring it so that it's ready to go later.
+For this we recommend creating a hotfix lifecycle. Our hotfix lifecycle will only have two phases, Staging and Production, though yours might be different to account for your internal policies and how your team decides to handle hotfixes. In a later chapter, we'll look at how to configure your project to use this lifecycle in addition to the default, but for now we'll be content with configuring it so that it's ready to go later.
 
 ### Infrastructure as Code Lifecycle
 
-You may have noticed that we didn't include SpinUp, TearDown, or Maintenance in the default or emergency lifecycles. We are going to create a lifecycle for our Infrastructure as Code projects that includes SpinUp and TearDown. We'll cover the use of this lifecycle later, but for now, create the lifecycle with a SpinUp and TearDown phase. There is a twist in creating the SpinUp phase as we're going to make it an optional phase.
+You may have noticed that we didn't include SpinUp, TearDown, or Maintenance in the default or hotfix lifecycles. We are going to create a lifecycle for our Infrastructure as Code projects that includes SpinUp and TearDown. We'll cover the use of this lifecycle later, but for now, create the lifecycle with a SpinUp and TearDown phase. There is a twist in creating the SpinUp phase as we're going to make it an optional phase.
 
 #### Optional Phases
 
@@ -58,7 +58,11 @@ Because errors and issues can arise when building up infrastructure, especially 
 
 ### Maintenance Lifecycle
 
-TODO
+The last lifecyle we created was a Maintenance lifecycle. The Maintenance lifecycle and environment will be used for projects that run maintenance tasks such as backups or software upgrades. It can really be used for any tasks that you want to run on a regular basis and want the same benefits that Octopus provides for your application deployments.
+
+Even though we have grouped all of the machines for these tasks in the Maintenance environment, you could also split them up into the Development, Testing, Staging, and Production environments if you want to run the tasks for machines in those environments at different times.
+
+Whichever you choose, you know the steps now so go ahead and create that lifecycle with the phases that you want.
 
 ## Conclusion
 
