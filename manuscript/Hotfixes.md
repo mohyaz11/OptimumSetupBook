@@ -14,19 +14,19 @@ You'll notice that there's already a channel listed on the page. Every project h
 
 Let's click the "Add Channel" button.
 
-We'll set the name to Emergency Bug Fix and the Lifecycle to Emergency Bug Fix. Let's go ahead and save this and create a release in the channel to see what it looks like.
+We'll set the name to Hotfix and the Lifecycle to Hotfix. Let's go ahead and save this and create a release in the channel to see what it looks like.
 
-Click on the "Create Release" button. Before you hit that save button, go ahead and change the Channel from Default to Emergency Bug Fix. Once you save the release, you'll notice that our release screen shows the Staging and Production environments only and the deploy button says "Deploy to Staging...". If we jump to the Overview page, you'll see that our releases are grouped by their channel and that the Emergency Bug Fix channel only has Staging and Production environments. Very nice!
+Click on the "Create Release" button. Before you hit that save button, go ahead and change the Channel from Default to Hotix. Once you save the release, you'll notice that our release screen shows the Staging and Production environments only and the deploy button says "Deploy to Staging...". If we jump to the Overview page, you'll see that our releases are grouped by their channel and that the Hotfix channel only has Staging and Production environments. Very nice!
 
 ## Adding the Package Version Rule
 
-We highly recommend using either a different version or a pre-release tag to separate your normal releases from your emergency releases. In this example, we're going to use a pre-release tag of "hotfix" to differentiate our packages. This means that our package will be named something like OctoFX.Database.1.0.40-hotfix.zip.
+We highly recommend using either a different version or a pre-release tag to separate your normal releases from your hotfix releases. In this example, we're going to use a pre-release tag of "hotfix" to differentiate our packages. This means that our package will be named something like OctoFX.Database.1.0.40-hotfix.zip.
 
-Usually, a hotfix branch is created from master, either the latest version or a tag that represents the last release, and merged back to master after the emergency release is complete. This is so that you don't accidentally release new changes that weren't previously on production. We'll also have a separate build for emergencies that can create the package with the special hotfix tag. For now, you can download the latest version of your package, add -hotfix to the name, and upload that as a new version.
+Usually, a hotfix branch is created from master, either the latest version or a tag that represents the last release, and merged back to master after the hotfix release is complete. This is so that you don't accidentally release new changes that weren't previously on production. We'll also have a separate build for hotfixes that can create the package with the special hotfix tag. For now, you can download the latest version of your package, add -hotfix to the name, and upload that as a new version.
 
-Now, let's go back and edit our Emergency Bug Fix channel. In the Version Rules section, click "Add Version Rule." Choose "Deploy Database Changes" as the Package step. Ignore Version range for now. This is handy, if you are releasing a newer version of your software, say version 2 versus version 1, and you'd like to limit packages with that version to their own channel with scoped steps and variables. Set the Pre-release tag to "hotfix" and click Save.
+Now, let's go back and edit our Hotfix channel. In the Version Rules section, click "Add Version Rule." Choose "Deploy Database Changes" as the Package step. Ignore Version range for now. This is handy, if you are releasing a newer version of your software, say version 2 versus version 1, and you'd like to limit packages with that version to their own channel with scoped steps and variables. Set the Pre-release tag to "hotfix" and click Save.
 
-Click on Create Release. Expand the Channel and the Packages sections. When you choose the Emergency Bug Fix channel, you should see the version of the package change to the one with the prerelease tag. You can override this, but by default, your normal packages can't be used for emergency releases and your emergency packages can't be used for normal releases.
+Click on Create Release. Expand the Channel and the Packages sections. When you choose the Hotfix channel, you should see the version of the package change to the one with the prerelease tag. You can override this, but by default, your normal packages can't be used for hotfix releases and your hotfix packages can't be used for normal releases.
 
 ## Conclusion
 
