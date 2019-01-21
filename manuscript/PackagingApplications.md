@@ -27,7 +27,7 @@ If any of the preceding steps fail then the build server will fail the build.  T
 
 Also, do not start packaging and pushing the packages until all tests have completed and passed.  This way the build server doesn't waste time packaging something that fails on a test step.  
 
-> <img src="images/professoroctopus.png" style="float: left;"> Analysis and tests get exponentially more expensive as you move farther away from the build server.  In terms of time, fixing a problem because of analysis failure is much less expensive than fixing a problem in production.  Unit tests should be self-contained, repeatable and fast.  While integration tests are more "soup to nuts" tests which require external components such as a database or file system.  They tend to be much slower and more expensive to maintain. We've seen some projects with 10,000+ unit tests and a couple of hundred integration tests.  The unit tests took a few minutes to run while the integration tests took 10+ minutes to run.  If there is a problem in the code it should fail as fast as possible.  
+> ![](images/professoroctopus.png) Analysis and tests get exponentially more expensive as you move farther away from the build server.  In terms of time, fixing a problem because of analysis failure is much less expensive than fixing a problem in production.  Unit tests should be self-contained, repeatable and fast.  While integration tests are more "soup to nuts" tests which require external components such as a database or file system.  They tend to be much slower and more expensive to maintain. We've seen some projects with 10,000+ unit tests and a couple of hundred integration tests.  The unit tests took a few minutes to run while the integration tests took 10+ minutes to run.  If there is a problem in the code it should fail as fast as possible.  
 
 ## One Source Control Repository or Multiple Source Control Repositories?
 
@@ -44,17 +44,17 @@ This gets a little trickier if you both the C# code and the database scripts are
 
 The Major, Minor and Patch, of the version should be stored somewhere in the source control repository or in a variable on the build server.  This provides a source of truth for the version numbers.
 
-> <img src="images/professoroctopus.png" style="float: left;"> When compiling or building the code those values should be used to version the .dlls or .jar files or any other compiled item.  This will allow you to easily see what version is on a specific server.  
+> ![](images/professoroctopus.png) When compiling or building the code those values should be used to version the .dlls or .jar files or any other compiled item.  This will allow you to easily see what version is on a specific server.  
 
 For packaging the application to ship to Octopus Deploy you should also include a build number.  For example, if you compiled `1.5.2` then you should include the build number, say 1000, in the package name `1.5.2.1000` or `1.5.2-Build1000` depending on your own internal versioning guidelines.  
 
-> <img src="images/professoroctopus.png" style="float: left;"> Including the build number with your package allows you to have multiple builds for the same version.  Very rarely will a version have a single build which makes it all the way to production.
+> ![](images/professoroctopus.png) Including the build number with your package allows you to have multiple builds for the same version.  Very rarely will a version have a single build which makes it all the way to production.
 
 ## Releases
 
 We recommend having the build server create and deploy a release to a lower environment such as dev.  Having your build server handle release creation provides you with greater control over the release.  For example, you can select the channel to use or which tenant to deploy to.  In addition, every one of our build plug-ins as well as `octo.exe` have the ability to wait for a deployment to complete.  We recommend configuring your build server to also wait for the deployment to complete. 
 
-> <img src="images/professoroctopus.png" style="float: left;">  Having the build server keep track of your deployment opens up other options.  You can fail a build if it cannot be successfully deployed to development and let the appropriate people know of an issue quickly.  You can also configure integration tests to run after the deployment is complete.
+> ![](images/professoroctopus.png)  Having the build server keep track of your deployment opens up other options.  You can fail a build if it cannot be successfully deployed to development and let the appropriate people know of an issue quickly.  You can also configure integration tests to run after the deployment is complete.
 
 It is possible to configure the Octopus Deploy server to automatically create a release when a package is pushed, however it only works if a very specific set of conditions are met, such as only using the internal NuGet feed, not using variables for package ids, and so on.  As your Octopus Deploy instance is used by more and more people within your company you will often find those conditions very constricting.  Automatic release creation using Octopus Deploy should be treated as an exception rather than a rule.
 

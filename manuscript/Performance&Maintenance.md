@@ -14,9 +14,7 @@ Octopus
 
 It's key to keep Octopus up to date and there is a section which covers this in more detail but we are continually working to ensure Octopus performs to a high standard and we will always recommend upgrading to the latest version. 
 
-> An example, many customers have saw reported speed improvements of their deployments after upgrading from earlier versions of Octopus **3.x** to the latest versions. 
-
-> <img src="images/professoroctopus.png" style="float: left;">There is a Chapter dedicated to upgrading Octopus. 
+> ![](images/professoroctopus.png) An example, many customers have saw reported speed improvements of their deployments after upgrading from earlier versions of Octopus **3.x** to the latest versions. 
 
 ### Retention Policies
 
@@ -26,7 +24,7 @@ The one exception to this is the Events table which records an audit trail of ev
 
 A tighter retention policy means your Octopus Server will run faster across the board.
 
-> <img src="images/professoroctopus.png" style="float: left;"> There is a section dedicated to Retention Policies and we recommend this as further reading. 
+> ![](images/professoroctopus.png) There is a section dedicated to Retention Policies and we recommend this as further reading. 
 
 ### SQL Server Maintainence
 

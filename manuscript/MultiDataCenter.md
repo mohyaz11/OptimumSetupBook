@@ -8,7 +8,7 @@ With some of our customers, we see all those scenarios on a single Octopus Serve
 
 Scalability is a major concern with this approach.  What happens if you want to add `Production Canary 30%` as an environment?  You would first have to add the environment.  Then you have a decision to make, do you add it to the Canary Deployments Lifecycle?  That means any project gets that new environment to deploy to.  Is that good or bad (we don't know, but it is a question you would need to ask).  What about any variables scoped to environments?  How would you know which projects needed new variables added for Production Canary 30%?
 
-> <img src="images/professoroctopus.png" style="float: left;"> A good indicator something isn't quite right with your environments or lifecycles is when you have to add [Environment Name] [Qualifier], such as `Production DR` or `Production Canary 30%`.
+> ![](images/professoroctopus.png) A good indicator something isn't quite right with your environments or lifecycles is when you have to add [Environment Name] [Qualifier], such as `Production DR` or `Production Canary 30%`.
 
 Earlier in the book, we created three tenants, `Internal`, `Illinois Data Center`, and `Texas Data Center`.  In this chapter, we will cover how to leverage those tenants to support a multi-data center deployment.
 
@@ -30,13 +30,13 @@ First, we need to make some changes to our existing infrastructure.  We have alr
 
 This can be done by expanding out the tenant section and selecting `Include in both tenanted and untenanted deployments` and then selecting the internal tenant.
 
-> <img src="images/professoroctopus.png" style="float: left;"> This can get rather tedious if you have more than 20 targets to update.  It would be a good idea to automate this using the API to speed this up.
+> ![](images/professoroctopus.png) This can get rather tedious if you have more than 20 targets to update.  It would be a good idea to automate this using the API to speed this up.
 
 ![](images/datacenter-internaldevserverwithtenant.png)
 
 For the machines in the Texas and Illinois Data Centers, we only want to use those for tenanted deployments.  The tenant options for that machine will be `Include only in tenanted deployments` as well as the tenant for the machine.  Please note, that for these machines the display name now includes the data center, for example, `s-octofx-illinois-web-01`.  
 
-> <img src="images/professoroctopus.png" style="float: left;"> This is somewhat contradictory to the recommendation about environments.  Environments are used almost everywhere, lifecycles, variable scoping, step scoping, etc.  Machine display names are used much less, they are primarily used for logging during a deployment.  While it is possible to scope a variable to them, that is rare.
+> ![](images/professoroctopus.png) This is somewhat contradictory to the recommendation about environments.  Environments are used almost everywhere, lifecycles, variable scoping, step scoping, etc.  Machine display names are used much less, they are primarily used for logging during a deployment.  While it is possible to scope a variable to them, that is rare.
 
 ![](images/datacenter-stagingdatacentermachine.png)
 
@@ -46,7 +46,7 @@ Next up is project configuration.  For the purposes of this demo, we went ahead 
 
 We need to let the project know that it will be used for multi-tenant deployments.  Go to the project and then click on the settings link on the left.  Expand out the multi-tenant deployment section and select `Require a tenant for deployments`.
 
-> <img src="images/professoroctopus.png" style="float: left;"> While it is possible to have deployments with or without a tenant it is not recommended.  The project should either require tenants or not allow tenants.  Having projects with or without a tenant makes it very confusing to most users and it increases the chances of someone making a mistake.
+> ![](images/professoroctopus.png) While it is possible to have deployments with or without a tenant it is not recommended.  The project should either require tenants or not allow tenants.  Having projects with or without a tenant makes it very confusing to most users and it increases the chances of someone making a mistake.
 
 ![](images/datacenter-projectsettings.png)
 

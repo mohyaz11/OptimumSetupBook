@@ -48,7 +48,7 @@ In the event you have several applications being hosted on the same target then 
 
 It does feel a bit tedious to be adding roles to an existing target, but it makes changes in your infrastructure much easier to change.  For example, two new servers are created for a subset of applications.  You only need to remove the roles from the old servers and add them to the new ones.  You don't have to adjust your deployment process or create a new release.  In fact, once the roles are added you can re-run the deployment for the environment and the new machines will get the latest and greatest code.  In later chapters we will discuss triggers on how to automate this.    
 
-> <img src="images/professoroctopus.png" style="float: left;"> Adding dozens upon dozens of application roles to a single target is a good litmus test the server is doing too much.  If you have the resources consider splitting up the server.  
+> ![](images/professoroctopus.png) Adding dozens upon dozens of application roles to a single target is a good litmus test the server is doing too much.  If you have the resources consider splitting up the server.  
 
 ## Tenants
 

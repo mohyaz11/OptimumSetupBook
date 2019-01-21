@@ -27,7 +27,7 @@ If you go the machine policy per environment we recommend changing the times bet
 
 ![](images/machinepolicies-multiplemachinepolicies.png)
 
-> <img src="images/professoroctopus.png" style="float: left;"> Each machine policy health check is a unique task.  This will allow you to multi-thread your health checks.  If you are using Octopus Deploy's High Availability functionality (available with data center licenses) the health checks can now be spread across multiple nodes.  
+> ![](images/professoroctopus.png) Each machine policy health check is a unique task.  This will allow you to multi-thread your health checks.  If you are using Octopus Deploy's High Availability functionality (available with data center licenses) the health checks can now be spread across multiple nodes.  
 
 You change the machine policy for a specific deployment target by going to the deployment target screen.
 

@@ -4,11 +4,11 @@ The tentacle is an MSI you have to install on a VM.  To get your Poc going, you 
 
 We recommend creating a process to automate the tentacle installation.  If you are using Azure, you can leverage Azure Resource Manager Templates (ARM Templates).  For AWS, you can leverage or CloudFormation to spin up new virtual machines.  Both processes support running a PowerShell script to bootstrap them.
 
-> <img src="images/professoroctopus.png" style="float: left;"> CloudFormation templates allow you to include PowerShell directly in them.  ARM templates require you to use the custom script extension.  We recommend using Google to find the latest examples.  
+> ![](images/professoroctopus.png) CloudFormation templates allow you to include PowerShell directly in them.  ARM templates require you to use the custom script extension.  We recommend using Google to find the latest examples.  
 
 Meanwhile, if you are on-premise, you might be using hypervisor software such as Hyper-V or VMWare.  Those have a robust API so you can also script out spinning up a VM and bootstrapping them using a PowerShell script.  
 
-> <img src="images/professoroctopus.png" style="float: left;"> We are not including samples on how to do this as your hypervisor and configuration is unique to your organization.  If we tried to include scripts for every possible hypervisor and version, this chapter would end up being hundreds of pages long.
+> ![](images/professoroctopus.png) We are not including samples on how to do this as your hypervisor and configuration is unique to your organization.  If we tried to include scripts for every possible hypervisor and version, this chapter would end up being hundreds of pages long.
 
 Regardless of the technology you are using, you will need a PowerShell script to Bootstrap the tentacle installation.  Below is a sample script that we wrote for this book to bootstrap tentacles.
 
@@ -104,7 +104,7 @@ if ($lastExitCode -ne 0) {
 }
 ```
 
-> <img src="images/professoroctopus.png" style="float: left;"> By automating the tentacle bootstrapping process, you also put yourself in a position to better handle increased load.  With automation, you can spin up a new server in a matter of minutes rather than hours or even days.
+> ![](images/professoroctopus.png) By automating the tentacle bootstrapping process, you also put yourself in a position to better handle increased load.  With automation, you can spin up a new server in a matter of minutes rather than hours or even days.
 
 The bootstrap script can do so much more than install the tentacle.  You can also leverage applications such as Chocolatey and built-in features such as DISM to install IIS, .NET Core, SQL Server Management Objects, and so on.  Chocolatey is a application manager which allows you install third-party applications in an automated fashion.  DISM, or Deployment Image Servicing and Management, is built into Windows to allow you to enable or disable features.  For example, if you wanted to automatically configure a VM to host a .NET core application this would be a script to do so.
 
@@ -125,7 +125,7 @@ Write-Output "Installing .NET Core"
 choco install dotnetcore-windowshosting -y
 ```
 
-> <img src="images/professoroctopus.png" style="float: left;"> For other deployment target types (Kubernetes, SSH, Azure Web Apps, etc), you should leverage the Octopus Deploy API to register the target.  Octopus Deploy is an API first application.  Everything you can do in the UI you can do in the API.
+> ![](images/professoroctopus.png) For other deployment target types (Kubernetes, SSH, Azure Web Apps, etc), you should leverage the Octopus Deploy API to register the target.  Octopus Deploy is an API first application.  Everything you can do in the UI you can do in the API.
 
 ## Project Triggers
 

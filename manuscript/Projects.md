@@ -18,7 +18,7 @@ Each component should have its own project.  This will give you the flexibility 
 
 Octopus Deploy provides a mechanism for a project to call other projects.  This will allow you to set up an orchestrator, or what we like to call a traffic cop, to deploy your projects in a specific order.
 
-> <img src="images/professoroctopus.png" style="float: left;"> This will also allow you to isolate your code in your source control repository or have separate builds for each component.  This way your CI/CD pipeline only has to build and deploy something which actually changed rather than building and deploying the actual application.  This also has an added benefit of reducing the build and deployment times.  
+> ![](images/professoroctopus.png) This will also allow you to isolate your code in your source control repository or have separate builds for each component.  This way your CI/CD pipeline only has to build and deploy something which actually changed rather than building and deploying the actual application.  This also has an added benefit of reducing the build and deployment times.  
 
 ### Projects should be responsible for setting up what it needs to run
 
@@ -50,13 +50,13 @@ Let's first get the project scaffolding in place and see what that looks like.  
 
 ![](images/projectconfiguration-projectgroupcreation.png)
 
-> <img src="images/professoroctopus.png" style="float: left;"> Project groups are a great way to organize your deployment projects.  They have many uses, not only do they visually separate the projects, but you can also configure the dashboard to hide/show specific project groups as well as configure permissions to restrict access to them. 
+> ![](images/professoroctopus.png) Project groups are a great way to organize your deployment projects.  They have many uses, not only do they visually separate the projects, but you can also configure the dashboard to hide/show specific project groups as well as configure permissions to restrict access to them. 
 
 That group looks a little empty.  Let's add in the three projects we discussed earlier. 
 
 ![](images/projectconfiguration-projectgrouppopulated.png)
 
-> <img src="images/professoroctopus.png" style="float: left;"> Just like with tenants, adding an image to your project is a useful way to visually set them apart from other projects.  In addition to supporting .jpg and .png files, we also support .gif files.  Which means...you can have an animated icon to add a little flair to your Octopus Deploy instance!
+> ![](images/professoroctopus.png) Just like with tenants, adding an image to your project is a useful way to visually set them apart from other projects.  In addition to supporting .jpg and .png files, we also support .gif files.  Which means...you can have an animated icon to add a little flair to your Octopus Deploy instance!
 
 ### Sharing Variables Between Projects
 
@@ -64,7 +64,7 @@ We have the three projects set up but there is going to be a need to share some 
 
 ![](images/projectconfiguration-projectlibraryset.png)
 
-> <img src="images/professoroctopus.png" style="float: left;"> A project can reference 0 to N number of library sets.  Variable naming is very important.  A good practice is to use a NameSpace style syntax on naming, [LibrarySetName].[ComponentName].[SubName].  Project variables can then be called [Project].[ComponentName].[SubName].  This gives you the ability to distinguish in the project steps and logs which variable is from a library set and which is from the project.
+> ![](images/professoroctopus.png) A project can reference 0 to N number of library sets.  Variable naming is very important.  A good practice is to use a NameSpace style syntax on naming, [LibrarySetName].[ComponentName].[SubName].  Project variables can then be called [Project].[ComponentName].[SubName].  This gives you the ability to distinguish in the project steps and logs which variable is from a library set and which is from the project.
 
 It is also a good idea to have a couple of other library sets to handle some non-project specific values.  For example, global and another to handle any infrastructure as code or IaC.  The same naming convention applies as the project specific variable set example, just replacing "OctoFx" with "Global."
 
@@ -82,7 +82,7 @@ Next, we are going to add in the manual intervention for the DBAs to approve.  I
 
 ![](images/projectconfiguration-dbaapprovaldatabase.png)
 
-> <img src="images/professoroctopus.png" style="float: left;"> This project deploy a database package using DBUp, a free database deployment tool.  Some tools provide the ability to generate a difference report prior to deployments which Octopus can store as an artifact and a DBA can download and review.  In that case, it makes more sense to have the manual intervention occur after that report has been generated.
+> ![](images/professoroctopus.png) This project deploy a database package using DBUp, a free database deployment tool.  Some tools provide the ability to generate a difference report prior to deployments which Octopus can store as an artifact and a DBA can download and review.  In that case, it makes more sense to have the manual intervention occur after that report has been generated.
 
 A number of community step templates have been created to help with some of this database scaffolding.  We are going to be using the SQL - Create Database If Not Exists step template to create the database if it doesn't exist.  We are going to be using variables out of the library sets we brought in previously.  For now, we are going to execute this script on a tentacle with the role "OctoFX-DB."  Later in the book, we will convert this over to using workers.
 
@@ -96,7 +96,7 @@ Now we are ready to configure the database deployment.  As you most likely learn
 
 ![](images/projectconfiguration-dbprojectvariablepackage.png)
 
-> <img src="images/professoroctopus.png" style="float: left;"> Using a variable to reference a package also makes it easier to clone this project to use with another application.
+> ![](images/professoroctopus.png) Using a variable to reference a package also makes it easier to clone this project to use with another application.
 
 Now that we have our package referenced as a variable, we can add the step to deploy the package and run the scripts on the database.
 

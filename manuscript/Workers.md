@@ -102,7 +102,7 @@ With this flexibility, it is now possible to move quite a bit of steps from depl
 
 Now that we have our worker pools configured and projects updated, we can now go in and turn off the default worker on the Octopus Server.  This will prevent any script from running on the Octopus Server.  
 
-> <img src="images/professoroctopus.png" style="float: left;"> Only do this after you have added worker pools and changed existing projects to use them.  This could break a lot of deployments.
+> ![](images/professoroctopus.png) Only do this after you have added worker pools and changed existing projects to use them.  This could break a lot of deployments.
 
 ![](images/workers-disablebuiltinworker.png)
 

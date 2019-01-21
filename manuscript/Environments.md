@@ -22,7 +22,7 @@ In this section we will walk through our recommendations for configuring your en
 
 We recommend configuring your environments to match your company’s terminology.  But keep it general.  Think how you want to phrase it during a conversation with a non-technical person.   "I’m pushing some code up to dev" or "I’m deploying my app to production" makes a lot more sense than "I’m pushing to Dev Omaha 45."  What does Omaha mean?  The data center?  Where did 45 come from?  
 
-> <img src="images/professoroctopus.png" style="float: left;"> A good indication your environments are modelled correctly is you can explain it in a few quick sentences.  If it takes you longer than a few seconds to explain your environments then that is an indication you need to make some changes.  
+> ![](images/professoroctopus.png) A good indication your environments are modelled correctly is you can explain it in a few quick sentences.  If it takes you longer than a few seconds to explain your environments then that is an indication you need to make some changes.  
 
 Keep the list of environments under a dozen or so.  Have the standard four or five environments, such as Dev, Test, Staging and Production.  Also add in SpinUp, TearDown and Maintenance.  Those additional environments will help cover you when it is time to build up servers, tear down applications or if you want to use Octopus to perform some scheduled maintenance tasks like taking a backup of logs in production.  Keeping the number of environments low helps with configuring life cycles, channels, security, and so on.  They also keep your dashboard easy to follow.  When we encounter customers with hundreds of environments the number one complaint we hear is "this isn't scaling all that well" or "our dashboard seems to scroll horizontally forever."
 
@@ -44,7 +44,7 @@ Because we don't have any targets or projects setup at this particular point in 
 
 Don't worry, we will be coming back to them in a later chapter when we start setting up our first multiple data centers project.  Just know that they are there when you need them.
 
-> <img src="images/professoroctopus.png" style="float: left;"> Adding images to your tenants makes them easier to find on the tenant screen.  You can accomplish this by clicking on the tenant and selecting settings link on the left.  On that screen you can upload an image for a tenant.
+> ![](images/professoroctopus.png) Adding images to your tenants makes them easier to find on the tenant screen.  You can accomplish this by clicking on the tenant and selecting settings link on the left.  On that screen you can upload an image for a tenant.
 
 ## Multiple Customers
 

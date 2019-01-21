@@ -22,7 +22,7 @@ A phase represents a stage in your deployment lifecycle. Phases are deployed to 
 
 Let's create a Development phase for our lifecycle. We will give it the name "Development" and add the Development environment to the phase.
 
-> <img src="images/professoroctopus.png" style="float: left;"> Phase names usually match the environment it contains, and while this is a good practice, it is not a requirement.
+> ![](images/professoroctopus.png) Phase names usually match the environment it contains, and while this is a good practice, it is not a requirement.
 
 We'll leave the radio button set to the default **manually deploy** on the add environment screen and also leave the **Required to progress** and **Retention policy** settings with the default values as we'll be covering these later.
 

@@ -4,7 +4,7 @@ So, you have your Octopus installation setup, and you have your deployments cran
 
 The only answer to this question is **Yes!!**, and in this section, we will cover a few things that you will need to consider as part of your Octopus Deploy upgrade process. 
 
-> <img src="images/professoroctopus.png" style="float: left;"> This section will not cover *how to upgrade*, it would be best if you looked at our website for the latest instructions.  
+> ![](images/professoroctopus.png) This section will not cover *how to upgrade*, it would be best if you looked at our website for the latest instructions.  
 
 ## What and How are the Octopus Deploy releases structured?
 

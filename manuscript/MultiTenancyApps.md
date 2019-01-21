@@ -57,7 +57,7 @@ You can also apply filters based on Tenant Tags on the tenant screen.  This will
 
 Now that we have that scaffolding out of the way, we can now move onto the project configuration.  First we need to go each project we want to make multi-tenant and enable multi-tenant deployments.  We selecting the option `Require a tenant for all deployments`.  As we go through this configuration we will make use of tenant specific variables.  Requiring a tenant for all deployments will ensure consistency across your deployments.  You don't have some deployments without a tenant and some with.
 
-> <img src="images/professoroctopus.png" style="float: left;"> A lot of times our customers want to enable allowing deployments with or without a tenant because they want to test internally first.  Creating a set of internal tenants will accomplish the same goal while keeping your deployments consistent.
+> ![](images/professoroctopus.png) A lot of times our customers want to enable allowing deployments with or without a tenant because they want to test internally first.  Creating a set of internal tenants will accomplish the same goal while keeping your deployments consistent.
 
 ![](images/multitenancyapp-projectconfiguration.png)
 
@@ -135,7 +135,7 @@ Now we just need to go through and fill out the variables for each tenant.
 
 ![](images/multitenancyapp-populatedcommonvariables.png)
 
-> <img src="images/professoroctopus.png" style="float: left;"> Adding variables to one or two tenants at a time isn't too terrible.  But this doesn't scale well when trying to work with 100s of tenants.  It would be a good idea to automate tenant setup using the API.
+> ![](images/professoroctopus.png) Adding variables to one or two tenants at a time isn't too terrible.  But this doesn't scale well when trying to work with 100s of tenants.  It would be a good idea to automate tenant setup using the API.
 
 ## Binding Steps To Tenant Tags
 
@@ -147,7 +147,7 @@ The process will also show the step will only be run for tenants with that speci
 
 ![](images/multitenancyapp-tenanttagprocess.png)
 
-> <img src="images/professoroctopus.png" style="float: left;"> Tenant tags are like roles, meaning it is treated as an OR for the runtime condition.  Not an AND.  Specifying two tenant tags will run that step for all tenants with either tag, not bot tags.  
+> ![](images/professoroctopus.png) Tenant tags are like roles, meaning it is treated as an OR for the runtime condition.  Not an AND.  Specifying two tenant tags will run that step for all tenants with either tag, not bot tags.  
 
 Our recommendation with using this feature is to only use one tenant tag if at all possible.  If necessary, create an additional tenant tag, or create a new tenant tag set.
 

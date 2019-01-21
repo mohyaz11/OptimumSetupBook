@@ -2,7 +2,7 @@
 
 In previous chapters we got the environment scaffolding put together, then we created some projects for our application and finally we wrapped it up by setting up deployment targets for the projects to push code to.  After all that (whew!) it is finally time to deploy some code!
 
-> <img src="images/professoroctopus.png" style="float: left;"> Typically the previous chapters will take anywhere from 10 to 20 minutes to set up and configure.  It does seem like a lot at first, the overall goal of the previous chapters was to provide you the foundation to get all the scaffolding configured so you can scale your Octopus Deploy.
+> ![](images/professoroctopus.png) Typically the previous chapters will take anywhere from 10 to 20 minutes to set up and configure.  It does seem like a lot at first, the overall goal of the previous chapters was to provide you the foundation to get all the scaffolding configured so you can scale your Octopus Deploy.
 
 Octopus Deploy will deploy code using what is known as a release.  When a release is created the project, variables, and packages being used are snapshotted.  You then deploy that release to the various environments and servers.  The idea behind a release is the core concept of Octopus Deploy, you build your code once, and you deploy that same code to all environments.  The same is true of the release.  The release is created once and that same release is deployed to all environments.
 
@@ -115,13 +115,13 @@ The next section allows you to configure if any steps are disabled with this dep
 
 ![](images/releasecreation-excludesteps.png)
 
-> <img src="images/professoroctopus.png" style="float: left;"> Excluding steps using this interface provides a nice alternative to disabling the steps in the process.  This will allow you to turn off steps without changing your process, which requires a new release to be created.  
+> ![](images/professoroctopus.png) Excluding steps using this interface provides a nice alternative to disabling the steps in the process.  This will allow you to turn off steps without changing your process, which requires a new release to be created.  
 
 The next section configures how the Octopus Server will handle a failure.  You have a couple of options when it comes to failures.  You can fail the deployment.  Or you can tell the Octopus Server to pause and wait for input when a failure occurs.  Guided failures are useful when you have a deployment step which randomly fails and you want to be notified of it so you can choose what to do with the step (skip it, retry or abort the deployment).  
 
 ![](images/releasecreation-failuremode.png)
 
-> <img src="images/professoroctopus.png" style="float: left;"> After a process is configured and tested the chances of it failing are very slim.  Typically we see a failure occur because a permission on a database got changed, a file share isn't available or something else directly unrelated to the deployment.  Those types of failures require an external change (fix the database permission) and then a retry will work.
+> ![](images/professoroctopus.png) After a process is configured and tested the chances of it failing are very slim.  Typically we see a failure occur because a permission on a database got changed, a file share isn't available or something else directly unrelated to the deployment.  Those types of failures require an external change (fix the database permission) and then a retry will work.
 
 The final section is the package download option.  We recommend leaving this option alone.  The only reason you would want to force a download of the package is for debugging purposes.  Just like any other cache, using the package cache should speed up the overall deployment process.
 
