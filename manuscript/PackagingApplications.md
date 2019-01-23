@@ -1,14 +1,12 @@
 # Packaging Applications on the build server
 
-In order deploy the code we will first need to package it.  Octopus Deploy supports a wide variety of package formats, including but not limited to NuGet packages, Tar packages, as well as Docker Images, Jar files and Zip files.  Choose the package type which matches your application type, use NuGet or Zip for .NET applications, JAR for Java, Docker images for Docker, etc.
+Octopus Deploy will deploy a wide variety of package formats to deployment targets.  This list includes, but not limited to NuGet packages, Tar packages, as well as Docker Images, Jar files and Zip files.  
 
-The build server, Jenkins, TeamCity, TFS/Azure DevOps, Bamboo, AppVeyor, etc, is the one typically responsible for packaging applications and pushing that package to Octopus Deploy.  It is possible to package a folder without using a build server, but for the purposes of this book, we are assuming the build server is the one who is packaging the applications.
+The build server, Jenkins, TeamCity, TFS/Azure DevOps, Bamboo, AppVeyor, etc, is most often responsible for packaging applications and pushing that package to Octopus Deploy.  It is possible to package a folder without using a build server, but for the purposes of this book, we are assuming the build server is the one who is packaging the applications.
 
-The primary reason the build server is responsible for packaging the application is because the build server monitors your source control for any changes.  Once a change is detected the build server goes into action.  
+The build server is responsible for packaging the application is because the build server monitors your source control for any changes.  It builds and tests code once a change is detected.  Once the build server is done it hands the package off to Octopus Deploy to handle the deployments.
 
-Octopus Deploy is build server agnostic.  It does not care where it gets the packages from.  All it cares about is that it gets a package to deploy.  In fact, we have written plug-ins for many of the popular build servers.  For the build servers where we don't have a plug-in we have created a command line application called `octo.exe`.  The plug-ins are wrappers for that command line application, so you will get the same functionality as the plug-ins.  
-
-We don't think it is practical to have screenshots for every build server we integrate with.  New build servers and tools are being added all the time.  Rather than that we have a series of recommendations for build server integration.
+Octopus Deploy is build server agnostic.  It does not care where it gets the packages from.  All it cares about is that it gets a package to deploy.  We have written a number of plug-ins to support the more popular build servers.  For the build servers where we don't have a plug-in we have created a command line application called `octo.exe`.  The plug-ins are wrappers for that command line application, so you will get the same functionality as the plug-ins.  
 
 ## Build Server Process
 
@@ -23,26 +21,38 @@ Our recommended build server process is:
 7) Create and deploy release in Octopus Deploy
 8) Run integration tests
 
-If any of the preceding steps fail then the build server will fail the build.  This ensures, at a bare minimum, that when Octopus Deploy gets any changes we know the code successfully passed analysis and unit tests.  
+If any of the preceding steps fail then the build server will fail the build.  This ensures, at a bare minimum, that when Octopus Deploy gets a package to deploy we know the code successfully passed analysis and unit tests.  
 
-Also, do not start packaging and pushing the packages until all tests have completed and passed.  This way the build server doesn't waste time packaging something that fails on a test step.  
+The order of the deployment process above was chosen very deliberately.  The goal of that order is to fail fast.  If the code cannot be built there is no reason to run static analysis.  If the static analysis fails there is no need to run unit tests.  This way the build server doesn't waste compute resources on a build.
 
 > ![](images/professoroctopus.png) Analysis and tests get exponentially more expensive as you move farther away from the build server.  In terms of time, fixing a problem because of analysis failure is much less expensive than fixing a problem in production.  Unit tests should be self-contained, repeatable and fast.  While integration tests are more "soup to nuts" tests which require external components such as a database or file system.  They tend to be much slower and more expensive to maintain. We've seen some projects with 10,000+ unit tests and a couple of hundred integration tests.  The unit tests took a few minutes to run while the integration tests took 10+ minutes to run.  If there is a problem in the code it should fail as fast as possible.  
 
 ## One Source Control Repository or Multiple Source Control Repositories?
 
-If you recall, the OctoFX project has two components, a database and a UI.  The question then comes up, should both components be in the same source control repository or should there be multiple source control repositories.  The answer to that depends on the build server chosen.  Several build servers have the ability to only trigger builds if files in a specific directory are changed.  For example, the source control repository has two folders
+If you recall, the OctoFX project has two components, a database and a UI.  Should both components be in the same source control repository or should there be multiple source control repositories.  The answer to that depends on the build server chosen.  Several build servers have the ability to only trigger builds if files in a specific directory are changed.  For example, OctoFx stores the database and WebUI in two folders.
 
-- src
-- db
+- source/OctoFX.Database
+- source/OctoFX.TradingWebsite
 
-The src folder contains all the C# code, while the db contain all the database scripts.  You can configure your build server to have two builds, one to watch for changes to the db folder and another to watch for changes to the src folder.  
+It is possible to configure a build server to have two builds, one to watch for changes to the db folder and another to watch for changes to the src folder.  This is done by configuring triggers.  In TeamCity that is done on the trigger page.
 
-This gets a little trickier if you both the C# code and the database scripts are in the same solution.  In that case you would want to build a specific project rather than building the entire solution.
+![](images/packagingapplications-teamcitytriggers.png)
+
+In TFS/VSTS/Azure DevOps the trigger is located on the same page where you configure which branch to watch.
+
+![](images/packagingapplications-adotriggers.png)
+
+Both of these projects are in the same solution.  The build step for each project only builds that project.
+
+![](images/packagingapplications-buildspecificproject.png)
+
+It does seem a bit extreme to separate out the components into two builds.  But consider this.  How often do you make a change to just the website?  What if you just make a change to the database, say add a new index?  Should you have to wait for the entire application, both the front-end and database, to be built and tested because of a small index change? 
+
+> ![](images/professoroctopus.png) A good rule of thumb is a build shouldn't take any longer than it takes to get a cup of coffee from the break room.
 
 ## Building and Packaging using Versioning Schemes
 
-The Major, Minor and Patch, of the version should be stored somewhere in the source control repository or in a variable on the build server.  This provides a source of truth for the version numbers.
+The Major, Minor and Patch, of the version should be stored somewhere in the source control repository or in a variable on the build server.  This provides a source of truth for the version numbers.  
 
 > ![](images/professoroctopus.png) When compiling or building the code those values should be used to version the .dlls or .jar files or any other compiled item.  This will allow you to easily see what version is on a specific server.  
 
@@ -52,9 +62,9 @@ For packaging the application to ship to Octopus Deploy you should also include 
 
 ## Releases
 
-We recommend having the build server create and deploy a release to a lower environment such as dev.  Having your build server handle release creation provides you with greater control over the release.  For example, you can select the channel to use or which tenant to deploy to.  In addition, every one of our build plug-ins as well as `octo.exe` have the ability to wait for a deployment to complete.  We recommend configuring your build server to also wait for the deployment to complete. 
+We recommend having the build server create and deploy a release to a Development environment.  This allows you to control when code is deployed.  Maybe your project needs to push two packages.  Waiting until after both packages are pushed to create the release ensures Octopus will deploy those two packages at the same time.  
 
-> ![](images/professoroctopus.png)  Having the build server keep track of your deployment opens up other options.  You can fail a build if it cannot be successfully deployed to development and let the appropriate people know of an issue quickly.  You can also configure integration tests to run after the deployment is complete.
+All of our plug-ins allow you to wait for the deployment to Development to complete.  It is recommended you enable that feature.  This way the build will fail if the deployment to development fails.  You can also run integration tests once the deployment is complete.
 
 It is possible to configure the Octopus Deploy server to automatically create a release when a package is pushed, however it only works if a very specific set of conditions are met, such as only using the internal NuGet feed, not using variables for package ids, and so on.  As your Octopus Deploy instance is used by more and more people within your company you will often find those conditions very constricting.  Automatic release creation using Octopus Deploy should be treated as an exception rather than a rule.
 

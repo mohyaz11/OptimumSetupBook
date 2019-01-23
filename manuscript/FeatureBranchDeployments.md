@@ -14,25 +14,23 @@ We just need to make a few other tweaks to Octopus Deploy to help support this s
 
 ## Lifecycle
 
-The first question you need to answer is, what environments will the feature branch be deployed to?  With our four environments on our instance, Dev, Testing, Staging and Production, we would say Dev, Testing, and Staging.  We included staging because we often see staging is a mirror of production.  Meaning the outside world has access to it.  Maybe it is used for UAT for business owners, or as a place to get feedback from external customers.  If that is the case, you should be able to deploy to that environment with your feature branch.  There might be a case where you want to get feedback from external customers before merging the feature into the master branch.
+First we need to determine which environments we are going to be deploying to.  In our test instance we have four deployment environments, Development, Testing, Staging, and Production.  Our recommendation is to to be able to deploy to an environment where users can test out the changes.  If you are working on a SaaS application, maybe staging is a mirror of Production.  The outside world has access to connect to it.  Getting feedback from our external users means deploying all the way to Staging.  With no external users then deploying to Development and Testing makes the most sense.
 
-The resources being created for the feature branch, the database and the website, have a finite lifespan.  We will need to destroy them once the feature branch has been merged into master.  As a result of that, we should include a "TearDown" environment in our lifecycle.
+Another item to consider, the resources being created for the feature branch, the database and the website, have a finite lifespan.  We will need to destroy them once the feature branch has been merged into master.  As a result of that, we should include a "TearDown" environment in our lifecycle.
 
-Finally, we don't know how far we are going to push this feature branch.  We might only push it to dev to get some quick feedback.  Or we might push it all the way to staging.  As such, each phase in the lifecycle, Dev, Testing, and Staging should be optional.  
+Each feature branch will be different.  Some will go to development only.  Others will go to Testing.  And others might go all the way to Staging.  We still need to deploy to TearDown to destroy the temporary website and database.  Each phase in the lifecycle, Development, Testing, and Staging should be optional.  
 
 We will create a new lifecycle to support this scenario.  
 
 ![](images/featurebranches-lifecycle.png)
 
-## Channels
+## Channels and Versioning
 
 Channels allow you to make use of a lifecycle different than the project's default lifecycle.  We will be need to create a new channel to make use of this new lifecycle.
 
 ![](images/featurebranches-newchannel.png)
 
-### Versioning
-
-Octopus Deploy adopts a modified version of SemVer.  We are not as strict as SemVer, but we implement a number of it's requirements.  This includes support for pre-release text after the version number (IE 2018.1.9 or 1.0.0.0).  We will be making use of that pre-release text.  This will be for both the package version as well as the release number.  
+Octopus Deploy adopts a modified version of SemVer.  We are not as strict as SemVer. We do implement a number of it's requirements.  This includes support for pre-release text after the version number (IE 2018.1.9 or 1.0.0.0).  We will be making use of that pre-release text.  This will be for both the package version as well as the release number.  
 
 We will create a version rule for this channel where it only accepts packages with pre-release text.
 
@@ -115,7 +113,7 @@ In this particular example, we created a new variable to store the database name
 
 ![](images/featurebranches-changeddatabasestep.png)
 
-A good rule of thumb is to use project variables to reference variable set variables.  This way, if you do need to overwrite the variable at a local level, for whatever reason, you can, and you don't have to go through the exercise of updating all your steps.
+> ![](images/professoroctopus.png) A good rule of thumb is to use project variables to reference variable set variables.  This way, if you do need to overwrite the variable at a local level, for whatever reason, you can, and you don't have to go through the exercise of updating all your steps.
 
 For each project you wish to do this for, you will need to repeat the process of adding the new step and making any variable adjustments.
 
@@ -125,13 +123,85 @@ When you create a feature branch release you will need to specify the channel.  
 
 ![](images/featurebranches-createrelease.png)
 
-On the build server you will need to specify the channel through the plug-in.  Most build servers support the ability to pass variables in.  We recommend you writing a script to check the branch you are on.  If you are on the master branch then specify the default channel.  If you are on any other branch then specify the feature branch channel.  
+That applies to the Octopus User Interface only.  The goal here is to automate all of this.  A developer checks in their code to a feature branch.  The build server sees the feature branch and creates a release on the separate channel.  
 
-![](images/featurebranches-buildserverplugin.png)
+First, the build server needs to be configured to monitor any branch, not just master.  For TeamCity that is a setting in the version control settings for the build.
 
-In addition, you will need to update the step which sets the version of the package to use the name of the branch as a pre-release tag.
+![](images/featurebranches-teamcitymonitorbranches.png)
 
-![](images/featurebranches-packageapplication.png)
+For TFS/VSTS/Azure DevOps the syntax looks like:
+
+![](images/featurebranches-adomonitormultiplebranches.png)
+
+Most, if not all, build servers store the name which triggered the build in a variable.  Using that variable we can determine which channel to deploy to.  Here is a simple script which was written for TeamCity.  At the end of the script, the variables env.octopusChannel and env.octopusVersion are set.  Later steps in the process will use that variable.
+
+```
+Param(    
+    [string]$currentBranch,
+    [string]$buildNumber,
+	[string]$defaultMajorVersion,
+	[string]$featureBranchVersion
+)
+
+Write-Host "BuildNumber: $buildNumber"
+Write-Host "DefaultMajorVersion: $defaultMajorVersion"
+Write-Host "FeatureBranchVersion: $featureBranchVersion"
+
+$channelName = "Default"
+$releaseVersion = "$defaultMajorVersion.$buildNumber"
+
+Write-Host "This is the branch that is building: $currentBranch"
+
+if ($currentBranch -ne "refs/heads/master"){
+    Write-Host "Non-master branch detected, using feature branches instead"
+    $channelName = "Feature Branch Channel"
+    $replacementBranchName = $currentBranch.replace("refs/heads/", "").replace(" ", "")
+    $releaseVersion = "$featureBranchVersion.$buildNumber-$replacementBranchName" 
+}
+
+"##teamcity[setParameter name='env.octopusChannel' value='$channelName']"
+"##teamcity[setParameter name='env.octopusVersion' value='$releaseVersion']"
+```
+
+The script for TFS/VSTS/Azure DevOps would be:
+
+```
+Param(    
+    [string]$currentBranch,
+    [string]$buildNumber,
+	[string]$defaultMajorVersion,
+	[string]$featureBranchVersion
+)
+
+Write-Host "BuildNumber: $buildNumber"
+Write-Host "DefaultMajorVersion: $defaultMajorVersion"
+Write-Host "FeatureBranchVersion: $featureBranchVersion"
+
+$channelName = "Default"
+$releaseVersion = "$defaultMajorVersion.$buildNumber"
+
+Write-Host "This is the branch that is building: $currentBranch"
+
+if ($currentBranch -ne "refs/heads/master"){
+    Write-Host "Non-master branch detected, using feature branches instead"
+    $channelName = "Feature Branch Channel"
+    $replacementBranchName = $currentBranch.replace("refs/heads/", "").replace(" ", "")
+    $releaseVersion = "$featureBranchVersion.$buildNumber-$replacementBranchName" 
+}
+
+Write-Host "##vso[task.setvariable variable=octopusChannel;issecret=true]$channelName" 
+Write-Host "##vso[task.setvariable variable=octopusVersion;issecret=true]$releaseVersion" 
+```
+
+For the steps which package the output into packages and push those packages to Octopus Deploy will use the version variable.
+
+![](images/featurebranches-usingteamcityvariables.png)
+
+The step which creates the release will use the channel and version variable.
+
+![](images/featurebranches-usingversionandchannelvariables.png)
+
+Everything else in the process, the build steps, the testing steps, and so on, remain the same.  
 
 ## Deploying Feature Branch Releases
 
