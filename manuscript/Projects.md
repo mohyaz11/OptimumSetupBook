@@ -1,6 +1,6 @@
 # Finally...time to set up some projects and deployment targets
 
-Earlier we set up the necessary infrastructure scaffolding for our Octopus Deploy server to help it scale.  In this chapter, we will take that infrastructure and use it to set up a simple project.  We know...we know...this is something you already did in your Proof of Concept.  You already know how to set up a project.  We've found some practices which work and some which don't.
+In previous chapters we set up the necessary infrastructure scaffolding for our Octopus Deploy server to help it scale.  In this chapter, we will take that infrastructure and use it to set up a simple project.  We know...we know...this is something you already did in your Proof of Concept.  You already know how to set up a project.  The goal of this chapter isn't to rehash that.  Rather it is to provide yo with a different way of thinking about projects.
 
 ## Project Recommendations
 
@@ -44,7 +44,7 @@ Essentially there is this great automated process which takes a few minutes to f
 
 ## Setting up the project
 
-Whew...that got a bit long-winded.  Enough talk, it is time for action.  Let's configure a project using all those principles so we can see what they look like.  We are going to be deploying our sample application, OctoFX.  It is a small ASP.NET application with a database and a user interface.  When we are finished with this set up we will have three projects.  One to deploy the UI, another to deploy the database and a traffic cop project to coordinate those deployments.
+Let's configure a project using all those principles so we can see what they look like.  We are going to be deploying our sample application, OctoFX.  It is a small ASP.NET application with a database and a user interface.  When we are finished with this set up we will have three projects.  One to deploy the UI, another to deploy the database and a traffic cop project to coordinate those deployments.
 
 Let's first get the project scaffolding in place and see what that looks like.  Start with creating a project group called "OctoFX."
 
