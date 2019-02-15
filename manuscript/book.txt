@@ -13,6 +13,7 @@ MultiDataCenter.md
 FeatureBranchDeployments.md
 EmergencyBugFixes.md
 TeamSecurity.md
+Subscriptions.md
 Spaces.md
 IaC.md
 DataCenter.md

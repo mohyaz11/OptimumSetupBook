@@ -17,7 +17,7 @@ This repo is used to store the open source book on how to setup an Octopus Deplo
 - [Deploying Feature Branches](manuscript/FeatureBranchDeployments.md)
 - [Configuring Emergency Bug Fix Deployments](manuscript/Hotfixes.md)
 - [Stopping your developers from deploying to production](manuscript/TeamSecurity.md)
-- Trust everyone to do their jobs right, but verify them (setting up subscriptions)
+- [Subscriptions](manuscript/Subscriptions.md)
 - [Spaces...what are they good for (almost everything!)](manuscript/Spaces.md)
 - [Spinning up Deployment Targets and deploying to them automatically using Infrastructure as Code](manuscript/IaC.md)
 - [What is Data Center, why do I need it and when should I upgrade?](manuscript/DataCenter.md)
