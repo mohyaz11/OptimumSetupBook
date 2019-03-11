@@ -1,43 +1,36 @@
 # Performance & Maintenance 101
 
-IMAGE OF WHISTLING OCTOPUS JANITOR, MOP, BUCKET, HOOVER etc..
-
-Octopus are generally very hygenic animals that clean up after themselves. 
-
-## Requirements
-
-Octopus
+Octopus are generally hygienic creatures, they clean up after themselves.  Octopus Deploy is not different.  It does its best to clean up after itself.  But it still needs your help.  In this chapter we will walk through some common tweaks you can make to Octopus Deploy to keep it running lean and mean.
 
 ## Routine Maintenance
 
-### Upgrade
-
-It's key to keep Octopus up to date and there is a section which covers this in more detail but we are continually working to ensure Octopus performs to a high standard and we will always recommend upgrading to the latest version. 
-
-> ![](images/professoroctopus.png) An example, many customers have saw reported speed improvements of their deployments after upgrading from earlier versions of Octopus **3.x** to the latest versions. 
+Octopus Deploy works best when regular maintenance is performed.  Routine maintenance can help clear up the "cruft" left behind by old deployments.  
 
 ### Retention Policies
 
-Octopus are generally hygienic creatures, cleaning up after themselves, and your Octopus is no different. Configuration documents, like projects and environments, are stored until you delete them, unlike historical documents like releases. These will be cleaned up according to the retention policies you configure.
+We cannot stress this enough.  Please set your retention policies.  Retention policies will clean old releases from your server and on the tentacles.  The one exception to this is the Events table which records an audit trail of every significant event in your Octopus.  We have entire chapter in this book devoted to retention policies.  Please read that.
 
-The one exception to this is the Events table which records an audit trail of every significant event in your Octopus.
+### Upgrade
 
-A tighter retention policy means your Octopus Server will run faster across the board.
-
-> ![](images/professoroctopus.png) There is a section dedicated to Retention Policies and we recommend this as further reading. 
+It's key to keep Octopus up to date. We are continually working to ensure Octopus performs to a high standard.  We will always recommend upgrading to the latest LTS version of Octopus Deploy.  We have written an entire chapter in this book about upgrading Octopus Deploy.  Please refer to that for more details.
 
 ### SQL Server Maintainence
 
+Starting with the first LTS release, 2018.10.x, any upgrade to Octopus Deploy will automatically rebuild fragmented indexes and regenerate stats.  That helps.  But it is important to rebuild fragmented indexes on a regular interval.  Work with a DBA to setup a SQL job to rebuild indexes and regenerate stats on a weekly basis.  
+
+Don't forget to backup the Octopus Deploy database.  A good strategy is to do a full backup once a week, a differential backup once a day and a transaction log backup once every 10-15 minutes.  If the SQL Server hosting the Octopus Deploy database were to ever crash you would only lose a few minutes worth of work.
+
 ## Scaling Octopus
 
-Octopus Servers do quite a lot of work during deployments, mostly around package acquisition:
+The Octopus Deploy server does quite a lot of work during deployments, mostly around package acquisition:
 
 * Downloading packages from the package source (network-bound).
 * Verifying package hashes (CPU-bound).
 * Calculating deltas between packages for delta compression (I/O-bound and CPU-bound).
 * Uploading packages to deployment targets (network-bound).
 * Monitoring deployment targets for job status, and collecting logs.
-* At some point your server hardware is going to limit how many of these things a single Octopus Server can do concurrently. * If a server over commits itself and hits these limits, timeouts (network or SQL connections) will begin to occur, and deployments can begin to fail. Above all else, your deployments should be repeatable and reliable.
+
+At some point your server hardware is going to limit how many of these things a single Octopus Server can do concurrently. There are only so many CPUs you can allocate.  So many network connections which can be opened.  If a server over commits itself and hits these limits, timeouts (network or SQL connections) will begin to occur, and deployments can begin to fail. Above all else, your deployments should be repeatable and reliable.
 
 We offer three options for scaling your Octopus Server:
 
@@ -52,15 +45,17 @@ An ideal situation would be an Octopus Server that's performing as many parallel
 
 Instead, we decided to put this control into your hands, allowing you to control how many tasks each Octopus Server node will execute concurrently. This way, you can measure server metrics for your own deployments, and then increase/decrease the task cap appropriately. Administrators can change the task cap in Configuration ➜ Nodes.
 
-See this blog post for more details on why we chose this approach.
+![](images/maintenance-changetaskcap.png)
 
-The default task cap is set to 5 out of the box. Based on our load testing, this offered the best balance of throughput and stability for most scenarios.
+The default task cap is set to 5 out of the box. Based on our load testing, this offered the best balance of throughput and stability for most scenarios.  The highest we'd recommend you setting the task cap to is 20.  Anything more and you will start running into resource contention.
 
-The task cap also interacts with offloading deployment work to Workers. If you have more workers available, you might be able to increase your deployment performance and different task cap or step parallelism might be right with the extra ability to scale.
+### Leverage Workers
+
+Workers are new feature added to Octopus Deploy in version 2018.7.x.  They allow you to offload several tasks typically done by the Octopus Deploy server onto a series of worker pools.  Please see the chapter on workers for more details.
 
 ### Octopus High Availability
 
-You can scale out your Octopus Server by implementing a High Availability cluster. In addition to linearly increasing the performance of your cluster, you can perform certain kinds of maintenance on your Octopus Servers without incurring downtime.
+You can scale out your Octopus Server by implementing a High Availability cluster. In addition to linearly increasing the performance of your cluster, you can perform certain kinds of maintenance on your Octopus Servers without incurring downtime.  We have written a chapter about High Availability, please see that for more details.
 
 ## Tips
 
