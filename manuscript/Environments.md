@@ -1,67 +1,63 @@
+ 
+
 # Environments
 
-Environments are the backbone of your deployment pipeline.  It is what you move your code through.  Before you configure your machines or your projects or your lifecycles you need to configure your environments first.  
+Environments are the backbone of your deployment pipeline.  It is what you move your code through.  Before you configure anything else, you need to configure your environments first.
 
-It seems every place we have worked, and the vast majority of the companies we talk to, have the same four environments, Dev, Test (or QA), Staging (or Pre-Production), and Production.  Which makes sense.  Dev is for developers to experiment on, it is very much in flux, and it is expected to go up and down quite often.  Test is used by quality assurance to write their tests against or manually test.  Staging is used as a final "sanity check" prior to production.  Production...is well production, it is what users connect to.  
+The most common setup is four environments.  Those are Dev, Test or QA, Staging or Pre-Production, and Production.  We've seen these at previous jobs and customers that we talk to.  It makes sense for this to be a common setup.  Dev is for developers to experiment on.  It is very much in flux, and you expect it to go up and down quite often.  Quality assurance test functionality in the Test.  You use Staging as a final "sanity check" before deploying to Production.  Production is ... well, production. It is what your users connect to.  
+We didn't design Octopus Deploy to force people to use a set of predefined environments.  Some companies only have three environments. Others have many more.  Not everyone uses the same naming for their environments.  One person's Test is another person's QA.  It is important to us that our customers can define and name their environments.
 
-When designing Octopus Deploy we didn't want to force people to use pre-defined environments.  Some companies only have three environments, while others have much more.  Not everyone uses the same naming for their environments.  One person's test is another person's QA.  It is important to us to let our customers define their environments using their own naming conventions.  
-
-That flexibility ends up being a double edged sword.  A lot of the customers we work with have machines in multiple data centers.  The temptation is to name your environment "Production [Data Center]," or "Production Omaha." This is done because these particular customers do not want to deploy to all data centers at the same time.  Or they want to know what version of code is in each data center.  This does not scale very well.  Every time you add a new data center you will need to adjust a number of different things, such as your life cycles, retention policies, channels, and so on.  
-
-To add to the confusion, a number of our customers provide SaaS solutions to their customers.  Each customer gets their own set of machines and other resources.  Again the temptation is there to configure a unique set of environments for each customer "Dev [Customer Name]," "Staging [Customer Name]," and "Production [Customer Name]."  This will work for the first dozen or so customers but again it doesn't scale very well. 
-
-In this section we will walk through our recommendations for configuring your environments to better prepare you to scale up and out your Octopus Deploy instance as you add more projects.  We will also walk through a couple of common scenarios we have seen and how to work through them.
+In this section, we will walk through our recommendations for configuring your environments to better prepare you to scale up and out your Octopus Deploy instance as you add more projects.  We will also walk through a couple of common scenarios we have seen and how to work through them.
 
 ## Environments Configuration
 
-We recommend configuring your environments to match your company’s terminology.  But keep it general.  Think how you want to phrase it during a conversation with a non-technical person.   "I’m pushing some code up to dev" or "I’m deploying my app to production" makes a lot more sense than "I’m pushing to Dev Omaha 45."  What does Omaha mean?  The data center?  Where did 45 come from?  
+We recommend configuring your environments to match your company’s terminology.  Keep it general where possible.  Think of how you want to phrase it during a conversation with a non-technical person.   "I’m pushing some code up to Dev" or "I’m deploying my app to Production" makes a lot more sense than "I’m pushing to Dev Omaha 45."  What does Omaha mean?  The data center?  Where did 45 come from?  
+> ![](images/professoroctopus.png) A good sign that you have well-modeled environments is that they are easy to explain.  If it takes longer than a few seconds to explain your environments then that is a sign that you need to make some changes.  
 
-> ![](images/professoroctopus.png) A good indication your environments are modelled correctly is you can explain it in a few quick sentences.  If it takes you longer than a few seconds to explain your environments then that is an indication you need to make some changes.  
-
-Keep the list of environments under a dozen or so.  Have the standard four or five environments, such as Dev, Test, Staging and Production.  Also add in SpinUp, TearDown and Maintenance.  Those additional environments will help cover you when it is time to build up servers, tear down applications or if you want to use Octopus to perform some scheduled maintenance tasks like taking a backup of logs in production.  
+Keep the list of environments under a dozen or so.  Have the standard four or five environments, such as Dev, Test, Staging, and Production.  For dynamic infrastructure and maintenance, you can also add SpinUp, TearDown, and Maintenance.  Those environments will help when it is time to build up infrastructure, tear down applications, or perform some scheduled maintenance tasks like taking a backup of logs in production.
 
 Keeping the number of environments low helps with configuring lifecycles, channels, and security.  They also keep your dashboard easy to follow.  
 
 ![](images/chapter001-environmentlist.png)
 
-Don't worry about the order of the environments or adding in machines just yet.  That will come a bit later.  For now we just want to get our environments created.  
+Don't worry about the order of the environments or adding in machines yet.  That will come a bit later.  For now, we want to focus on creating our environments.
 
 ## Multiple Data Center
 
-In the world of the Azure, AWS, Google Cloud and other cloud providers it is becoming very common to want to deploy to multiple data centers.  In some scenarios the software needs to be deployed in specific intervals.  First to a data center in Illinois and then to one in Texas.  
+In the world of the Azure, AWS, Google Cloud, and other cloud providers, it is becoming common to deploy to multiple data centers.  In some scenarios, you need to deploy the software in specific intervals.  For example, you might deploy to a data center in Illinois first before deploying to one in Texas.
 
-The temptation is there to just create more environments called "Environment - [Data Center]."  That does not scale well.  Each new data center brought online requires changes to the deployment process, lifecycle, and security.  
+The temptation is to name your environment "Production [Data Center]" or "Production Omaha." You would do this because you might not want to deploy to all data centers at the same time.  Or you want to know what version of the code is in each data center.  This does not scale very well, unfortunately.  Every time you add a new data center, you will need to adjust many different things.  You would have to add a new Environment. Then you would add that Environment to a Lifecycle.  You would need to update variable scopes.  Those are a few of the areas that you would have to manage. 
 
-A common scenario we have seen is customers deploy to an on-premise data center for dev, test and staging, but the code is hosted in data centers in Illinois and Texas.  Before pushing to production, they like to run some sanity checks in a staging environment in Illinois and Texas.  If you did environment per data center that would end up being seven environments.  When in reality you only want four.  
+A scenario that we have seen is customers deploy to an on-premise data center for dev, test, and staging, but production is hosted in data centers in Illinois and Texas.  Before pushing to production, they run some sanity checks in a staging environment in Illinois and Texas.  If you create an environment per data center, you would have seven environments when you only need four.  
 
 ![](images/chapter001-multitenancyenvironments.png)
 
-Because we don't have any targets or projects setup at this particular point in time, this is rather easy to accomplish.  For now, we will just add two new tenants to Octopus Deploy.  This is accomplished by clicking on the tenant link at the top of the screen and then clicking add tenant in the top right corner.
+Because we don't have any targets or projects set up at this particular time, this is rather easy to do.  For now, we will add two new tenants to Octopus Deploy.  We do this by clicking on the tenant link at the top of the screen and then clicking add tenant in the top right corner.
 
 ![](images/chapter001-datacentertenants.png)
 
-Don't worry, we will be coming back to them in a later chapter when we start setting up our first multiple data centers project.  Just know that they are there when you need them.
+Don't worry!  We will be coming back to Tenants in a later chapter when we start setting up our first multiple data centers project.  Just know that they are there when you need them.
 
-> ![](images/professoroctopus.png) Adding images to your tenants makes them easier to find on the tenant screen.  You can accomplish this by clicking on the tenant and selecting settings link on the left.  On that screen you can upload an image for a tenant.
+> ![](images/professoroctopus.png) Adding images to your tenants makes them easier to find.  You can do this by clicking on the tenant and selecting settings link on the left.  On that screen, you can upload an image for a tenant.
 
 ## Multiple Customers
 
-In the same vein of deploying the same project to multiple data centers, a lot of our customers want to deploy the same project to multiple clients.  Each client for a particular application has their own resources, be it on-premise or hosted by you.
+In the same vein of deploying the same project to multiple data centers, a lot of our customers deploy the same project to multiple clients.
 
-All to often, the client needs a way to test upcoming changes.  They would need their own testing or staging set of resources as well.  Again the temptation is there to configure a unique set of environments for each customer "Dev [Customer Name]," "Staging [Customer Name]," and "Production [Customer Name]."  This will work for the first dozen or so customers but again it doesn't scale very well.
+Each of their customers gets their own set of machines and other resources.  Again, you might be tempted to configure a unique set of environments for each customer.  You could create "Dev [Customer Name]," "Staging [Customer Name]," and "Production [Customer Name]."  This will work for the first dozen or so customers but again it doesn't scale very well.  
 
-Imagine if we had five clients, an internal testing customer, Coca-Cola, Ford, Nike and Starbucks.  The internal customer deploys to all the environments, dev, test, staging and prod.  Coca-Cola and Nike have resources in test, staging and production while Ford and Starbucks only have resources in staging and production.  If we did an environment per tenant we would end up with 14 environments.  And that is just for five customers!
+Imagine if we had five clients, an internal testing customer, Coca-Cola, Ford, Nike, and Starbucks.  The internal customer deploys to all the environments, dev, test, staging, and prod.  Coca-Cola and Nike have resources in test, staging, and production while Ford and Starbucks only have resources in staging and production.  If you create an environment per tenant, you would have 14 environments.  And that is only for five customers!
 
-This is where the multi-tenancy comes in.  It allows you to keep the number of environments low while at the same time have the ability to create a unique workflow per client.
+This is where the multi-tenancy comes in.  It allows you to keep the number of environments low while creating a unique workflow per client.
 
 ![](images/chapter001-multitenantapplication.png)
 
-Fow now we are just going to create those five customers we talked about in this example, Internal, Coca-Cola, Ford, Nike and Starbucks.
+For now, we are going to create those five customers that we talked about in this example: Internal, Coca-Cola, Ford, Nike, and Starbucks.
 
 ![](images/chapter001-alltenants.png)
 
-In a later chapter we will walk through configuring a suite of projects to deploy to multiple customers using the multi-tenancy feature.
+In a later chapter, we will walk through configuring a suite of projects to deploy to multiple customers using the multi-tenancy feature.
 
 ## Conclusion
 
-In this chapter we walked through of how to set up the backbone of Octopus Deploy, the environments.  The major thing to remember is to keep the number of environments small and leverage tenants to handle deployments to different data centers or customers.  In upcoming chapters we will be walking through setting up lifecycles and retention policies.  Having a small number of environments will help with that.
+In this chapter, we walked through of how to set up the backbone of Octopus Deploy, the environments.  The major point to remember is to keep the number of environments small and leverage tenants to handle deployments to different data centers or customers.  In upcoming chapters, we will be walking through setting up lifecycles and retention policies.  Having a small number of environments will make that easier.
