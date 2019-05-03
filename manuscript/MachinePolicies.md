@@ -35,4 +35,4 @@ You change the machine policy for a specific deployment target by going to the d
 
 ## Conclusion
 
-In this chapter, we set up multiple machine policies to ensure we have a high signal to noise ratio if/when Octopus Deploy cannot connect to a tentacle.  Production is checked the most because typically that has the least number of deployments.  An environment such as development is getting deployed to hundreds of times a day, and if a machine were to go down most people would know about it, but it would have the smallest impact on the business.
+In this chapter, we set up multiple machine policies to ensure we have a high signal to noise ratio if/when Octopus Deploy cannot connect to a Tentacle.  Production is checked the most because typically that has the least number of deployments.  An environment such as development is getting deployed to hundreds of times a day, and if a machine were to go down most people would know about it, but it would have the smallest impact on the business.

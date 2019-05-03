@@ -50,9 +50,9 @@ Let's first get the project scaffolding in place.  Start with creating a project
 
 ![](images/projectconfiguration-projectgroupcreation.png)
 
-> ![](images/professoroctopus.png) Project groups are a great way to organize your deployment projects.  They have many uses, not only do they visually separate the projects, but you can also configure the dashboard to hide/show specific project groups as well as configure permissions to restrict access to them. 
+> ![](images/professoroctopus.png) Project groups are a great way to organize your deployment projects.  They have many uses, not only do they visually separate the projects, but you can also configure the dashboard to hide/show specific project groups as well as configure permissions to restrict access to them.
 
-That group looks a little empty.  Let's add in the three projects we discussed earlier. 
+That group looks a little empty.  Let's add in the three projects we discussed earlier.
 
 ![](images/projectconfiguration-projectgrouppopulated.png)
 
@@ -84,7 +84,7 @@ Next, we are going to add in the manual intervention for the DBAs to approve.  I
 
 > ![](images/professoroctopus.png) This project deploy a database package using DBUp, a free database deployment tool.  Some tools provide the ability to generate a difference report before deployments which Octopus can store as an artifact and a DBA can download and review.  In that case, it makes more sense to have the manual intervention occur after that report has been generated.
 
-Many community step templates have been created to help with some of this database scaffolding.  We are going to be using the SQL - Create Database If Not Exists step template to create the database if it doesn't exist.  We are going to be using variables out of the library sets we brought in previously.  For now, we are going to execute this script on a tentacle with the role "OctoFX-DB."  Later in the book, we will convert this over to using workers.
+Many community step templates have been created to help with some of this database scaffolding.  We are going to be using the SQL - Create Database If Not Exists step template to create the database if it doesn't exist.  We are going to be using variables out of the library sets we brought in previously.  For now, we are going to execute this script on a Tentacle with the role "OctoFX-DB."  Later in the book, we will convert this over to using workers.
 
 ![](images/projectconfiguration-createdatabaseifnotexists.png)
 

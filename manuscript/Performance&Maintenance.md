@@ -8,7 +8,7 @@ Octopus Deploy works best when regular maintenance is performed.  Routine mainte
 
 ### Retention Policies
 
-We cannot stress this enough.  Please set your retention policies.  Retention policies will clean old releases from your server and on the tentacles.  The one exception to this is the Events table which records an audit trail of every significant event in your Octopus.  We have an entire chapter in this book devoted to retention policies.  Please read that.
+We cannot stress this enough.  Please set your retention policies.  Retention policies will clean old releases from your server and on the Tentacles.  The one exception to this is the Events table which records an audit trail of every significant event in your Octopus.  We have an entire chapter in this book devoted to retention policies.  Please read that.
 
 ### Upgrade
 
@@ -37,7 +37,7 @@ We offer three options for scaling your Octopus Server:
 * Scale up by controlling the task cap and providing more server resources as required.
 * Scale out using Octopus High Availability.
 * Scale out using Workers.
-* Scale out using Spaces. 
+* Scale out using Spaces.
 
 ### Task Caps
 

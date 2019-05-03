@@ -1,8 +1,8 @@
- 
+
 
 # Environments
 
-Environments are the backbone of your deployment pipeline.  It is what you move your code through.  Before you configure anything else, you need to configure your environments first.
+Environments are the backbone of your deployment pipeline.  It is what you move your code through.  Before you configure anything else, you need to configure your environments.
 
 The most common setup is four environments.  Those are Dev, Test or QA, Staging or Pre-Production, and Production.  We've seen these at previous jobs and customers that we talk to.  It makes sense for this to be a common setup.  Dev is for developers to experiment on.  It is very much in flux, and you expect it to go up and down quite often.  Quality assurance test functionality in the Test.  You use Staging as a final "sanity check" before deploying to Production.  Production is ... well, production. It is what your users connect to.  
 We didn't design Octopus Deploy to force people to use a set of predefined environments.  Some companies only have three environments. Others have many more.  Not everyone uses the same naming for their environments.  One person's Test is another person's QA.  It is important to us that our customers can define and name their environments.
@@ -26,7 +26,7 @@ Don't worry about the order of the environments or adding in machines yet.  That
 
 In the world of the Azure, AWS, Google Cloud, and other cloud providers, it is becoming common to deploy to multiple data centers.  In some scenarios, you need to deploy the software in specific intervals.  For example, you might deploy to a data center in Illinois first before deploying to one in Texas.
 
-The temptation is to name your environment "Production [Data Center]" or "Production Omaha." You would do this because you might not want to deploy to all data centers at the same time.  Or you want to know what version of the code is in each data center.  This does not scale very well, unfortunately.  Every time you add a new data center, you will need to adjust many different things.  You would have to add a new Environment. Then you would add that Environment to a Lifecycle.  You would need to update variable scopes.  Those are a few of the areas that you would have to manage. 
+The temptation is to name your environment "Production [Data Center]" or "Production Omaha." You would do this because you might not want to deploy to all data centers at the same time.  Or you want to know what version of the code is in each data center.  This does not scale very well, unfortunately.  Every time you add a new data center, you will need to adjust many different things.  You would have to add a new Environment. Then you would add that Environment to a Lifecycle.  You would need to update variable scopes.  Those are a few of the areas that you would have to manage.
 
 A scenario that we have seen is customers deploy to an on-premise data center for dev, test, and staging, but production is hosted in data centers in Illinois and Texas.  Before pushing to production, they run some sanity checks in a staging environment in Illinois and Texas.  If you create an environment per data center, you would have seven environments when you only need four.  
 

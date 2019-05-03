@@ -48,9 +48,9 @@ That is it!  We have now configured the first worker pool.  Go ahead and repeat 
 
 ## Workers
 
-Adding workers to a worker pool is just like adding a deployment target to an environment.  At the time of this writing, only three types of deployment targets are supported with worker pools, polling tentacles, listening tentacles and SSH targets.  It is the same tentacle you have always installed on a VM.  The primary difference is how it is registered with the Octopus Deploy server.
+Adding workers to a worker pool is just like adding a deployment target to an environment.  At the time of this writing, only three types of deployment targets are supported with worker pools, polling Tentacles, listening Tentacles and SSH targets.  It is the same Tentacle you have always installed on a VM.  The primary difference is how it is registered with the Octopus Deploy server.
 
-The form to add a worker is very similar adding a tentacle target.  The difference in the form is instead of adding the tentacle to an environment and assigning it a role; you attach it to a worker pool.
+The form to add a worker is very similar adding a Tentacle target.  The difference in the form is instead of adding the Tentacle to an environment and assigning it a role; you attach it to a worker pool.
 
 ![](images/workers-addworkerpoolform.png)
 

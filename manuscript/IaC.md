@@ -1,8 +1,8 @@
 ## Spinning up Deployment Targets and deploying to them automatically using Infrastructure as Code
 
-The tentacle is an MSI you have to install on a VM.  To get your POC going, you went the manual route.  Download the MSI onto the VM, install it and configure it.  Then you went back to the Octopus Deploy UI and registered the target with the Octopus Deploy server.  For a few tentacles that works.  Once you get above 25 or so machines, you realize that doesn't scale.
+The Tentacle is an MSI you have to install on a VM.  To get your POC going, you went the manual route.  Download the MSI onto the VM, install it and configure it.  Then you went back to the Octopus Deploy UI and registered the target with the Octopus Deploy server.  For a few Tentacles that works.  Once you get above 25 or so machines, you realize that doesn't scale.
 
-We recommend creating a process to automate the tentacle installation.  If you are using Azure, you can leverage Azure Resource Manager Templates (ARM Templates).  For AWS, you can leverage or CloudFormation to spin up new virtual machines.  Both processes support running a PowerShell script to bootstrap them.
+We recommend creating a process to automate the Tentacle installation.  If you are using Azure, you can leverage Azure Resource Manager Templates (ARM Templates).  For AWS, you can leverage or CloudFormation to spin up new virtual machines.  Both processes support running a PowerShell script to bootstrap them.
 
 > ![](images/professoroctopus.png) CloudFormation templates allow you to include PowerShell in them.  ARM templates require you to use the custom script extension.  We recommend using Google to find the latest examples.  
 
@@ -10,7 +10,7 @@ Meanwhile, if you are on-premise, you might be using hypervisor software such as
 
 > ![](images/professoroctopus.png) We are not including samples on how to do this as each hypervisor is unique.  If we tried to include scripts for every possible hypervisor and version, this chapter would end up being hundreds of pages long.
 
-Regardless of the technology you are using, you will need a PowerShell script to Bootstrap the tentacle installation.  Below is a sample script that we wrote for this book to bootstrap tentacles.
+Regardless of the technology you are using, you will need a PowerShell script to Bootstrap the Tentacle installation.  Below is a sample script that we wrote for this book to bootstrap Tentacles.
 
 ``` PS
 
@@ -104,9 +104,9 @@ if ($lastExitCode -ne 0) {
 }
 ```
 
-> ![](images/professoroctopus.png) By automating the tentacle bootstrapping process, you also put yourself in a position to better handle increasing load.  With automation, you can spin up a new server in a matter of minutes rather than hours or even days.
+> ![](images/professoroctopus.png) By automating the Tentacle bootstrapping process, you also put yourself in a position to better handle increasing load.  With automation, you can spin up a new server in a matter of minutes rather than hours or even days.
 
-The bootstrap script can do so much more than install the tentacle.  You can also leverage applications such as Chocolatey and built-in features such as DISM to install IIS, .NET Core, SQL Server Management Objects, and so on.  Chocolatey is an application manager which allows you to install third-party applications in an automated fashion.  DISM, or Deployment Image Servicing and Management, is built into Windows to allow you to enable or disable features.  For example, if you wanted to automatically configure a VM to host a .NET core application this would be a script to do so.
+The bootstrap script can do so much more than install the Tentacle.  You can also leverage applications such as Chocolatey and built-in features such as DISM to install IIS, .NET Core, SQL Server Management Objects, and so on.  Chocolatey is an application manager which allows you to install third-party applications in an automated fashion.  DISM, or Deployment Image Servicing and Management, is built into Windows to allow you to enable or disable features.  For example, if you wanted to automatically configure a VM to host a .NET core application this would be a script to do so.
 
 ```PS
 Write-Output "Installing ASP.NET 4.5"
