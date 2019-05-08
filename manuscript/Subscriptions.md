@@ -10,7 +10,7 @@ Let's create a subscription that will notify administrators whenever a productio
 
 ## Creating Subscriptions
 
-Navigate over to Configuration > Subscriptions to see any existing subscriptions.
+Navigate over to **Configuration > Subscriptions** to see any existing subscriptions.
 
 ![](images/subscriptions-viewexistingsubscriptions.png)
 

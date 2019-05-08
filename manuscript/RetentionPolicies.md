@@ -1,36 +1,36 @@
 # Retention Policies
 
-When we review a customer's Octopus Deploy configuration the first thing we ask to see is the retention policies.  Setting appropriate retention policies is an easy win, and they are usually not changed from the default during a trial and not revisited after setting up a production configuration.
+When we review a customer's Octopus Deploy configuration, the first thing we ask to see is the retention policies.  Setting appropriate retention policies is an easy win, and they are usually not changed from the default during a trial and not revisited after setting up a production configuration.
 
 Without setting retention policies, Octopus will keep all releases created and packages uploaded indefinitely. If you have small packages or don't release frequently, you may never notice any adverse effects, but as your usage grows, you might run into disk space or performance issues as you server turns into a hoarder.
 
-We haven't covered what packages and releases are yet, but it's okay to set these values now and revisit them once you have a better understanding of what they are.
+We haven't covered what packages and releases are yet, but it's okay to set these values now and revisit them when you have a better understanding of what they are.
 
 ## Package Retention
 
 First, we'll look at the built-in package repository retention policy. If you're not planning to use the built-in repository, then you don't necessarily need to set this, but it's good to go ahead and set it so that you won't have to remember it if you do start using the repository in the future.
 
-You can see this policy by navigating to Library > Packages and looking for `Repository Retention` on the right side of the page.
+You can see this policy by navigating to **Library > Packages** and looking for `Repository Retention` on the right side of the page.
 
 ![](images/chapter003-repository-retention.png)
 
 Let's click `CHANGE` and set this to something less than forever.
 
-Choosing the `A limited time` option will allow you to select the number of days to keep a package in the repository. The default value is 30, but you can choose something shorter or longer based on your needs. Normally we opt for a shorter length of time, something close to 7 days.
+Choosing the `A limited time` option will allow you to select the number of days to keep a package in the repository. The default value is 30, but you can choose something shorter or longer based on your needs. Normally we opt for a shorter length of time, for instance, something close to 7 days.
 
-It's important to note here that only packages that are not associated with releases will be cleaned up. That means that even if a package is older than the value you choose if it is attached to an *existing* release, it won't be cleaned up until that release is also cleaned up.
+It's important to note here that only packages that are not associated with releases will be cleaned up. That means even if a package is older than the value you choose, if it is attached to an *existing* release, it won't be cleaned up until that release is also cleaned up.
 
 Which leads us to release retention policies!
 
 ## Release Retention
 
-Ok, we're going to take a quick trip back to the Lifecycles for the next bit. Navigate back to the Default Lifecycle and expand the `Retention Policy` section.
+Ok, we're going to take a quick trip back to the lifecycles for the next bit. Navigate back to the default lifecycle and expand the `Retention Policy` section.
 
 ![](images/chapter003-lifecycle-retention.png)
 
-You can see that this is set to keep all releases forever and also to keep all extracted packages and files on disk on Tentacles, a Deployment Target that represents a Windows server.
+You can see that this is set to keep all releases forever and also to keep all extracted packages and files on disk on Tentacles. A Tentacle is a deployment target that represents a Windows server.
 
-Let's change this to something a little tidier. You have the choice to clean up after a specified number of releases or a specified number of days. If you're not sure what value to pick at this time, a good value to start with is to keep the last three releases for both the releases and the extracted packages.
+Let's change this to something a little tidier. You have the choice to clean up after a specified number of releases or a specified number of days. If you're not sure what value to pick, a good value to start with is keeping the last three releases for both the releases and the extracted packages.
 
 There is one nuance to release cleanup. If the release is displayed on any dashboard, either the main dashboard or the project overview screen, it will not be cleaned up even if it matches the rules. You don't have to worry about a recent release in the Staging environment being deleted before it can be promoted to Production. So if you see that a release isn't being cleaned up, check the dashboards to see if it's being displayed.
 
