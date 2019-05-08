@@ -4,9 +4,9 @@ Let's start by defining some terms and what they mean in the Octopus world. Thes
 
 ## Target / Deployment Target / Machine
 
-These are the machines and services that you deploy your software to. They might be physical machines, virtual machines, or PaaS targets in the cloud.
+Targets, deployment targets and machine are the machines and services where you deploy your software. They might be physical machines, virtual machines, or PaaS targets in the cloud.
 
-In early versions of Octopus, we used the name machines instead of deployment targets. After we added targets like Azure Web Applications and Kubernetes, machine became a misnomer.  You might be deploying to a machine but you might also be deploying to an API.  Deployment target describes both usages.
+In early versions of Octopus, we used the name machines instead of deployment targets, but after we added targets like Azure Web Applications and Kubernetes, machine became a misnomer.  You might be deploying to a machine but you might also be deploying to an API.  Deployment target describes both usages.
 
 ## Environment
 
@@ -14,7 +14,7 @@ An environment is a group of deployment targets. Your Development environment mi
 
 ## Package
 
-A package is an archive (zip, tar, NuGet) that contains your application assets. Octopus works by deploying your packages to deployment targets. You can host packages in external repositories or the built-in repository. Octopus can integrate with external repositories like Artifactory and NuGet.
+A package is an archive (zip, tar, NuGet) that contains your application assets. Octopus works by deploying your packages to deployment targets. You can host packages in external repositories or the built-in Octopus repository. Octopus can integrate with external repositories like Artifactory and NuGet.
 
 ## Project
 
@@ -32,4 +32,4 @@ The same release can be (and should be) deployed to multiple environments. You s
 
 ## Lifecycle
 
-A lifecycle defines which environments that you can deploy a release to and in what order.
+A lifecycle defines which environments you can deploy a release to and in what order.
