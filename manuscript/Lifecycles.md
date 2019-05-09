@@ -56,7 +56,7 @@ The second choice is to set a minimum number of environments that must be succes
 
 The last choice is to set the phase to be entirely optional. The phase can be skipped, and you can deploy directly to the next phase after it.
 
-Because errors and issues can arise when building up infrastructure, especially when setting up the IAC scripts for the first time, we want the option to deploy directly to TearDown so that we can start fresh. As you're setting up these phases, make the SpinUp phase optional.
+Because errors and issues can arise when building up infrastructure, especially when setting up the IaC scripts for the first time, we want the option to deploy directly to TearDown so that we can start fresh. As you're setting up these phases, make the SpinUp phase optional.
 
 ### Maintenance Lifecycle
 
