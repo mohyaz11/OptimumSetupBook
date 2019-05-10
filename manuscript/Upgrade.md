@@ -2,15 +2,15 @@
 
 You have your Octopus installation setup, and you have your deployments cranking away daily. You start to notice the bell icon at the top of the Octopus Deploy interface announcing new changes.  Security starts asking questions about patching Octopus Deploy.  Users want to see new features being published on Twitter and through the blog every month.  It is time to define an upgrade strategy.  
 
-In this section, we will cover a few things that you will need to consider as part of your Octopus Deploy upgrade process. 
+In this section, we will cover a few things that you will need to consider as part of your Octopus Deploy upgrade process.
 
 > ![](images/professoroctopus.png) This section will not cover *how to upgrade*, it would be best if you looked at our website for the latest instructions.  
 
-## What and How are the Octopus Deploy releases structured?
+## What and How Are the Octopus Deploy Releases Structured?
 
 We use our version numbering scheme to help you understand the type of changes we have introduced between two versions of Octopus Deploy:
 
-### Major version change,  breaking changes and new features.
+### Major Version Change, Breaking Changes and New Features
 
 Example: Octopus 3.x to Octopus 2018.x
 
@@ -18,14 +18,14 @@ Upgrading may require some manual intervention, we will provide a detailed upgra
 
 Major breaking changes examples: Octopus 1.x to Octopus 2.x we rewrote the HTTP API.  Going from Octopus 2.x to Octopus 3.x we changed the Tentacle communication protocol and moved to SQL Server.
 
-### Minor version change, new features, the potential for minor breaking changes and database changes.
+### Minor Version Change, New Features, the Potential for Minor Breaking Changes and Database Changes
 
 Example: Octopus 2018.1.x to Octopus 2018.2.x
-Upgrading should be easy, but rolling back will require restoring your database.  The upgrade will most likely make changes to the database schema.  There is a chance changes are made to the API.  The goal is the changes will backward compatible wherever possible. Check our release notes for more details. Check for breaking changes as they are likely but less likely that in a Major version upgrade. 
+Upgrading should be easy, but rolling back will require restoring your database.  The upgrade will most likely make changes to the database schema.  There is a chance changes are made to the API.  The goal is the changes will backward compatible wherever possible. Check our release notes for more details. Check for breaking changes as they are likely but less likely that in a Major version upgrade.
 
 Minor breaking changes example: In Octopus 3.3 we made a change to how Sensitive Properties work in the API.
 
-### Patch version change, small bug fixes, and computational logic changes.
+### Patch Version Change, Small Bug Fixes, and Computational Logic Changes
 
 Example: Octopus 2018.8.1 to Octopus 2018.8.2
 
@@ -33,16 +33,16 @@ Patches should be safe to update, safe to roll back.  There is more risk in not 
 
 Changes example: Octopus 2018.2.3 to any other patch of Octopus 2018.2. X (upgrade or downgrade). We may decide to make API changes, but any changes will be backward compatible.
 
-## Why stay up to date with Octopus Deploy? 
+## Why Stay up to Date with Octopus Deploy?
 
-There are several benefits to upgrading your Octopus Deploy instance. 
+There are several benefits to upgrading your Octopus Deploy instance.
 
 - Whenever we get reports of performance problems we do our very best to isolate them and fix them as soon as possible.  Except in rare cases, the latest edition of Octopus Deploy will be faster than the version you have installed.
 - Security flaws are treated as critical and we will fix them as soon as possible.  The latest version of Octopus Deploy will have all the latest security patches.
 - In 2018 a new feature was released roughly every six to eight weeks.  This includes features such as Workers, Kubernetes Support, Azure Support, and Scheduled Triggers.  Upgrading will give you access to new features.
 - Any software is bound to have bugs in it.  Octopus Deploy is no different.  Each new minor version will include multiple bug fixes in it.
 
-## When should you upgrade
+## When Should You Upgrade
 
 This really will depend on the type of organization you are working in. Octopus has 2 types of releases and is categorized as:
 
@@ -53,7 +53,7 @@ Not every customer is the same, we will provide the facts so you and your organi
 
 ### Long Term Support
 
-Long Term Support versions of Octopus are shipped every three months and remain in support for six months.  It contains a roll-up of all changes, including new features and bug fixes, released in the previous three months.  This is the version we recommend to our customers.  Once an LTS release is created we only ship security enhancements and fixes for show-stopping bugs.  The rule of thumb is upgrading to the latest LTS release should be less risky than staying on the current LTS release. 
+Long Term Support versions of Octopus are shipped every three months and remain in support for six months.  It contains a roll-up of all changes, including new features and bug fixes, released in the previous three months.  This is the version we recommend to our customers.  Once an LTS release is created we only ship security enhancements and fixes for show-stopping bugs.  The rule of thumb is upgrading to the latest LTS release should be less risky than staying on the current LTS release.
 
 Choose the slow lane releases with long-term support if this sounds like your scenario:
 

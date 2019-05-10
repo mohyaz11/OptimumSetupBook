@@ -74,7 +74,7 @@ After linking the other projects, the result for the Illinois Data Center will l
 
 ![](images/datacenter-illnoiswithlinkedprojects.png)
 
-The internal tenant will look like this.  Note that it configured to only deploy to `Development,` `Testing,` and `Staging.` 
+The internal tenant will look like this.  Note that it configured to only deploy to `Development,` `Testing,` and `Staging.`
 
 ![](images/datacenter-internaldatacenter.png)
 
@@ -116,7 +116,7 @@ That deployment was successful.
 
 ![](images/datacenter-postinternaltrafficcop.png)
 
-Now we can deploy to both Illinois and the Texas Data Center. 
+Now we can deploy to both Illinois and the Texas Data Center.
 
 ![](images/datacenter-deploytoboth.png)
 

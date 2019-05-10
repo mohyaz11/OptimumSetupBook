@@ -58,7 +58,7 @@ To the WebUI Deployments:
 
 We recommended driving your process using variables for this very reason.  We can change around those variables and not have to worry too much about our process.  That being said, there might be a couple of new variables we will have to use.  
 
-### The case against using tenants
+### The Case Against Using Tenants
 
 There are two approaches to deploying feature branches.  The first approach to consider is using tenants.  Each feature branch becomes a tenant.  
 
@@ -70,7 +70,7 @@ In addition, you might already have regular customers as tenants. Feature branch
 
 The last issue is the tenant clean-up.  If you happen to have a tenant name collision, when should the clean-up occur?  How would you schedule something like that?  
 
-### Using output variables
+### Using Output Variables
 
 Rather than using tenants for feature branches, we will be using the release name to drive this.  At the start of the process, we will have a PowerShell step to set an output variable based on the release name.  The PowerShell script will only run on the channel we created for feature branch deployments.  
 
@@ -158,7 +158,7 @@ if ($currentBranch -ne "refs/heads/master"){
     Write-Host "Non-master branch detected, using feature branches instead"
     $channelName = "Feature Branch Channel"
     $replacementBranchName = $currentBranch.replace("refs/heads/", "").replace(" ", "")
-    $releaseVersion = "$featureBranchVersion.$buildNumber-$replacementBranchName" 
+    $releaseVersion = "$featureBranchVersion.$buildNumber-$replacementBranchName"
 }
 
 "##teamcity[setParameter name='env.octopusChannel' value='$channelName']"
@@ -188,11 +188,11 @@ if ($currentBranch -ne "refs/heads/master"){
     Write-Host "Non-master branch detected, using feature branches instead"
     $channelName = "Feature Branch Channel"
     $replacementBranchName = $currentBranch.replace("refs/heads/", "").replace(" ", "")
-    $releaseVersion = "$featureBranchVersion.$buildNumber-$replacementBranchName" 
+    $releaseVersion = "$featureBranchVersion.$buildNumber-$replacementBranchName"
 }
 
-Write-Host "##vso[task.setvariable variable=octopusChannel;issecret=true]$channelName" 
-Write-Host "##vso[task.setvariable variable=octopusVersion;issecret=true]$releaseVersion" 
+Write-Host "##vso[task.setvariable variable=octopusChannel;issecret=true]$channelName"
+Write-Host "##vso[task.setvariable variable=octopusVersion;issecret=true]$releaseVersion"
 ```
 
 For the steps which package the output into packages and push those packages to Octopus Deploy will use the version variable.

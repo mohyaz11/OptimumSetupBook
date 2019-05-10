@@ -1,4 +1,4 @@
-# What is Data Center and why would I need it?
+# What Is Data Center and Why Would I Need It?
 
 Everything we presented so far in this book can be done using the Standard Edition of Octopus Deploy.  The standard license of Octopus Deploy provides quite a bit of functionality.  You get unlimited users, projects, and workers.  You get up to three unique instances of Octopus Deploy.  You get 3 spaces per instance.  There is a lot there.  So...what exactly does Data Center provide?
 
@@ -26,7 +26,7 @@ When a task is added into the queue to be processed one of the servers will pick
 
 ![](images/datacenter-tasks.png)
 
-There are still some behind the scenes things only one server can do, such as processing subscriptions or scheduled tasks.  This is why you see the label `Leader` and another label `Follower`.  An Octopus Deploy Server cluster can only have one leader, but it can have many followers.  If the leader is offline for an extended period of time, then one of the followers will become the leader. 
+There are still some behind the scenes things only one server can do, such as processing subscriptions or scheduled tasks.  This is why you see the label `Leader` and another label `Follower`.  An Octopus Deploy Server cluster can only have one leader, but it can have many followers.  If the leader is offline for an extended period of time, then one of the followers will become the leader.
 
 ## Data Center Benefits
 

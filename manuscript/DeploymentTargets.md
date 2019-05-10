@@ -1,4 +1,4 @@
-# Everything you wanted to know about deployment targets and roles (but were afraid to ask)
+# Everything You Wanted to Know about Deployment Targets and Roles (but Were Afraid to Ask)
 
 We have environments and project processes configured.  Now we need to configure a couple of deployment targets.  Deployment targets are what you will deploy the code to.  Originally, deployment targets were Windows VMs running the Tentacle Windows Service.  The Octopus Deploy server connects to that Tentacle and instructs it to do work.  But a deployment target is not just a Tentacle.  As time has gone on we have added more and more deployment targets types.  Now there are Windows Targets, SSH Connections (for Linux machines), Azure Targets, Kubernetes Clusters, Offline Drops, and Cloud Regions.  That list keeps growing and growing.  We are willing to bet that by the time you read this book that list will have changed.
 

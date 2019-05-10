@@ -121,7 +121,7 @@ Make sure the disks used by your Octopus Server have sufficient throughput/IOPS 
    * Octopus is leaking SQL Connections. This should be very rare but has happened in the past, and we fix every instance we find. We recommend upgrading to the latest version of Octopus and get help from us if the problem persists.
 
 
-## Don't be afraid to get in touch!
+## Don't Be Afraid to Get in Touch!
 
 If none of these troubleshooting steps work, please get in contact with our support team and send along the following details (feel free to ignore points if they don't apply):
 

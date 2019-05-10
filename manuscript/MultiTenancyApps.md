@@ -17,7 +17,7 @@ We want to be able to support the following scenarios for our Multi-Tenant appli
 
 Before jumping into the projects, we want first to configure our deployment targets.  In a previous chapter, we offloaded all database deployments onto workers.  We only need to configure the Web Servers for OctoFx.  There are a couple of small items to point out when configuring a target for a specific tenant.
 
-The name of the deployment target should include the name of the tenant.  [EnvironmentPrefix]-[TenantName]-[AppName]-[Component]-[Number] is a an easy to remember naming convention.  For example, `d-ford-octofx-web-01` if we wanted the machine to deploy the OctoFX website for Ford to Dev.  In the event the target is used for multiple tenants, it is a good idea to group them using tenant tags and name the server after the tenant tag.  [EnvironmentPrefix]-[TenantTag]-[AppName]-[Component]-[Number], or `d-alphacustomers-octofx-web-01`.  As always, naming is easy to understand, difficult to master, as long as you have consensus around your naming conventions you should be fine. 
+The name of the deployment target should include the name of the tenant.  [EnvironmentPrefix]-[TenantName]-[AppName]-[Component]-[Number] is a an easy to remember naming convention.  For example, `d-ford-octofx-web-01` if we wanted the machine to deploy the OctoFX website for Ford to Dev.  In the event the target is used for multiple tenants, it is a good idea to group them using tenant tags and name the server after the tenant tag.  [EnvironmentPrefix]-[TenantTag]-[AppName]-[Component]-[Number], or `d-alphacustomers-octofx-web-01`.  As always, naming is easy to understand, difficult to master, as long as you have consensus around your naming conventions you should be fine.
 
 A good rule of thumb is to configure targets for tenanted deployments only.  Allowing untenanted deployments for a target should be an exception.  Typically we see our customers use a target for tenanted and untenanted deployments in lower environments when the number of test resources available to them is limited.  
 
@@ -151,7 +151,7 @@ The process will also show the step will only be run for tenants with that speci
 
 Our recommendation with using this feature is only to use one tenant tag if at all possible.  If necessary, create an additional tenant tag, or create a new tenant tag set.
 
-## Creating the first releases
+## Creating the First Releases
 
 Everything required has been updated or created.  It is time for the moment of truth, creating a release and deploying it to the development environment.
 
@@ -196,7 +196,7 @@ It is important to point out that each tenant deployment is a unique task.  This
 There were quite a number of changes we made to get this project ready for multi-tenancy.  Some of the changes were a result of some shortcuts we took when we first set up the project in earlier chapters.  For example, changing the website from being a web application under "default web site" to being a unique website with a sub-domain.  Other changes were due to how multi-tenancy is set up, such as adding tenant tags.  However, these changes were able to support all of these scenarios.
 
 1. Each of our customers has a separate web server and database.  They get the same code.  The deployment process should be the same.  The only difference is the destination server and some variables such as the database server and user.
-2. We should be able to choose when a customer gets a specific version of our code.  Some of our customers want to be on the cutting edge, their tolerance for risk is high.  They have no problem being the "guinea pig" for a new feature.  Some of our other customers have a low-risk tolerance.  They only want to be on the stable version. 
+2. We should be able to choose when a customer gets a specific version of our code.  Some of our customers want to be on the cutting edge, their tolerance for risk is high.  They have no problem being the "guinea pig" for a new feature.  Some of our other customers have a low-risk tolerance.  They only want to be on the stable version.
 3. We should be able to group our customers into different release rings, such as Alpha, Beta and Stable.  This allows us to release new versions of code to multiple customers at once.
 4. Some of our customers have custom branding.  During deployments, we need to have the ability to run an additional step to add in the branding.  
 

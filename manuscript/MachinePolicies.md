@@ -1,4 +1,4 @@
-# Making sure your server can connect to deployment targets using machine policies
+# Making Sure Your Server Can Connect to Deployment Targets Using Machine Policies
 
 A topic that we have been dancing around for the past several chapters is machine policies.  You probably noticed it on the left-hand menu and didn't think much of it.
 

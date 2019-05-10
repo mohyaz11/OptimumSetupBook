@@ -6,7 +6,7 @@ In previous chapters we got the environment scaffolding put together, then we cr
 
 Octopus Deploy will deploy code using what is known as a release.  Releases are snapshots of your project's process, variables, and packages.  You deploy that release to the various environments and servers.  The idea behind a release is the core concept of Octopus Deploy, you build your code once, and you deploy that same code to all environments.  The same is true of the release.  The release is created once, and that same release is deployed to all environments.
 
-## Creating the first release
+## Creating the First Release
 
 At this point, we do not have our build server integration set up.  Which is okay, we don't need to do that at this very second.  An easy way to test our deployment process for the Web UI is to go to a development web server and zip up the application folder.  Zipping up the folder will let us test our deployment process without having to worry about configuring the build server and getting that connection wired up.
 
@@ -68,7 +68,7 @@ A typical Maven version string is split into five parts:
 
 The Major, Minor, Patch and Build number are all integer values.  The Qualifier can hold any value, although some qualifiers do have special meaning.
 
-## Creating the release
+## Creating the Release
 
 We are going to create a release to deploy the database changes.  There is no sense in deploying code without a database.  Creating a release is done in the UI by going to the project page and clicking on the create release button.
 
@@ -97,7 +97,7 @@ Finally, there are release notes.  The release notes support markdown syntax.  B
 - A detailed description of changes
 - Git Commit Hash which triggered the deployment
 
-## Deploying the release
+## Deploying the Release
 
 Clicking the save button on the release will take you to the release overview screen.  From here you can view much information about the release, such as what environments it has been deployed to, what variables have been snapshotted, what packages are being deployed, any artifacts created as well as the deployment history.
 

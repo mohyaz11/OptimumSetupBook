@@ -1,4 +1,4 @@
-## Spinning up Deployment Targets and deploying to them automatically using Infrastructure as Code
+## Spinning up Deployment Targets and Deploying to Them Automatically Using Infrastructure as Code
 
 The Tentacle is an MSI you have to install on a VM.  To get your POC going, you went the manual route.  Download the MSI onto the VM, install it and configure it.  Then you went back to the Octopus Deploy UI and registered the target with the Octopus Deploy server.  For a few Tentacles that works.  Once you get above 25 or so machines, you realize that doesn't scale.
 

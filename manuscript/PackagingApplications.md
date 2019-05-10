@@ -1,4 +1,4 @@
-# Packaging Applications on the build server
+# Packaging Applications on the Build Server
 
 Octopus Deploy will deploy a wide variety of package formats to deployment targets.  This list includes, but not limited to NuGet packages, Tar packages, as well as Docker Images, Jar files and Zip files.  
 
@@ -46,7 +46,7 @@ Both of these projects are in the same solution.  The build step for each projec
 
 ![](images/packagingapplications-buildspecificproject.png)
 
-It does seem a bit extreme to separate the components into two builds.  However, consider this.  How often do you make a change to just the website?  What if you make a change to the database, say add a new index?  Should you have to wait for the entire application, both the front-end and database, to be built and tested because of a small index change? 
+It does seem a bit extreme to separate the components into two builds.  However, consider this.  How often do you make a change to just the website?  What if you make a change to the database, say add a new index?  Should you have to wait for the entire application, both the front-end and database, to be built and tested because of a small index change?
 
 > ![](images/professoroctopus.png) A good rule of thumb is a build shouldn't take any longer than it takes to get a cup of coffee from the break room.
 
