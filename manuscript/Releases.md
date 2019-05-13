@@ -1,6 +1,6 @@
 # Let's Deploy Some Code!
 
-In previous chapters we got the environment scaffolding put together, then we created some projects for our application.  We wrapped it up by setting up deployment targets for the projects.  After all that (whew!) it is finally time to deploy some code!
+In previous chapters we got the environment scaffolding put together, then we created some projects for our application, and we wrapped it up by setting up deployment targets for the projects.  After all that (whew!) it is finally time to deploy some code!
 
 > ![](images/professoroctopus.png) Typically the previous chapters will take anywhere from 10 to 20 minutes to set up and configure.  It does seem like a lot at first.  The overall goal of the previous chapters was to provide you the foundation to get all the scaffolding set so you can scale your Octopus Deploy.
 
@@ -43,7 +43,7 @@ Octopus Deploy supports regular Semantic Versioning or SemVer.  A typical exampl
 - Minor
 - Patch
 
-We also support pragmatic versioning, which is including a fourth number, `1.5.2.3.`  Not every version can fit into three numbers.  
+We also support pragmatic versioning, which includes a fourth number, `1.5.2.3.`  Not every version can fit into three numbers.  
 
 - Major
 - Minor
@@ -82,24 +82,24 @@ The first option is the version number for this release.  By default, Octopus De
 
 ![](images/releasecreation-versionstrategy.png)
 
-We recommend leaving that as is.  When you set up the integration with the build server, you can configure the plug-in to specify the build number when creating a release.  When manually creating releases through the UI (typically done to test out changes to the process) the default option will create a new version for you with requiring you to have to make a bunch of changes to the version number.
+We recommend leaving that as is.  When you set up the integration with the build server, you can configure the plug-in to specify the build number when creating a release.  When manually creating releases through the UI (typically done to test out changes to the process) the default option will create a new version for you without requiring you to make a bunch of changes to the version number.
 
 ![](images/releasecreation-buildserverreleasenumber.png)
 
-The next option on the release creation screen is the package selection section.  By default Octopus Deploy will select the latest version it can find.  However, there are cases when you want to choose a specific version.  To do that you can click on the select version button.
+The next option on the release creation screen is the package selection section.  By default, Octopus Deploy will select the latest version it can find.  However, there are cases when you want to choose a specific version.  To do that you can click on the select version button.
 
 ![](images/releasecreation-selectspecificpackageversion.png)
 
 Finally, there are release notes.  The release notes support markdown syntax.  Because we are just testing out this deployment process for the first time, we are going to skip entering in anything into the release notes.  We recommend including as much information as you think as necessary for each release.  Some ideas include:
 
-- All Git Commits since the last deployment
+- All Git Commits since the last deployment.
 - Links to your internal tracking system such as Jira.  
-- A detailed description of changes
-- Git Commit Hash which triggered the deployment
+- A detailed description of changes.
+- Git Commit Hash which triggered the deployment.
 
 ## Deploying the Release
 
-Clicking the save button on the release will take you to the release overview screen.  From here you can view much information about the release, such as what environments it has been deployed to, what variables have been snapshotted, what packages are being deployed, any artifacts created as well as the deployment history.
+Clicking the save button on the release will take you to the release overview screen.  From here you can view much more information about the release, such as what environments it has been deployed to, what variables have been snapshotted, which packages are being deployed, and any artifacts that have been created, as well as the deployment history.
 
 ![](images/releasecreation-predevdeployment.png)
 
@@ -121,7 +121,7 @@ The next section configures how the Octopus Server will handle a failure.  You h
 
 ![](images/releasecreation-failuremode.png)
 
-> ![](images/professoroctopus.png) After a process is configured and tested the chances of it failing are very slim.  Typically we see a failure occur because permissions on a database got changed, a file share isn't available or something else directly unrelated to the deployment.  Those types of failures require an external change (fix the database permission) and then a retry will work.
+> ![](images/professoroctopus.png) After a process is configured and tested the chances of it failing are very slim.  Typically we see a failure occur because permissions on a database were changed, a file share isn't available, or something else directly unrelated to the deployment.  Those types of failures require an external change (fix the database permission) and then a retry will work.
 
 The final section is the package download option.  We recommend leaving this option alone.  The only reason you would want to force a download of the package is for debugging purposes.  Just like any other cache, using the package cache should speed up the overall deployment process.
 
@@ -177,7 +177,7 @@ In looking at the dashboard, we can see that both projects were successfully dep
 
 ## First Traffic Cop Deployment
 
-If you recall from earlier, the Traffic Cop project doesn't deploy to the Development environment.  Traffic Cop skips the development environment because we configured it use a unique lifecycle which skips Development and starts with Testing.  The reason for this is because in most CI/CD scenarios the build server is the one creating the releases for the Database and WebUI project.  The build server wouldn't create the Traffic Cop release because not all releases will be deploying both applications.  There are several scenarios where only a database change is needed (sproc bug fix, new index, etc.) or only a code fix is required (bug fix, updating CSS, etc.).  
+If you recall from earlier, the Traffic Cop project doesn't deploy to the Development environment.  Traffic Cop skips the development environment because we configured it to use a unique lifecycle which skips Development and starts with Testing.  We did this because in most CI/CD scenarios the build server is the one creating the releases for the Database and WebUI project.  The build server wouldn't create the Traffic Cop release because not all releases will be deploying both applications.  There are several scenarios where only a database change is needed (sproc bug fix, new index, etc.) or only a code fix is required (bug fix, updating CSS, etc.).  
 
 ![](images/releasecreation-trafficcopprocess.png)
 
@@ -187,11 +187,11 @@ One thing you will notice the project will first try to create a release version
 
 ![](images/releasecreation-createtrafficcoprelease.png)
 
-Because the lifecycle skips dev, the release will allow you to go directly to staging.  Please note, the version of the projects being deployed is included in the snapshot.  If you were to create a new WebUI release or a new Database release, then you would need to create a new TrafficCop release.
+Because the lifecycle skips dev, the release will allow you to go directly to staging.  Please note, the version of the projects being deployed is included in the snapshot.  If you were to create a new WebUI release or a new Database release, then you would need to create a new Traffic Cop release.
 
 ![](images/releasecreation-trafficcopreleasedetails.png)
 
-Unlike before, the first release of TrafficCop works because we sorted out any issues in Dev.
+Unlike before, the first release of Traffic Cop works because we sorted out any issues in Dev.
 
 ![](images/releasecreation-trafficcopsuccessfulrelease.png)
 
