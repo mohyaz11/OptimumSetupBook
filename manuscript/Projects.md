@@ -139,7 +139,7 @@ Just like with the database project, do not get too hung up on the steps.  We ar
 
 ### OctoFX-TrafficCop Project
 
-The Traffic Cop project is the coordinator.  It knows the order to invoke the Database and WebUI projects.  This project is useful for times when the entire OctoFX application needs to be deployed.  This way you can still have a single project to schedule and deploy later.
+The traffic cop project is the coordinator.  It knows the order to invoke the Database and WebUI projects.  This project is useful for times when the entire OctoFX application needs to be deployed.  This way you can still have a single project to schedule and deploy later.
 
 We have added manual interventions to the Database and WebUI projects.  So it makes sense to have them if you are deploying the database or you are just deploying the WebUI.  It doesn't make a whole lot of sense to get approval for a WebUI deployment after the database has been deployed.  In an ideal world, those approvals would come before the deployments even started, which is what we are going to do.  
 

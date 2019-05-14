@@ -50,7 +50,7 @@ We didn't include SpinUp, TearDown, or Maintenance in the default or hotfix life
 
 #### Optional Phases
 
-One of the settings when creating a phase is the `Required to progress` setting.  The default value is `All must complete.`  All environments in the phase must be deployed to successfully before we can promote to the next phase.
+One of the settings when creating a phase is the `Required to progress` setting.  The default value is `All must complete`.  All environments in the phase must be deployed to successfully before we can promote to the next phase.
 
 The second choice is to set a minimum number of environments that must be successfully deployed to before promoting to the next phase. This is handy for cases where you have two or three QA environments, but only one is used for each release of your application. You can configure your Testing phase so that it contains three environments but only one needs to be successful before you can promote to the Staging environment.
 

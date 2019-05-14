@@ -93,7 +93,7 @@ With the above scenarios, we create a couple of teams to be used for approvals, 
 
 ![](images/teamsecurity-manualintervention.png)
 
-Octopus Administrators sometimes need to test new features.  Having the ability to approve is critical.  Alternatively, it is an emergency, and all the DBAs are out to a team lunch, and you need to get a deployment to production approved.  The Octopus Admins should know what will happen when they click on `Approved.`  They know it will be audited.  They can tell and show anyone what was done after the emergency has passed.
+Octopus Administrators sometimes need to test new features.  Having the ability to approve is critical.  Alternatively, it is an emergency, and all the DBAs are out to a team lunch, and you need to get a deployment to production approved.  The Octopus Admins should know what will happen when they click on `Approved`.  They know it will be audited.  They can tell and show anyone what was done after the emergency has passed.
 
 ## Conclusion
 

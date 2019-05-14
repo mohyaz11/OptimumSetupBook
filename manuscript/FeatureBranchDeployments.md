@@ -8,7 +8,7 @@ A common technique is to hide the change behind a feature flag.  But that doesn'
 
 In a perfect world, that feature branch would get its own set of resources.  In our example application, OctoFX, this means a website and a database.  Those resources would be automatically created when the user pushes the feature branch up to the server.  
 
-If you recall in our projects chapter we said a core rule when configuring your projects is `Projects should be responsible for setting up what it needs to run.`  This means creating a website and database.  In that chapter we created the database and web project with that rule in mind.  The database project will create the database if it does not exist.  The WebUI project will create a website if it doesn't exist.  Resource creation is covered.  
+If you recall in our projects chapter we said a core rule when configuring your projects is `Projects should be responsible for setting up what it needs to run`.  This means creating a website and database.  In that chapter we created the database and web project with that rule in mind.  The database project will create the database if it does not exist.  The WebUI project will create a website if it doesn't exist.  Resource creation is covered.  
 
 We need to make a few other tweaks to Octopus Deploy to help support this scenario.
 

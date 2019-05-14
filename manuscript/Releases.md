@@ -43,7 +43,7 @@ Octopus Deploy supports regular Semantic Versioning or SemVer.  A typical exampl
 - Minor
 - Patch
 
-We also support pragmatic versioning, which includes a fourth number, `1.5.2.3.`  Not every version can fit into three numbers.  
+We also support pragmatic versioning, which includes a fourth number, `1.5.2.3`.  Not every version can fit into three numbers.  
 
 - Major
 - Minor
@@ -177,21 +177,21 @@ In looking at the dashboard, we can see that both projects were successfully dep
 
 ## First Traffic Cop Deployment
 
-If you recall from earlier, the Traffic Cop project doesn't deploy to the Development environment.  Traffic Cop skips the development environment because we configured it to use a unique lifecycle which skips Development and starts with Testing.  We did this because in most CI/CD scenarios the build server is the one creating the releases for the Database and WebUI project.  The build server wouldn't create the Traffic Cop release because not all releases will be deploying both applications.  There are several scenarios where only a database change is needed (sproc bug fix, new index, etc.) or only a code fix is required (bug fix, updating CSS, etc.).  
+If you recall from earlier, the traffic cop project doesn't deploy to the Development environment.  Traffic cop skips the development environment because we configured it to use a unique lifecycle which skips Development and starts with Testing.  We did this because in most CI/CD scenarios the build server is the one creating the releases for the Database and WebUI project.  The build server wouldn't create the traffic cop release because not all releases will be deploying both applications.  There are several scenarios where only a database change is needed (sproc bug fix, new index, etc.) or only a code fix is required (bug fix, updating CSS, etc.).  
 
 ![](images/releasecreation-trafficcopprocess.png)
 
 Because this is the first time this project is being deployed via Octopus Deploy, it makes sense to take advantage of the traffic cop project.  Let's first start with creating the release.  
 
-One thing you will notice the project will first try to create a release version of `0.0.1` but the projects it is deploying are currently on release `0.0.2`.  We recommend keeping versioning the traffic cop release, so it matches the same, Major.Minor.Patch release.  For example, if you have deployed `1.5.2.1` to the WebUI and `1.5.2.10` to the Database, then the first release for the Traffic Cop should be `1.5.2.1`, or `1.5.2-Release1`.  
+One thing you will notice the project will first try to create a release version of `0.0.1` but the projects it is deploying are currently on release `0.0.2`.  We recommend keeping versioning the traffic cop release, so it matches the same, Major.Minor.Patch release.  For example, if you have deployed `1.5.2.1` to the WebUI and `1.5.2.10` to the Database, then the first release for the traffic cop should be `1.5.2.1`, or `1.5.2-Release1`.  
 
 ![](images/releasecreation-createtrafficcoprelease.png)
 
-Because the lifecycle skips dev, the release will allow you to go directly to staging.  Please note, the version of the projects being deployed is included in the snapshot.  If you were to create a new WebUI release or a new Database release, then you would need to create a new Traffic Cop release.
+Because the lifecycle skips dev, the release will allow you to go directly to staging.  Please note, the version of the projects being deployed is included in the snapshot.  If you were to create a new WebUI release or a new Database release, then you would need to create a new traffic cop release.
 
 ![](images/releasecreation-trafficcopreleasedetails.png)
 
-Unlike before, the first release of Traffic Cop works because we sorted out any issues in Dev.
+Unlike before, the first release of traffic cop works because we sorted out any issues in Dev.
 
 ![](images/releasecreation-trafficcopsuccessfulrelease.png)
 

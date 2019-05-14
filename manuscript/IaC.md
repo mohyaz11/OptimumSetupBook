@@ -6,7 +6,7 @@ We recommend creating a process to automate the Tentacle installation.  If you a
 
 > ![](images/professoroctopus.png) CloudFormation templates allow you to include PowerShell in them.  ARM templates require you to use the custom script extension.  We recommend using Google to find the latest examples.  
 
-Meanwhile, if you are on-premise, you might be using hypervisor software such as Hyper-V or VMWare.  Those have a robust API to script out spinning up a VM and bootstrapping them using a PowerShell script.  
+Meanwhile, if you are on-premises, you might be using hypervisor software such as Hyper-V or VMWare.  Those have a robust API to script out spinning up a VM and bootstrapping them using a PowerShell script.  
 
 > ![](images/professoroctopus.png) We are not including samples on how to do this as each hypervisor is unique.  If we tried to include scripts for every possible hypervisor and version, this chapter would end up being hundreds of pages long.
 
@@ -155,4 +155,4 @@ And with a simple click of the save button, we have the trigger configured.
 
 ## Conclusion
 
-You can leverage technology to automatically spin up and down deployment targets.  This can be done whether you are using a cloud provider such as AWS and Azure or if all your deployment targets are on-premise you running Hyper-V or VMWare.  With deployment triggers, you can then tell Octopus Deploy to automatically deploy code when new machines come online.  This allows you to scale up your application in a few minutes, and when you no longer need that extra horsepower, scale back down.
+You can leverage technology to automatically spin up and down deployment targets.  This can be done whether you are using a cloud provider such as AWS and Azure or if all your deployment targets are on-premises you running Hyper-V or VMWare.  With deployment triggers, you can then tell Octopus Deploy to automatically deploy code when new machines come online.  This allows you to scale up your application in a few minutes, and when you no longer need that extra horsepower, scale back down.

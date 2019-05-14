@@ -24,19 +24,19 @@ Let's give it a descriptive name like "Production Deployment." We'll leave it en
 
 ### Event Filters
 
-Now we need to create a filter that represents production deployments. The first drop down is the event group selection. Event groups are great if you want to filter to a known set of events. For example, `machine critical-events` includes `machine cleanup failed` and `machine failed to be unavailable.` We'll leave this blank since we're only looking for a single event.
+Now we need to create a filter that represents production deployments. The first drop down is the event group selection. Event groups are great if you want to filter to a known set of events. For example, `machine critical-events` includes `machine cleanup failed` and `machine failed to be unavailable`. We'll leave this blank since we're only looking for a single event.
 
-We want to know when a production deployment starts, so click on `select event categories` and choose `deployment started.`
+We want to know when a production deployment starts, so click on `select event categories` and choose `deployment started`.
 
 ![](images/subscriptions-selectingdeploymentstarted.png)
 
-A document type is the type of record to watch.  Examples are `Project,` `Variable-Set,` and `Machine Policy.`  If you were to look in the database document types would almost match up with table names.  Not exactly though, but close.  For this particular subscription, we only care about deployments to production.  No filter is needed here.
+A document type is the type of record to watch.  Examples are `Project`, `Variable-Set`, and `Machine Policy`.  If you were to look in the database document types would almost match up with table names.  Not exactly though, but close.  For this particular subscription, we only care about deployments to production.  No filter is needed here.
 
 User filters allow you to filter certain actions for specific users.  A useful example would be sending a notification if a service account user fails to log in.  This filter isn't helpful for this particular subscription we are setting up.  Leave that blank as well.
 
 The project filter allows you to select specific projects.  For this filter, maybe you only want to be notified when specific key projects go to production.  This would be one of the first filters to look at when/if the subscription starts being too noisy.  
 
-The last piece for the filter is the environment. Click `select environments` and choose `Production.`
+The last piece for the filter is the environment. Click `select environments` and choose `Production`.
 
 ![](images/subscriptions-selectingenvironment.png)
 

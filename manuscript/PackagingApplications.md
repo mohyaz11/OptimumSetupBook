@@ -6,7 +6,7 @@ The build server, typically Jenkins, TeamCity, TFS/Azure DevOps, Bamboo, or AppV
 
 The build server is responsible for packaging the application is because the build server monitors your source control for any changes.  It builds and tests code once a change is detected.  Once the build server is done it hands the package off to Octopus Deploy to handle the deployments.
 
-Octopus Deploy is build server agnostic.  It does not care about the origin of the packages.  All it cares about is that it gets a package to deploy.  We have written many plug-ins to support the more popular build servers.  For the build servers where we don't have a plug-in, we have created a command line application called `octo.exe.`  The plug-ins are wrappers for that command line application so that you will get the same functionality as the plug-ins.  
+Octopus Deploy is build server agnostic.  It does not care about the origin of the packages.  All it cares about is that it gets a package to deploy.  We have written many plug-ins to support the more popular build servers.  For the build servers where we don't have a plug-in, we have created a command line application called `octo.exe`.  The plug-ins are wrappers for that command line application so that you will get the same functionality as the plug-ins.  
 
 ## Build Server Process
 
@@ -76,7 +76,7 @@ Your build server will need to communicate with the Octopus Deploy server.  To d
 
 Service accounts don't have passwords.  They only have API Keys.  If an API Key is compromised, then all you need to do is delete it.  Password resets are slightly harder.  Also, service accounts are not tied to a specific user.  Often we have seen a person configure the CI/CD pipeline using an API Key linked to their user account.  When they leave the company, the typical clean-up process runs and disables the user account.  Then all the builds start failing because they are unable to deploy.
 
-It is also a good idea to limit what the service account can do.  We recommend creating a custom role for your build server service account which we will call `Build Server Role.`
+It is also a good idea to limit what the service account can do.  We recommend creating a custom role for your build server service account which we will call `Build Server Role`.
 
 ![](images/packagingapplications-buildserverrole.png)
 
