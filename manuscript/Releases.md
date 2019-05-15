@@ -14,7 +14,7 @@ For this first release, I have created two packages, one for the website project
 
 ![](images/releasecreation-packagestoupload.png)
 
-Now we need to upload them to the Octopus Server.  Go to Library -> Packages and clicking the upload packages button in the top right to upload packages to the server.
+Now we need to upload them to the Octopus Server.  Go to **Library > Packages** and clicking the upload packages button in the top right to upload packages to the server.
 
 ![](images/releasecreation-uploadpackages.png)
 

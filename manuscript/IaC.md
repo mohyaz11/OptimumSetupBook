@@ -1,16 +1,16 @@
-## Spinning up Deployment Targets and Deploying to Them Automatically Using Infrastructure as Code
+## Spinning up Deployment Targets and Automatic Deployments Using Infrastructure as Code
 
-The Tentacle is an MSI you have to install on a VM.  To get your POC going, you went the manual route.  Download the MSI onto the VM, install it and configure it.  Then you went back to the Octopus Deploy UI and registered the target with the Octopus Deploy server.  For a few Tentacles that works.  Once you get above 25 or so machines, you realize that doesn't scale.
+The Tentacle is an MSI you have to install on a VM.  To get your POC going, you went the manual route.  Downloaded the MSI onto the VM, installed it and configured it.  Then you went back to the Octopus Deploy UI and registered the target with the Octopus Deploy server.  For a few Tentacles that works.  Once you get above 25 or so machines, you realize that doesn't scale.
 
-We recommend creating a process to automate the Tentacle installation.  If you are using Azure, you can leverage Azure Resource Manager Templates (ARM Templates).  For AWS, you can leverage or CloudFormation to spin up new virtual machines.  Both processes support running a PowerShell script to bootstrap them.
+We recommend creating a process to automate Tentacle installation.  If you're using Azure, you can leverage Azure Resource Manager Templates (ARM Templates).  For AWS, you can leverage CloudFormation to spin up new virtual machines.  Both processes support running a PowerShell script to bootstrap them.
 
 > ![](images/professoroctopus.png) CloudFormation templates allow you to include PowerShell in them.  ARM templates require you to use the custom script extension.  We recommend using Google to find the latest examples.  
 
-Meanwhile, if you are on-premises, you might be using hypervisor software such as Hyper-V or VMWare.  Those have a robust API to script out spinning up a VM and bootstrapping them using a PowerShell script.  
+Meanwhile, if you are on-premises, you might use hypervisor software such as Hyper-V or VMWare.  Those have a robust API to script spinning up VMs and bootstrapping them using a PowerShell script.  
 
 > ![](images/professoroctopus.png) We are not including samples on how to do this as each hypervisor is unique.  If we tried to include scripts for every possible hypervisor and version, this chapter would end up being hundreds of pages long.
 
-Regardless of the technology you are using, you will need a PowerShell script to Bootstrap the Tentacle installation.  Below is a sample script that we wrote for this book to bootstrap Tentacles.
+Regardless of the technology you are using, you need a PowerShell script to Bootstrap the Tentacle installation.  Below is a sample script we wrote for this book to bootstrap Tentacles.
 
 ``` PS
 
@@ -106,7 +106,7 @@ if ($lastExitCode -ne 0) {
 
 > ![](images/professoroctopus.png) By automating the Tentacle bootstrapping process, you also put yourself in a position to better handle increasing load.  With automation, you can spin up a new server in a matter of minutes rather than hours or even days.
 
-The bootstrap script can do so much more than install the Tentacle.  You can also leverage applications such as Chocolatey and built-in features such as DISM to install IIS, .NET Core, SQL Server Management Objects, and so on.  Chocolatey is an application manager which allows you to install third-party applications in an automated fashion.  DISM, or Deployment Image Servicing and Management, is built into Windows to allow you to enable or disable features.  For example, if you wanted to automatically configure a VM to host a .NET core application this would be a script to do so.
+The bootstrap script can do so much more than install the Tentacle.  You can also leverage applications such as Chocolatey and built-in features such as DISM to install IIS, .NET Core, SQL Server Management Objects, and so on.  Chocolatey is an application manager which lets you install third-party applications in an automated fashion.  DISM, or Deployment Image Servicing and Management, is built into Windows to let you enable or disable features.  For example, if you wanted to automatically configure a VM to host a .NET core application this would be a script to do so:
 
 ```PS
 Write-Output "Installing ASP.NET 4.5"
@@ -131,7 +131,7 @@ choco install dotnetcore-windowshosting -y
 
 The creation of the deployment targets is now automated.  The next step is to set up a project trigger which will see when a new machine is added for a specific role and then automatically deploy to that machine.  This way the entire process is automated, from machine creation to deployment.  
 
-Before we get going on creating the triggers, let's take a quick step back and think about what this means.  In the previous chapters, we set up three projects.  
+Before we get going creating the triggers, let's take a quick step back and think about what this means.  In the previous chapters, we set up three projects.  
 
 ![](images/deploymenttargets-allprojects.png)
 
@@ -141,11 +141,11 @@ This is done by going to the project and selecting the triggers option on the le
 
 ![](images/deploymenttargets-notriggers.png)
 
-From here you are going to want to select the add triggers button in the top right corner of the screen and select deployment targets trigger.
+From here you need to select the add triggers button in the top right corner of the screen and select deployment targets trigger.
 
 ![](images/deploymenttargets-addtriggeroptions.png)
 
-On the next screen, you will want to the event, which should be "machine becomes available for deployment."  Next select the machine role.  This is also a great reason to have a specific role per project.  It allows the trigger to monitor for machines it cares about.
+On the next screen, you will want to select the event, which should be "machine becomes available for deployment."  Next select the machine role.  This is also a great reason to have a specific role per project.  It allows the trigger to monitor for machines it cares about.
 
 ![](images/deploymenttargets-addtriggerform.png)
 
@@ -155,4 +155,4 @@ And with a simple click of the save button, we have the trigger configured.
 
 ## Conclusion
 
-You can leverage technology to automatically spin up and down deployment targets.  This can be done whether you are using a cloud provider such as AWS and Azure or if all your deployment targets are on-premises you running Hyper-V or VMWare.  With deployment triggers, you can then tell Octopus Deploy to automatically deploy code when new machines come online.  This allows you to scale up your application in a few minutes, and when you no longer need that extra horsepower, scale back down.
+You can leverage technology to automatically spin up and down deployment targets.  This can be done whether you are using a cloud provider such as AWS and Azure or if all your deployment targets are on-premises you running Hyper-V or VMWare.  With deployment triggers, you can then tell Octopus Deploy to automatically deploy code when new machines come online.  This allows you to scale up your application in a few minutes, and when you no longer need that extra horsepower, scale it back down.

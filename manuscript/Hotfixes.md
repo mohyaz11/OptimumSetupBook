@@ -1,10 +1,10 @@
 # Hotfixes
 
-It is not a great start to the day.  Production is hosed.  You need to get a hotfix out quickly before the start of business. What do you do? You could make those changes directly to the production database or files, but that's risky and time-consuming. And we already have this tremendous automated deployment pipeline. We just need to configure it for these scenarios. Luckily, we've gone part of the work earlier when we set up our lifecycles. Let's look at the next piece of the puzzle with channels.
+It is not a great start to the day.  Production is hosed.  You need to get a hotfix out quickly before the start of business. What do you do? You could make those changes directly to the production database or files, but that's risky and time-consuming. And we already have this tremendous automated deployment pipeline. We just need to configure it for these scenarios. Luckily, we did part of the work earlier when we set up our lifecycles. Let's look at the next piece of the puzzle with channels.
 
 ## Channels
 
-Channels let you configure your project releases to take different paths. The primary way this happens is that you can assign different lifecycles to each channel. You can limit what versions of packages are available for releases in each channel. You can also scope specific steps and variables to different channels, but for this chapter, we're going to focus on lifecycles and package version rules.
+Channels let you configure your project releases to take different paths. The primary way this happens is that you can assign different lifecycles to each channel. You can limit which versions of packages are available for releases in each channel. You can also scope specific steps and variables to different channels, but for this chapter, we're going to focus on lifecycles and package version rules.
 
 ## Creating the Hotfix Channel
 
@@ -14,7 +14,7 @@ You'll notice two channels on this page, `Default` and `Feature Branch Channel`.
 
 ![](images/hotfix-allchannels.png)
 
-We need to add another channel to handle hotfix deployments.  First, click the `Add Channel` button.  We'll set the name to Hotfix and the Lifecycle to `Hotfix`. 
+We need to add another channel to handle hotfix deployments.  First, click the `Add Channel` button.  We'll set the name to Hotfix and the Lifecycle to `Hotfix`.
 
 ![](images/hotfix-addchannel.png)
 
@@ -22,7 +22,7 @@ Let's go ahead and save this and create a release in the channel to see what it 
 
 ![](images/hotfix-createrelease.png)
 
-Once you save the release, you'll notice that our release screen shows the Staging and Production environments only and the deploy button says "Deploy to Staging...". If we jump to the Overview page, you'll see that our releases are grouped by their channel and that the Hotfix channel only has Staging and Production environments. Very nice!
+Once you save the release, you'll notice that our release screen shows the Staging and Production environments only, and the deploy button says "Deploy to Staging...". If we jump to the Overview page, you'll see that our releases are grouped by their channel and that the Hotfix channel only has Staging and Production environments. Very nice!
 
 ![](images/hotfix-deploy.png)
 
@@ -36,15 +36,15 @@ Now, let's go back and edit our Hotfix channel. In the Version Rules section, cl
 
 ![](images/hotfix-maindesignrule.png)
 
-When the modal window loads, ignore Version range for now. The version range is handy when you are releasing a newer version of your software, say version 2 versus version 1. The version rule will limit packages with that version to their own channel with scoped steps and variables. Set the Pre-release tag to `hotfix*` and click Save.
+When the modal window loads, ignore Version range for now. The version range is handy when you are releasing a newer version of your software, say version 2 versus version 1. The version rule will limit packages with the specified version to their own channel with scoped steps and variables. Set the Pre-release tag to `hotfix*` and click Save.
 
 ![](images/hotfix-versionrules.png)
 
-Time to create another release.  Expand the Channel and the Packages sections. When you choose the Hotfix channel, you should see the version of the package change to the one with the prerelease tag. 
+Time to create another release.  Expand the Channel and the Packages sections. When you choose the Hotfix channel, you should see the version of the package change to the one with the pre-release tag.
 
 ![](images/hotfix-createreleasewithchannelrule.png)
 
-Clicking on the select version button will load a modal window with only packages versions which match that version rule.
+Clicking on the select version button will load a modal window with only the versions of packages which match that version rule.
 
 ![](images/hotfix-selectpackagewithversionrules.png)
 
@@ -52,4 +52,4 @@ You can override this, but by default, your standard packages can't be used for 
 
 ## Conclusion
 
-In this chapter, we covered how to set up a new channel for your project that uses a different lifecycle and different packages from your mainstream releases. Now you're set up to handle emergencies with deployments from Octopus!
+In this chapter, we covered how to set up a new channel for your project that uses a different lifecycle and different packages from your mainstream releases. Now you're ready to handle emergencies with deployments from Octopus!

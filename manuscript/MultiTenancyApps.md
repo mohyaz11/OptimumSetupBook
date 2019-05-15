@@ -27,7 +27,7 @@ In a perfect world, each tenant would get a separate web server and database ser
 
 ## Tenant Tags
 
-Tenant tags are a way to group tenants.  To support our scenarios we are going to create two tenant tag sets, one called `Release` and the other called `Custom Features`.  Go to the Library -> Tenant Tag Sets page to configure tenant tags.  
+Tenant tags are a way to group tenants.  To support our scenarios we are going to create two tenant tag sets, one called `Release` and the other called `Custom Features`.  Go to the **Library > Tenant Tag Sets** page to configure tenant tags.  
 
 ![](images/multitenancyapp-tenanttags.png)
 

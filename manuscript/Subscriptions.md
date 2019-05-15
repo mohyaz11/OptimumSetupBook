@@ -2,11 +2,11 @@
 
 Who changed that project's deployment process? Who removed Bob from the administrator's group?
 
-The Octopus audit log will tell you who did these actions which are useful after the fact, but wouldn't you rather know _when_ specific changes happen?
+The Octopus audit log will tell you who made these actions, which is useful after the fact, but wouldn't you rather know _when_ specific changes happen?
 
 If you answered "yes," then you're in luck! This is precisely what the Subscriptions feature is for.
 
-Let's create a subscription that will notify administrators whenever a production deployment starts. You can create an email step or Slack notification step in each project and scope it to the Production environment, but we can be notified about all production deployments with a single subscription.
+Let's create a subscription that will notify administrators whenever a production deployment starts. You can create an email step or Slack notification step in each project and scope it to the Production environment, but we can be also notified about all production deployments with a single subscription.
 
 ## Creating Subscriptions
 
@@ -32,7 +32,7 @@ We want to know when a production deployment starts, so click on `select event c
 
 A document type is the type of record to watch.  Examples are `Project`, `Variable-Set`, and `Machine Policy`.  If you were to look in the database document types would almost match up with table names.  Not exactly though, but close.  For this particular subscription, we only care about deployments to production.  No filter is needed here.
 
-User filters allow you to filter certain actions for specific users.  A useful example would be sending a notification if a service account user fails to log in.  This filter isn't helpful for this particular subscription we are setting up.  Leave that blank as well.
+User filters allow you to filter certain actions for specific users.  A useful example would be sending a notification if a service account user fails to log in.  This filter isn't helpful for this particular subscription that we are setting up.  Leave that blank as well.
 
 The project filter allows you to select specific projects.  For this filter, maybe you only want to be notified when specific key projects go to production.  This would be one of the first filters to look at when/if the subscription starts being too noisy.  
 
@@ -40,11 +40,11 @@ The last piece for the filter is the environment. Click `select environments` an
 
 ![](images/subscriptions-selectingenvironment.png)
 
-There are two options for how to deliver the notification, email or webhook.
+There are two options for how to deliver the notification: email or webhook.
 
 ### Email Notifications
 
-We're going to set up this subscription with an email notification.
+We're going to configure this subscription with an email notification.
 
 First, choose a team to receive the email. When the subscription fires, an email will be sent to each member of the team with the permissions to see that event.
 
@@ -62,7 +62,7 @@ Notice that small text at the bottom of the screenshot above.  All the emails se
 
 ### Webhook Notifications
 
-You can also configure the subscription to send the event payload to a webhook. We won't be configuring a webhook in this chapter, but we will cover the settings available.
+You can also configure the subscription to send the event payload to a webhook. We won't configure a webhook in this chapter, but we will cover the settings available.
 
 The URL to an endpoint will accept the subscription payload. The payload will be delivered in the body of a POST request using an application/json content type, contained in a parameter called "Payload." Each payload will contain a single event.
 
