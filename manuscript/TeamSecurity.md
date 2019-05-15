@@ -1,23 +1,23 @@
 # Stopping Your Developers From Deploying to Production
 
-In our time at Octopus Deploy we have seen a lot of different team dynamics and security requirements.  Some companies are okay with developers deploying to development, testing and staging.  While other companies only allow their developers to deploy to development.  QA deploys to testing, and the web admins deploy to staging and production.  
+In our time at Octopus Deploy we have seen a lot of different team dynamics and security requirements.  Some companies are okay with developers deploying to development, testing, and staging.  While other companies only allow their developers to deploy to development.  QA deploys to testing, and the web admins deploy to staging and production.  
 
-Rather than try to create a one size fits all security model, Octopus Deploy took the approach of fine-grained security.  We wanted to give you as much control as reasonably possible in defining your security module.  Like everything else with Octopus Deploy, this can be a double-edged sword.  In some cases, people attempt to use Octopus Deploy to solve a people problem rather than a technical problem.
+Rather than try to create a one size fits all security model, Octopus Deploy took the approach of fine-grained security.  We wanted to give you as much control as reasonably possible for defining your security module.  Like everything else with Octopus Deploy, this can be a double-edged sword.  In some cases, people attempt to use Octopus Deploy to solve a people problem rather than a technical problem.
 
-It would be impossible for this book to cover every possible security scenario.  The goal of this chapter is to give you a set of guidelines for you to adapt to your own Octopus Deploy configuration.
+It would be impossible for this book to cover every possible security scenario.  The goal of this chapter is to give you a set of guidelines you can adapt to your own Octopus Deploy configuration.
 
 ## Scenarios
 
 We recommend applying the "trust but verify" approach to security with Octopus Deploy.  You either trust your team, or you don't.  Do not try to come up with a security solution to limit a subset of people, for example, your "cowboy developers," from making mistakes.  You are going to end up creating a maintenance nightmare with very fine-grained permissions.
 
-Personas or roles we will be creating on our Octopus Deploy instance.
+These are the personas or roles we will be creating on our Octopus Deploy instance.
 
-- **Octopus Administrator:** the group of in-house Octopus Deploy experts.  They have unlimited rights in the system.  They know with great power comes great responsibility.
-- **Web Admins:** the group of people responsible for setting up new machines and ensuring everything is functioning correctly.  Some of them are experts with Octopus Deploy while others are not.  They are responsible for adding new deployment targets.  They also trigger deployments to staging and production.
+- **Octopus Administrator:** The group of in-house Octopus Deploy experts.  They have unlimited rights in the system.  They know with great power comes great responsibility.
+- **Web Admins:** The group of people responsible for setting up new machines and ensuring everything is functioning correctly.  Some of them are experts with Octopus Deploy while others are not.  They are responsible for adding new deployment targets.  They also trigger deployments to staging and production.
 - **DBAs:** The group of people accountable for keeping all the databases up and running.  For this demo, DBAs are assigned the manual intervention steps for database projects for staging and production.
-- **Business Owners or project managers:** the group of people who are responsible for signing off on a release before it goes to production.  They are assigned all non-DBA manual intervention steps for staging and production.
-- **Lead Developers or Technical Leads:** The technical leader of the team.  Typically has been with the company for several years and knows when something doesn't work they are the first ones triaging the issue.  They have permissions to make changes to projects as well as deploy to Development, Testing, and Staging.  They also have permissions to edit variable sets.  
-- **Developers:** They have permissions to change projects but cannot edit variable sets.  Day to day interaction is focused on writing code and fixing bugs.  When something goes wrong with a deployment, they typically will bring in the lead developer if they cannot figure out how to solve the issue in a few minutes.
+- **Business Owners or project managers:** The group of people who are responsible for signing off on a release before it goes to production.  They are assigned all non-DBA manual intervention steps for staging and production.
+- **Lead Developers or Technical Leads:** The technical leader of the team who has typically been with the company for several years and knows when something doesn't work they are the first person triaging the issue.  They have permissions to make changes to projects as well as deploy to Development, Testing, and Staging.  They also have permissions to edit variable sets.  
+- **Developers:** They have permissions to change projects but cannot edit variable sets.  Day to day attention is focused on writing code and fixing bugs.  When something goes wrong with a deployment, they typically will bring in the lead developer if they cannot figure out how to solve the issue in a few minutes.
 - **QA:** QA test the application.  They want control over their environment because their tests fail if they suddenly
 - **Build Servers:** Service accounts used by build servers to push packages to Octopus Deploy and trigger deployments to development.  
 - **Managers, VPs, and CTOs:** They are not concerned with triggering builds.  They want to be able to see the status of the deployments and if there are any significant problems.
