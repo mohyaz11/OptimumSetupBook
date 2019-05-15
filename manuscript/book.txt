@@ -11,7 +11,7 @@ MultiTenancyIntro.md
 MultiTenancyApps.md
 MultiDataCenter.md
 FeatureBranchDeployments.md
-EmergencyBugFixes.md
+EmergencyBugFixes.md 
 TeamSecurity.md
 Subscriptions.md
 Spaces.md
