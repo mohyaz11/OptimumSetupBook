@@ -6,7 +6,7 @@ Everything we presented so far in this book can be done using the Standard Editi
 
 Octopus Deploy was originally designed to run on a single server.  Our customers would scale up the resources dedicated to that server as they scaled up the number of projects, deployment targets, and users.  But eventually, they reached a breaking point where it was impossible to scale up any further.  There are only so many network connections and concurrent processes a computer can run.  
 
-Additionally, our customers had unwittingly created a massive single point of failure in their CD pipelines.  If their server were to ever go down, for whatever reason (the most common cause was Windows Patches), that would bring all deployments to a grinding halt.  When this only affected a team of 10-15 people it was an annoyance.  When it affected an entire development shop of 100s of people this became a major problem.  
+Additionally, our customers had unwittingly created a massive single point of failure in their CD pipelines.  If their server were to ever go down, for whatever reason (the most common cause was Windows patches), that would bring all deployments to a grinding halt.  When this only affected a team of 10-15 people it was an annoyance.  When it affected an entire development shop of 100s of people this became a major problem.  
 
 Finally, a lot of our customers started treating their Octopus Servers like pets rather than chattel. The default configuration of Octopus Deploy didn't help much.  All folders are stored on the C:\ drive, and if that server were to ever crash a lot of data would be lost.  And if the master key was ever lost then getting it back up and running could take quite a while.
 

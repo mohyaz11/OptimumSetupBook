@@ -4,7 +4,7 @@ A topic that we have been dancing around for the past several chapters is machin
 
 ![](images/machinepolicies-machinepoliciesmenu.png)
 
-The Octopus Deploy server needs to make sure that it can still connect to all the deployment targets.  We call that a health check.  It runs periodically on the Octopus Deploy Server.  It does this because many of our users want to know about problems with a machine before doing a deployment.  If a system admin can fix a minor problem before it becomes a significant problem, then it is well worth the effort.  It also does this as a sanity check to make sure that the server has not crashed or is about to run out of space.  By default, health checks run every hour.  If the Octopus Server cannot connect to the machine, it will fail the health check.  All machines are added to the default machine policy when no policy is specified.  That is configurable on the machine policy screen.
+The Octopus Deploy server needs to make sure that it can still connect to all the deployment targets.  We call that a health check.  It runs periodically on the Octopus Deploy server.  It does this because many of our users want to know about problems with a machine before doing a deployment.  If a system admin can fix a minor problem before it becomes a significant problem, then it is well worth the effort.  It also does this as a sanity check to make sure that the server has not crashed or is about to run out of space.  By default, health checks run every hour.  If the Octopus Server cannot connect to the machine, it will fail the health check.  All machines are added to the default machine policy when no policy is specified.  That is configurable on the machine policy screen.
 
 ![](images/machinepolicies-defaultmachinepolicy.png)
 
