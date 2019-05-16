@@ -1,6 +1,6 @@
 # What Is Data Center and Why Would I Need It?
 
-Everything we presented so far in this book can be done using the Standard Edition of Octopus Deploy.  The standard license of Octopus Deploy provides quite a bit of functionality.  You get unlimited users, projects, and workers.  You get up to three unique instances of Octopus Deploy.  You get 3 spaces per instance.  There is a lot there.  So...what exactly does Data Center provide?
+Everything we presented so far in this book can be done using the Standard Edition of Octopus Deploy. The standard license of Octopus Deploy provides quite a bit of functionality.  You get unlimited users, projects, and workers.  You get up to three unique instances of Octopus Deploy.  You get 3 spaces per instance.  There is a lot there.  So... what exactly does Data Center provide?
 
 ## Driving Force Behind Data Center
 
