@@ -1,8 +1,8 @@
 # Retention Policies
 
-When we review a customer's Octopus Deploy configuration, the first thing we ask to see is the retention policies.  Setting appropriate retention policies is an easy win, and they are usually not changed from the default during a trial and not revisited after setting up a production configuration.
+When we review a customer's Octopus Deploy configuration, the first thing we ask to see is their retention policies.  Setting appropriate retention policies is an easy win, and they are usually not changed from the default during a trial and not revisited after setting up a production configuration.
 
-Without setting retention policies, Octopus will keep all releases created and packages uploaded indefinitely. If you have small packages or don't release frequently, you may never notice any adverse effects, but as your usage grows, you might run into disk space or performance issues as you server turns into a hoarder.
+Without setting retention policies, Octopus will keep all releases created and packages uploaded indefinitely. If you have small packages or don't release frequently, you may never notice any adverse effects, but as your usage grows, you might run into disk space or performance issues as you server becomes a hoarder.
 
 We haven't covered what packages and releases are yet, but it's okay to set these values now and revisit them when you have a better understanding of what they are.
 
@@ -24,15 +24,15 @@ Which leads us to release retention policies!
 
 ## Release Retention
 
-Ok, we're going to take a quick trip back to the lifecycles for the next bit. Navigate back to the default lifecycle and expand the `Retention Policy` section.
+Okay, we're going to take a quick trip back to the lifecycles for the next bit. Navigate back to the default lifecycle and expand the `Retention Policy` section.
 
 ![](images/chapter003-lifecycle-retention.png)
 
 You can see that this is set to keep all releases forever and also to keep all extracted packages and files on disk on Tentacles. A Tentacle is a deployment target that represents a Windows server.
 
-Let's change this to something a little tidier. You have the choice to clean up after a specified number of releases or a specified number of days. If you're not sure what value to pick, a good value to start with is keeping the last three releases for both the releases and the extracted packages.
+Let's change this to something a little tidier. You have the choice to clean up after a specified number of releases or a specified number of days. If you're not sure what value to pick, a good place to start is keeping the last three releases for both the releases and the extracted packages.
 
-There is one nuance to release cleanup. If the release is displayed on any dashboard, either the main dashboard or the project overview screen, it will not be cleaned up even if it matches the rules. You don't have to worry about a recent release in the Staging environment being deleted before it can be promoted to Production. So if you see that a release isn't being cleaned up, check the dashboards to see if it's being displayed.
+There is one nuance to release cleanup. If the release is displayed on any dashboard, either the main dashboard or the project overview screen, it will not be cleaned up even if it matches the rules. This means you don't have to worry about a recent release in the Staging environment being deleted before it can be promoted to Production. So if you see that a release isn't being cleaned up, check the dashboards to see if it's being displayed.
 
 ### Lifecycle Policy
 
@@ -52,7 +52,7 @@ We prefer to keep the Staging and Production retention policies in sync. It is p
 
 If you have an existing Octopus server with a large number of releases and are planning to set some retention policies going forward, we highly recommend starting with a large retention policy and adjusting it down to what you need.
 
-For example, if you have 12 months worth of releases now, perhaps set the retention policy to keep 11 months worth of releases. The Octopus server will apply these retention policies periodically. After it has cleaned up the oldest releases, you can change the policy to keep ten months of releases. Rinse and repeat until you have reached your desired retention policy. You can apply this method with the number of releases instead of the time-based setting.
+For example, if you have 12 months worth of releases now, perhaps set the retention policy to keep 11 months worth of releases. The Octopus server will apply these retention policies periodically. After it has cleaned up the oldest releases, you can change the policy to keep ten months of releases. Rinse and repeat until you have reached your desired retention policy. You can also apply this method with the number of releases instead of the time-based setting.
 
 ## Conclusion
 

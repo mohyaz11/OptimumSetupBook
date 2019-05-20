@@ -1,12 +1,12 @@
 # Terms
 
-Let's start by defining some terms and what they mean in the Octopus world. These terms might match up with terminology that you use. They might differ slightly. But it'll help to have a shared glossary as we work through the upcoming chapters.
+Let's start by defining some terms and what they mean in the Octopus world. These terms might match up with terminology that you use, or they might differ slightly, but it'll help to have a shared glossary as we work through the upcoming chapters.
 
-## Target / Deployment Target / Machine
+## Target/Deployment Target/Machine
 
-Targets, deployment targets and machine are the machines and services where you deploy your software. They might be physical machines, virtual machines, or PaaS targets in the cloud.
+Targets, deployment targets, and machine are the machines and services where you deploy your software. They might be physical machines, virtual machines, or PaaS targets in the cloud.
 
-In early versions of Octopus, we used the name machines instead of deployment targets, but after we added targets like Azure Web Applications and Kubernetes, machine became a misnomer.  You might be deploying to a machine but you might also be deploying to an API.  Deployment target describes both usages.
+In early versions of Octopus, we used the name machines instead of deployment targets, but after we added Azure Web Applications and Kubernetes as targets, machine became a misnomer.  You might be deploying to a machine, but you might also be deploying to an API.  Deployment target describes both.
 
 ## Environment
 
@@ -14,11 +14,11 @@ An environment is a group of deployment targets. Your Development environment mi
 
 ## Package
 
-A package is an archive (zip, tar, NuGet) that contains your application assets. Octopus works by deploying your packages to deployment targets. You can host packages in external repositories or the built-in Octopus repository. Octopus can integrate with external repositories like Artifactory and NuGet.
+A package is an archive (zip, tar, NuGet) that contains your application assets. Octopus works by deploying your packages to deployment targets. You can host packages in external repositories or the built-in Octopus repository. Octopus can also integrate with external repositories like Artifactory and NuGet.
 
 ## Project
 
-Projects define your deployment process, configuration variables, and the deployment lifecycle. Think of it as a blueprint for releasing your packages to deployment targets.
+Projects define your deployment process, configuration variables, and the deployment lifecycle. Think of it as a blueprint for releasing your packages to your deployment targets.
 
 ## Release
 

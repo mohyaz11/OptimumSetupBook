@@ -1,12 +1,10 @@
-
-
 # Environments
 
 Environments are the backbone of your deployment pipeline.  It's what you move your code through.  Before you configure anything else, you need to configure your environments.
 
-The most common setup is four environments.  Those are Dev, Test or QA, Staging or Pre-Production, and Production.  We've seen these at previous jobs and with customers that we talk to.  It makes sense for this to be a common setup.  
+The most common setup is four environments.  Those are Dev, Test/QA, Staging/Pre-Production, and Production.  We've seen these at previous jobs and with customers that we talk to.  It makes sense to use them for an example setup.
 
-Dev is for developers to experiment on.  It is very much in-flux, and you expect it to go up and down quite often.  
+Dev is for developers to experiment on.  It is very much in flux, and you expect it to go up and down quite often.  
 
 Quality assurance test functionality in the Test environment.  
 
@@ -22,7 +20,7 @@ In this section, we will walk through our recommendations for configuring your e
 
 We recommend configuring your environments to match your company’s terminology.  Keep it general where possible.  Think of how you want to phrase it during a conversation with a non-technical person. "I’m pushing some code up to Dev," or "I’m deploying my app to Production," makes a lot more sense than "I’m pushing to Dev Omaha 45."  What does Omaha mean?  The data center?  Where did 45 come from?  
 
-> ![](images/professoroctopus.png) A good sign that you have well-modeled environments is that they are easy to explain.  If it takes longer than a few seconds to explain your environments, that's a sign that you need to make some changes.  
+> ![](images/professoroctopus.png) A good sign that you have well-modeled environments is that they are easy to explain.  If it takes longer than a few seconds to explain your environments, that's a sign you need to make some changes.  
 
 Keep the list of environments under a dozen or so.  Have the standard four or five environments, such as Dev, Test, Staging, and Production.  For dynamic infrastructure and maintenance, you can also add SpinUp, TearDown, and Maintenance.  Those environments will help when it's time to build up infrastructure, tear down applications, or perform some scheduled maintenance tasks like taking a backup of logs in production.
 
@@ -34,9 +32,9 @@ Don't worry about the order of the environments or adding any machines yet.  Tha
 
 ## Multiple Data Centers
 
-In the world of the Azure, AWS, Google Cloud, and other cloud providers, it's becoming common to deploy to multiple data centers.  In some scenarios, you might need to deploy the software in specific intervals.  For example, you might deploy to a data center in Illinois before deploying to one in Texas.
+In the world of the Azure, AWS, Google Cloud, and other cloud providers, it's becoming common to deploy to multiple data centers.  In some scenarios, you might need to deploy the software in specific intervals or orders.  For example, you might deploy to a data center in Illinois before deploying to one in Texas.
 
-It can be tempting to name your environment "Production [Data Center]" or "Production Omaha." You would do this because you might not want to deploy to all data centers at the same time, or because you want to know what version of the code is in each data center. Unfortunately this doesn't scale very well.  Every time you add a new data center, you'd need to adjust many different parts of your infrastructure and configuration.  You'd have to add a new environment, and add that environment to a lifecycle, you'd need to update variable scopes, and those are just a few of the areas that you would have to manage.
+It can be tempting to name your environment "Production [Data Center]" or "Production Omaha." You would do this because you might not want to deploy to all data centers at the same time, or because you want to know what version of the code is in each data center. Unfortunately, this doesn't scale very well.  Every time you add a new data center, you'll need to adjust many different parts of your infrastructure and configuration.  You'll have to add a new environment, add that environment to a lifecycle, you'll need to update variable scopes, and those are just a few of the areas that need to be managed.
 
 One scenario that we've seen is customers deploy to an on-premises data center for dev, test, and staging, but production is hosted in data centers in Illinois and Texas.  Before pushing to production, they run some sanity checks in a staging environment in Illinois and Texas.  If you create an environment per data center, you would have seven environments when you only need four.  
 
@@ -46,17 +44,17 @@ Because we don't have any targets or projects set up yet, this is rather easy to
 
 ![](images/chapter001-datacentertenants.png)
 
-Don't worry!  We will be coming back to Tenants in a later chapter when we set up our first multiple data centers project.  Just know that they are there when you need them.
+Don't worry!  We will be coming back to tenants in a later chapter when we set up our first multi-data center project.  Just know that they are there when you need them.
 
-> ![](images/professoroctopus.png) Adding images to your tenants makes them easier to find.  You can do this by clicking on the tenant and selecting settings link on the left.  On that screen, you can upload an image for a tenant.
+> ![](images/professoroctopus.png) Adding images to your tenants makes them easier to find.  You can do this by clicking on the tenant and selecting the settings link on the left.  On that screen, you can upload an image for a tenant.
 
 ## Multiple Customers
 
 In the same vein of deploying the same project to multiple data centers, a lot of our customers deploy the same project to multiple clients.
 
-Each of their customers gets their own set of machines and other resources.  Again, you might be tempted to configure a unique set of environments for each customer.  You could create "Dev [Customer Name]," "Staging [Customer Name]," and "Production [Customer Name]."  This will work for the first dozen or so customers but again it doesn't scale very well.
+Each of their customers gets their own set of machines and other resources.  Again, you might be tempted to configure a unique set of environments for each customer.  You could create "Dev [Customer Name]", "Staging [Customer Name]", and "Production [Customer Name]", and this will work for the first dozen or so customers, but again, it doesn't scale very well.
 
-Imagine if we had five clients, an internal testing customer, Coca-Cola, Ford, Nike, and Starbucks.  The internal customer deploys to all the environments, dev, test, staging, and prod.  Coca-Cola and Nike have resources in test, staging, and production while Ford and Starbucks only have resources in staging and production.  If you create an environment per tenant, you would have 14 environments.  And that is only for five customers!
+Imagine if we had five clients, an internal testing customer, Coca-Cola, Ford, Nike, and Starbucks.  The internal customer deploys to all the environments, dev, test, staging, and prod.  Coca-Cola and Nike have resources in test, staging, and production, while Ford and Starbucks only have resources in staging and production.  If you create an environment per tenant, you would have 14 environments.  And that is only for five customers!
 
 This is where the multi-tenancy comes in.  It allows you to keep the number of environments low while creating a unique workflow per client.
 
