@@ -1,14 +1,14 @@
 # Feature Branch Deployments
 
-One of the great things about GIT is how easy it is to create a branch.  That ability has several benefits.  Namely, it allows for experimentation.  A developer can try out an idea in a branch and if it doesn't work they can delete the branch.  No fuss.  No muss.  Or they can start work on a new feature in a feature branch.  Once the feature is complete everything is merged into the main branch.
+One of the great things about GIT is how easy it is to create a branch.  That ability has several benefits.  Namely, it allows for experimentation.  A developer can try out an idea in a branch, and if it doesn't work, they can delete the branch.  No fuss.  No muss.  Or they can start work on a new feature in a feature branch.  Once the feature is complete, everything is merged into the main branch.
 
-Eventually, developers need to get feedback on the feature branch.  They want to check-in the code and deploy it so someone else can take a look at it.  Often times the code is in an incomplete state.  It shouldn't be merged into master or development because that could have serious consequences, for instance, incomplete code could get pushed out to test or even worse, production before it's ready. Also, QA doesn't want to test incomplete code.  
+Eventually, developers need to get feedback on the feature branch.  They want to check-in the code and deploy it so someone else can take a look at it.  Often, the code is in an incomplete state.  It shouldn't be merged into master or development because that could have serious consequences, for instance, incomplete code could get pushed out to test or even worse, production before it's ready. Also, QA doesn't want to test incomplete code.  
 
-A common technique is to hide the change behind a feature flag, but that doesn't scale all that well.  Depending on the change, it could include a lot of if/then statements for the change.  Someone has to go in and clean up that feature flag, which causes more work.
+A common technique is to hide the change behind a feature flag, but that doesn't scale all that well.  Depending on the change, it could include a lot of if/then statements.  Someone has to go in and clean up that feature flag, which causes more work.
 
 In a perfect world, that feature branch would get its own set of resources.  In our example application, OctoFX, this means a website and a database.  Those resources would be automatically created when the user pushes the feature branch up to the server.
 
-If you recall in our projects chapter we said a core rule when configuring your projects is `Projects should be responsible for setting up what it needs to run`.  This means creating a website and database.  In that chapter we created the database and web project with that rule in mind.  The database project will create the database if it doesn't exist.  The WebUI project will create a website if it doesn't exist.  Resource creation is covered.  
+If you recall in our projects chapter, we said a core rule when configuring your projects is `Projects should be responsible for setting up what it needs to run`.  This means creating a website and database.  In that chapter, we created the database and web project with that rule in mind.  The database project will create the database if it doesn't exist.  The WebUI project will create a website if it doesn't exist.  Resource creation is covered.  
 
 We need to make a few other tweaks to Octopus Deploy to help support the feature branch scenario.
 
@@ -16,7 +16,7 @@ We need to make a few other tweaks to Octopus Deploy to help support the feature
 
 First, we need to determine which environments we are deploying to.  In this book, we've been using four environments: Development, Testing, Staging, and Production.  Our recommendation is to deploy to an environment where users can test the changes.  If you're working on a SaaS application, very often staging is a mirror of Production.  The outside world has access to connect to it.  Getting feedback from our external users means deploying all the way to Staging. But if you don't have any external users, deploying to Development and Testing makes more sense.
 
-Another item to consider, the resources being created for the feature branch, the database and the website, have a finite lifespan.  We will need to destroy them once the feature branch has been merged into master.  As a result of this, we should include a "TearDown" environment in our lifecycle.
+Another item to consider, the resources being created for the feature branch, the database, and the website, have a finite lifespan.  We will need to destroy them once the feature branch has been merged into master.  As a result of this, we should include a "TearDown" environment in our lifecycle.
 
 Each feature branch will be different.  Some will go to development only.  Others will go to Testing.  And others might go all the way to Staging.  We still need to deploy to TearDown to destroy the temporary website and database.  Each phase in the lifecycle, Development, Testing, and Staging should be optional.  
 
@@ -32,7 +32,7 @@ Channels allow you to tie more than one lifecycle to a project.  We need to crea
 
 Octopus Deploy adopts a modified version of SemVer, but we're not as strict as SemVer. Octopus Deploy implements a number of its requirements.  This includes support for pre-release text after the version number (IE 2018.1.9-PreRelease or 1.0.0.0-PreRelease).  We will make use of that pre-release text.  This will be for both the package version as well as the release number.  
 
-We will also create a version rule for this channel so it only accepts packages with pre-release text.
+We will also create a version rule for this channel so, it only accepts packages with pre-release text.
 
 ![](images/featurebranches-versionrules.png)
 
@@ -40,7 +40,7 @@ We need to go back to the default channel and tell it to accept any version with
 
 ![](images/featurebranches-defaultchannelrule.png)
 
-Now we have multiple channels to deploy to.
+Now we have multiple channels we can use for deployments.
 
 ![](images/featurebranches-multiplechannels.png)
 
@@ -60,7 +60,7 @@ We recommended driving your processes with variables for this very reason.  We c
 
 ### The Case Against Using Tenants
 
-There are two approaches to deploying feature branches.  The first approach to consider is using tenants. With this approach each feature branch becomes a tenant.  
+There are two approaches to deploying feature branches.  The first approach to consider is using tenants. With this approach, each feature branch becomes a tenant.  
 
 At first blush, this makes the most sense.  The problem is, it doesn't scale all that well.  Feature branches have a finite lifespan of a few days or a couple of weeks.  You will be adding/removing tenants quite often.  It is possible to automate that using the API, but that is brittle.  
 
@@ -107,7 +107,7 @@ We recommend creating a variable to store that output variable.  Scope that outp
 
 ![](images/featurebranches-outputvariableasvariable.png)
 
-With that variable created we can modify a couple of other variables to make use of it.
+With that variable created, we can modify a couple of other variables to make use of it.
 
 ![](images/featurebranches-usingoutputvariable.png)
 
@@ -117,17 +117,17 @@ In this particular example, we created a new variable to store the database name
 
 > ![](images/professoroctopus.png) A good rule of thumb is to use project variables to reference variable set variables.  This way, if you do need to overwrite the variable at a local level, for whatever reason, you can, and you don't have to go through the exercise of updating all your steps.
 
-For each project, you want to do this for, you need to repeat the process of adding the new step and making any variable adjustments.
+For each project you want to do this for, you need to repeat the process of adding the new step and making any variable adjustments.
 
 ## Creating Feature Branch Release
 
-When you create a feature branch release you need to specify the channel.  In the UI this is done by selecting the channel from the drop-down list.
+When you create a feature branch release, you need to specify the channel.  In the UI this is done by selecting the channel from the drop-down list.
 
 ![](images/featurebranches-createrelease.png)
 
 That applies to the Octopus User Interface only.  The goal here is to automate all of this.  A developer checks in their code to a feature branch.  The build server sees the feature branch and creates a release on the separate channel.  
 
-First, the build server needs to be configured to monitor any branch, not just master.  For TeamCity that is a setting in the version control settings for the build.
+First, the build server needs to be configured to monitor any branch, not just master.  For TeamCity, that is a setting in the version control settings for the build.
 
 ![](images/featurebranches-teamcitymonitorbranches.png)
 
@@ -225,4 +225,4 @@ If your build server supports it, kicking off a build or pushing a deployment to
 
 ## Conclusion
 
-With some minor modifications, it is possible to start deploying feature branches using Octopus Deploy.  This allows you to get feedback quickly from your business owners, QA, or external users without requiring you to merge into master.  This approach supports as many feature branches as you like and you can tear them as needed.  
+With some minor modifications, it is possible to start deploying feature branches using Octopus Deploy.  This allows you to get feedback quickly from your business owners, QA, or external users without requiring you to merge into master.  This approach supports as many feature branches as you like and you can tear them down as needed.  

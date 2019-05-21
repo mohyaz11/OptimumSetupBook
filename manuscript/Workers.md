@@ -1,16 +1,16 @@
 # Offloading Work To Workers
 
-When you add a `Run a Script` step, you are asked to define where the script will be run.  If the script is to do some clean-up work after deploying to IIS, it makes sense to run it on a deployment target.  That is pretty clear.  However, what about other scenarios, say sending a notification to slack.  It doesn't make a whole lot of sense to run that on a deployment target.
+When you add a `Run a Script` step, you are asked to define where the script will run.  If the script is to do some clean-up work after deploying to IIS, it makes sense to run it on a deployment target.  That is pretty clear.  However, what about other scenarios, say sending a notification to slack.  It doesn't make a whole lot of sense to run that step on a deployment target.
 
 ![](images/workers-originalrunonscriptstep.png)
 
-When Octopus Deploy was first created the number of times you would run a script on a server was limited.  Send a slack notification, create a folder name based on some business logic, or notify NewRelic of a deployment.  That work is easy for the server to do.  It doesn't consume resources nor does it take much time.  
+When Octopus Deploy was first created the number of times you would run a script on a server was limited.  Send a slack notification, create a folder name based on some business logic, or notify NewRelic of a deployment.  That work is easy for the server to do.  It doesn't consume resources, nor does it take much time.  
 
-With the addition of Platform as a Service options (PaaS), the Octopus Server is being asked to do quite a bit more.  An Azure App Service isn't the same as a VM.  It's not a server where you can download and extract a package.  The deployments all occur over an API.  Anytime you want to deploy an Azure ARM Template, or to a Kubernetes Cluster, you can run that directly on the Octopus Server.
+With the addition of Platform as a Service options (PaaS), the Octopus Server is being asked to do quite a bit more.  An Azure App Service isn't the same as a VM.  It's not a server where you can download and extract a package, and the deployments all occur over an API.  Anytime you want to deploy an Azure ARM Template, or to a Kubernetes Cluster, you can run that directly on the Octopus Server.
 
-It is entirely possible to have a deployment process run on the Octopus Deploy server.  Running everything on the Octopus Deploy server is not a terrible thing when you have one or two projects, however, it doesn't scale all that well when you have hundreds or thousands of projects.
+It is entirely possible to have a deployment process run on the Octopus Deploy server.  Running everything on the Octopus Deploy server is not a terrible thing when you have one or two projects. However, it doesn't scale all that well when you have hundreds or thousands of projects.
 
-On top of that, these scripts are running on the Octopus Server.  We like to think most people are good at heart and don't mean any ill-will, however, people make mistakes.  A missing quote here.  A missing quote there.  Before you know it the server hosting Octopus Deploy crashes because of a lousy PowerShell script.  
+On top of that, these scripts are running on the Octopus Server.  We like to think most people are good at heart and don't mean any ill-will, but people occasionally make mistakes.  A missing quote here.  A missing quote there.  Before you know it the server hosting Octopus Deploy crashes because of a lousy PowerShell script.
 
 Those scenarios are why workers were created.  They allow you to move that work from the Octopus Deploy server onto other machines.  This works by creating a worker pool with machines that are available in that pool. When work needs to be done, the machine is leased from the pool, the work is completed on that machine, and the machine is placed back into the pool.
 
@@ -20,9 +20,9 @@ In this chapter, we'll configure worker pools.  While we are doing that we will 
 
 ## Worker Pools
 
-In the diagram above there are two worker pools, Windows and Linux.  That is a good start, however, we recommend creating different worker pools for the different types of work being done.  If you are doing Kubernetes deployments, Azure deployments, and database deployments, then we recommend three worker pools, one for Kubernetes, another for Azure, and another for database deployments.
+In the diagram above, there are two worker pools, Windows and Linux.  That is a good start, but we recommend creating different worker pools for the different types of work being done.  If you are doing Kubernetes deployments, Azure deployments, and database deployments, then we recommend three worker pools, one for Kubernetes, another for Azure, and another for database deployments.
 
-Breaking apart the worker pools by deployment type provides many benefits.  The servers in each pool only have the be configured to handle the deployment type.  For Kubernetes deployments this means just installing KubeCtl.  While the Azure deployments only need the Azure CLI installed.  Less software to install, reduces the chance of any software conflicts.  You can scale up your worker pools based on need.  If you are deploying to hundreds of databases, then you could have a half dozen workers in the database worker pool.  Meanwhile, if you are only deploying to a couple of Kubernetes clusters, then you might need one or two workers in the Kubernetes worker pool.  
+Breaking apart the worker pools by deployment type provides many benefits.  The servers in each pool only have to be configured to handle the deployment type.  For Kubernetes deployments this means just installing KubeCtl.  While the Azure deployments only need the Azure CLI installed.  Less software to install reduces the chance of any software conflicts.  You can scale up your worker pools based on need.  If you are deploying to hundreds of databases, then you could have a half dozen workers in the database worker pool.  Meanwhile, if you are only deploying to a couple of Kubernetes clusters, then you might need one or two workers in the Kubernetes worker pool.  
 
 For this demo, we will be adding those three worker pools.  To start, you will go to the infrastructure page and click on worker pools.
 
@@ -30,7 +30,7 @@ For this demo, we will be adding those three worker pools.  To start, you will g
 
 When you come to the worker pool page, you will notice there is already a worker pool, the `Default Worker Pool`.  This worker pool is automatically created when you install Octopus Deploy.  When there are no machines in the default worker pool, then the Octopus Server will handle the work.  
 
-Leave the default worker pool alone when configuring workers and worker pools.  Do not add any new machines to the default worker pool.  Leaving the default pool as is will allow you to keep using Octopus Deploy as is while you create new workers and workers pools.  That way you can phase in your rollout of workers rather than making big bang changes.
+Leave the default worker pool alone when configuring workers and worker pools.  Do not add any new machines to the default worker pool.  Leaving the default pool as is, will allow you to keep using Octopus Deploy as is while you create new workers and workers pools.  That way you can phase in your rollout of workers rather than making big bang changes.
 
 ![](images/workers-defaultworkerpool.png)
 
@@ -38,7 +38,7 @@ From here we will click on the `Add Worker Pool` button in the top right.  You w
 
 ![](images/workers-addworkerpoolmodal.png)
 
-When you click save you will be sent to the worker pool form.  On this form, you can add a description to the worker pool as well as make it the default worker pool.  The worker pool we are adding is for Kubernetes deployments, and we don't want to make it the default worker pool.
+When you click save, you will be sent to the worker pool form.  On this form, you can add a description to the worker pool as well as make it the default worker pool.  The worker pool we are adding is for Kubernetes deployments, and we don't want to make it the default worker pool.
 
 ![](images/workers-addworkerform.png)
 
@@ -48,7 +48,7 @@ That is it!  We have now configured the first worker pool.  Go ahead and repeat 
 
 ## Workers
 
-Adding workers to a worker pool is just like adding a deployment target to an environment.  At the time of this writing, only three types of deployment targets are supported with worker pools, Polling Tentacles, Listening Tentacles and SSH targets.  It is the same Tentacle you have always installed on a VM.  The primary difference is how it is registered with the Octopus Deploy server.
+Adding workers to a worker pool is just like adding a deployment target to an environment.  At the time of this writing, only three types of deployment targets are supported with worker pools, Polling Tentacles, Listening Tentacles, and SSH targets.  It is the same Tentacle you have always installed on a VM.  The primary difference is how it is registered with the Octopus Deploy server.
 
 The form to add a worker is very similar to adding a Tentacle target.  The difference in the form is instead of adding the Tentacle to an environment and assigning it a role; you attach it to a worker pool.
 
@@ -58,7 +58,7 @@ For naming convention, we recommend going with [workertype]-worker-[number].  Fo
 
 ## Changing Project Steps to Use Worker Pools
 
-Now that we have added worker pools, you will notice the execution location in the UI has changed.  The text previously said "Run on the Octopus Server" now says "Run once on a worker."  As well, "Run on the Octopus Server on behalf of the deployment target" now reads "Run on a worker on behalf of each deployment target."
+Now that we have added worker pools, you will notice the execution location in the UI has changed.  The text that previously said, "Run on the Octopus Server," now says, "Run once on a worker."  As well, "Run on the Octopus Server on behalf of the deployment target," now reads, "Run on a worker on behalf of each deployment target."
 
 ![](images/workers-newexecutionlocation.png)
 
@@ -66,11 +66,11 @@ For this demo, we are going to switch all the database steps over to run on the 
 
 ![](images/workers-sqlauthentication.png)
 
-To change it, we change the execution location to "Run once on a worker" and change the worker pool to be "Database Worker Pool."
+To change it, we change the execution location to, "Run once on a worker," and change the worker pool to, "Database Worker Pool."
 
 ![](images/worker-changingexecutionlocation.png)
 
-You might be asking yourself, why would I change the database steps over to running on a worker pool?  Well, there are several reasons to make that change.  Right now, we have multiple deployment targets to handle my database deployments.  When we look at our demo instance, we can see there are 12 targets just for database deployments.
+You might be asking yourself, why would I change the database steps over to running on a worker pool?  Well, there are several reasons to make that change.  Right now, we have multiple deployment targets to handle database deployments.  When we look at our demo instance, we can see there are 12 targets just for database deployments.
 
 ![](images/workers-databasetargets.png)
 
@@ -102,7 +102,7 @@ With this flexibility, it is now possible to move quite a lot of steps from depl
 
 Now that we have our worker pools configured and projects updated, we can turn off the default worker on the Octopus Server.  This will prevent any script from running on the Octopus Server.  
 
-> ![](images/professoroctopus.png) Only do this after you have added worker pools and changed existing projects to use them, otherwise you run the risk of breaking many deployments.
+> ![](images/professoroctopus.png) Only do this after you have added worker pools and changed existing projects to use them, otherwise, you run the risk of breaking many deployments.
 
 ![](images/workers-disablebuiltinworker.png)
 

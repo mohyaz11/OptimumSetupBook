@@ -17,7 +17,7 @@ We want to be able to support the following scenarios for our Multi-Tenanted app
 
 Before jumping into the projects, we want to configure our deployment targets.  In a previous chapter, we offloaded all database deployments onto workers.  We only need to configure the Web Servers for OctoFx.  There are a couple of small items to point out when configuring a target for a specific tenant.
 
-The name of the deployment target should include the name of the tenant.  [EnvironmentPrefix]-[TenantName]-[AppName]-[Component]-[Number] is a an easy to remember naming convention.  For example, `d-ford-octofx-web-01` if we wanted the machine to deploy the OctoFX website for Ford to Dev.  In the event the target is used for multiple tenants, it is a good idea to group them using tenant tags and name the server after the tenant tag.  [EnvironmentPrefix]-[TenantTag]-[AppName]-[Component]-[Number], or `d-alphacustomers-octofx-web-01`.  As always, naming is easy to understand, difficult to master, as long as you have consensus around your naming conventions you should be fine.
+The name of the deployment target should include the name of the tenant.  [EnvironmentPrefix]-[TenantName]-[AppName]-[Component]-[Number] is an easy to remember naming convention.  For example, `d-ford-octofx-web-01` if we wanted the machine to deploy the OctoFX website for Ford to Dev.  In the event the target is used for multiple tenants, it is a good idea to group them using tenant tags and name the server after the tenant tag.  [EnvironmentPrefix]-[TenantTag]-[AppName]-[Component]-[Number], or `d-alphacustomers-octofx-web-01`.  As always, naming is easy to understand, difficult to master, as long as you have consensus around your naming conventions you should be fine.
 
 A good rule of thumb is to configure targets for tenanted deployments only.  Allowing untenanted deployments for a target should be an exception.  Typically, we see our customers use a target for tenanted and untenanted deployments in lower environments when the number of test resources available to them is limited.  
 
@@ -55,7 +55,7 @@ You can also apply filters based on Tenant Tags on the tenant screen.
 
 ## Project Configuration
 
-Now that we have that scaffolding out of the way, we can now move onto the project configuration. First, we need to make each of the projects we want to make multi-tenanted by enabling multi-tenant deployments. In each project, we select the option `Require a tenant for all deployments`.  As we go through this configuration, we will make use of tenant-specific variables.  Requiring a tenant for all deployments will ensure consistency across your deployments.  Deployments without tenants and deployments with tenants only leads to confusion.
+Now that we have that scaffolding out of the way, we can move onto the project configuration. First, we need to make each of the projects multi-tenanted by enabling multi-tenant deployments. In each project, we select the option `Require a tenant for all deployments`.  As we go through this configuration, we will make use of tenant-specific variables.  Requiring a tenant for all deployments will ensure consistency across your deployments.  Deployments without tenants and deployments with tenants only leads to confusion.
 
 > ![](images/professoroctopus.png) Often customers want to enable deployments with or without a tenant so they can test internally first.  Creating a set of internal tenants will accomplish the same goal while keeping your deployments consistent.
 
@@ -63,13 +63,13 @@ Now that we have that scaffolding out of the way, we can now move onto the proje
 
 Next, we go to each tenant and link them to the projects.  For this demo, we will be using the following scenarios for the customers.
 
-1. Internal - This is our internal testing customer.  They are in the alpha release group because they are always testing new features.  Because they are an internal testing customer, they have access to all environments.
-2. Coca-Cola - This customer wants to try out new features, but they don't want to be on the bleeding edge.  They are beta testers.  Due to the increased risk of being a beta tester, they have machines in testing, staging, and production.
-3. Nike - this customer always wants to be on the cutting edge.  They are comfortable with the risk.  To help mitigate the risk, they have been given resources in the testing environment as well as staging and production.
-4. Ford - this is our most risk-averse customer.  They only want the most stable releases.  They want to test all releases before going to production.  They have access to staging and production.
-5. Starbucks - this customer doesn't have much tolerance for risk.  Sometimes they want to test changes before going to production.  Sometimes they don't.  They have access to staging and production.
+1. Internal: This is our internal testing customer.  They are in the alpha release group because they are always testing new features.  Because they are an internal testing customer, they have access to all environments.
+2. Coca-Cola: This customer wants to try out new features, but they don't want to be on the bleeding edge.  They are beta testers.  Due to the increased risk of being a beta tester, they have machines in testing, staging, and production.
+3. Nike: this customer always wants to be on the cutting edge.  They are comfortable with the risk.  To help mitigate the risk, they have been given resources in the testing environment as well as staging and production.
+4. Ford: this is our most risk-averse customer.  They only want the most stable releases.  They want to test all releases before going to production.  They have access to staging and production.
+5. Starbucks: this customer doesn't have much tolerance for risk.  Sometimes they want to test changes before going to production.  Sometimes they don't.  They have access to staging and production.
 
-We link up these customers to their projects by going to the tenants screen and clicking the `connect project` button.
+We link these customers to their projects by going to the tenants screen and clicking the `connect project` button.
 
 ![](images/multitenancyapp-connectproject.png)
 
@@ -83,7 +83,7 @@ Now we need to repeat the process for the remaining four customers.  Based on th
 
 ## Project Variable Templates
 
-If we take a look at one of our projects, for instance, the WebUI project for OctoFX.  Diving into the deploy to IIS step we can see that every tenant, at the moment, will deploy to the same web application.  That... is not ideal.
+If we take a look at one of our projects, for instance, the WebUI project for OctoFX.  Diving into the deploy to IIS step we can see that every tenant, at the moment, will deploy to the same web application.  That is not ideal.
 
 ![](images/multitenancyapp-deploytoiisoriginal.png)
 
@@ -147,7 +147,7 @@ The process shows the step will only be run for tenants with that specific tenan
 
 ![](images/multitenancyapp-tenanttagprocess.png)
 
-> ![](images/professoroctopus.png) Tenant tags are like roles, meaning it is treated as an OR for the runtime condition — not an AND.  Specifying two tenant tags will run that step for all tenants with either tag, not both tags.  
+> ![](images/professoroctopus.png) Tenant tags are like roles, meaning it is treated as an OR for the runtime condition, not an AND. Specifying two tenant tags will run that step for all tenants with either tag, not both tags.  
 
 Our recommendation with using this feature is only to use one tenant tag if at all possible.  If necessary, create an additional tenant tag, or create a new tenant tag set.
 

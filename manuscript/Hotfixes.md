@@ -8,7 +8,7 @@ Channels let you configure your project releases to take different paths. The pr
 
 ## Creating the Hotfix Channel
 
-Let's navigate over to our OctoFx-Database project and then click on Channels in the project menu.
+Let's navigate over to our OctoFx-Database project and click on Channels in the project menu.
 
 You'll notice two channels on this page, `Default` and `Feature Branch Channel`.  Every project has a default channel that uses the lifecycle defined on the Process page.  The `Feature Branch Channel` was created in the previous chapter to support feature branch deployments.  
 

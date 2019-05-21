@@ -1,8 +1,8 @@
 # Deploying to Multiple Data Centers
 
-In the age of cloud providers and disaster recovery, it is common to see scenarios where our users want to deploy to multiple data centers.  In some cases, a customer could be running a live/live situation, where the code is running in all the data centers.  In other cases we see customers deploying to the primary data center first and then to a disaster recovery data center.  Another typical scenario is a data center might be the "canary" where deployments occur first, after that 5% of all traffic is routed to that data center, and assuming everything looks good then the deployment is pushed to all remaining data centers.  
+In the age of cloud providers and disaster recovery, it is common to see scenarios where users want to deploy to multiple data centers.  In some cases, a customer could be running a live/live situation, where the code is running in all the data centers.  In other cases, we see customers deploying to the primary data center first and then to a disaster recovery data center.  Another typical scenario is a data center might be the "canary" where deployments occur first, after that 5% of all traffic is routed to that data center, and assuming everything looks good then the deployment is pushed to all remaining data centers.  
 
-With some of our customers, we see all those scenarios on a single Octopus Server.  All too often we see lots of "Production" environments and a lot of unique and custom lifecycles.
+With some of our customers, we see all those scenarios on a single Octopus Server.  All too often, we see lots of "Production" environments and a lot of unique and custom lifecycles.
 
 ![](images/datacenter-drlifecycle.png)
 
@@ -20,11 +20,11 @@ The use case for those tenants is as follows.
 - Texas Data Center: Our primary production data center for our external applications.  That is a data center for a cloud provider, and we have VMs running.  
 - Illinois Data Center: Our disaster recovery data center.  Our cloud provider has a fast connection between these two data centers.  During the day the VMs are running, whereas on the nights and weekends they are turned off.  In the event the Texas Data Center goes offline the load balancer automatically redirects all traffic to Illinois.
 
-When we do a deployment, we are first going to deploy to the internal data center for Dev, Test, and Staging.  Assuming everything looks good in Staging on the internal data center, we then push to Staging for Texas and then Illinois.  For a production deployment we would deploy to Texas first, and the next day we would push to the Illinois data center.
+When we do a deployment, we are first going to deploy to the internal data center for Dev, Test, and Staging.  Assuming everything looks good in Staging on the internal data center, we then push to Staging for Texas and then Illinois.  For a production deployment, we would deploy to Texas first, and the next day, we would push to the Illinois data center.
 
 ## Infrastructure
 
-First, we need to make some changes to our existing infrastructure.  We have already had several servers located on-premises.  The servers for Development, Testing, and Staging are shared for internal and external applications.  We want to configure those for both tenanted and non-tenanted deployments.
+First, we need to make some changes to our existing infrastructure.  We already have several servers located on-premises.  The servers for Development, Testing, and Staging are shared for internal and external applications.  We want to configure those for both tenanted and non-tenanted deployments.
 
 ![](images/datacenter-internaldevserverinitial.png)
 
@@ -34,7 +34,7 @@ That configuration can be done by expanding out the tenant section and selecting
 
 ![](images/datacenter-internaldevserverwithtenant.png)
 
-For the machines in the Texas and Illinois Data Centers, we only want to use those for tenanted deployments.  The tenant options for that machine will be `Include only in tenanted deployments` as well as the tenant for the machine.  Please note, that for these machines the display name now includes the data center, for example, `s-octofx-illinois-web-01`.  
+For the machines in the Texas and Illinois Data Centers, we only want to use those for tenanted deployments.  The tenant options for that machine will be `Include only in tenanted deployments` as well as the tenant for the machine.  Please note that for these machines the display name now includes the data center, for example, `s-octofx-illinois-web-01`.  
 
 > ![](images/professoroctopus.png) This is somewhat contradictory to the recommendation about environments.  Environments are used almost everywhere, lifecycles, variable scoping, step scoping, and so on.  Machine display names are used much less; they are primarily used for logging during a deployment.  While it is possible to scope a variable to them, that is rare.
 
@@ -88,7 +88,7 @@ When we look at the database project's dashboard, we can see the view has change
 
 ## Deploying Code
 
-Creating a release is the same as before, you provide a version number and select the package you wish to deploy.
+Creating a release is the same as before; you provide a version number and select the package you wish to deploy.
 
 ![](images/datacenter-createrelease.png)
 
@@ -96,19 +96,19 @@ When you deploy to development, you can choose the tenants.  The tenant is autom
 
 ![](images/datacenter-deploytodev.png)
 
-Let's get the WebUI, Database, and the traffic cop pushed up to the `Testing` environment.  If you look closely at the main dashboard, you will notice a gray box has now appeared with `1/1`.  The numerator is how many tenants have been deployed with that release.  The denominator is how many total tenants are available in that environment.  This tells us is 1 out of 1 tenant in both `Development`, and `Testing` have the `1.0.0.1` release.
+Let's get the WebUI, Database, and the traffic cop pushed up to the `Testing` environment.  If you look closely at the main dashboard, you will notice a gray box has now appeared with `1/1`.  The numerator is how many tenants have been deployed with that release.  The denominator is how many total tenants are available in that environment.  This tells us 1 out of 1 tenant in both `Development` and `Testing` have the `1.0.0.1` release.
 
 ![](images/datacenter-maindashboard.png)
 
-Going to the traffic cop dashboard, you will see that the other data centers are ready to be deployed but instead of `Deploy` we see `Filtered Required`.  That is intentional.  We haven't selected the release to deploy.  You can do this by clicking on the `Filter by Release` drop-down list.
+Going to the traffic cop dashboard, you will see that the other data centers are ready to be deployed, but instead of `Deploy` we see `Filtered Required`.  That is intentional.  We haven't selected the release to deploy.  You can do this by clicking on the `Filter by Release` drop-down list.
 
 ![](images/datacenter-trafficcopdashboard.png)
 
-Once a release is selected, the `Deploy` buttons appear.  Notice that each tenant has the `Deploy` button for the `Staging` environment.  That allows us to deploy to `Staging` for the `Internal` data center first and then we can deploy to the other data centers.
+Once a release is selected, the `Deploy` buttons appear.  Notice that each tenant has the `Deploy` button for the `Staging` environment.  That allows us to deploy to `Staging` for the `Internal` data center first, and then we can deploy to the other data centers.
 
 ![](images/datacenter-trafficcopdashboardfilterselected.png)
 
-Clicking on the `Deploy` button allows us to choose the data centers for deployment.  A multi-tenant deployment can push to 1 to N number of tenants at a time.  Right now we are just going to pick the `Internal` data center.
+Clicking on the `Deploy` button allows us to choose the data centers for deployment.  A multi-tenant deployment can push to 1 to N number of tenants at a time.  Right now, we are just going to pick the `Internal` data center.
 
 ![](images/datacenter-deploytostaging.png)
 
@@ -120,11 +120,11 @@ Now we can deploy to both Illinois and the Texas Data Center.
 
 ![](images/datacenter-deploytoboth.png)
 
-When clicking on the deploy button for both data centers, a navigation event will occur to a new screen.  The screen shows the deployment for each tenant is treated as a separate task.  That means deployments can run at the same time.  Which makes the window for the data centers to be out of sync much smaller (assuming the deployment to both were successful).
+When clicking on the deploy button for both data centers, a navigation event will occur to a new screen.  The screen shows the deployment for each tenant is treated as a separate task.  That means deployments can run at the same time.  Which makes the potential window for the data centers to be out of sync much smaller (assuming the deployment to both were successful).
 
 ![](images/datacenter-multipletasks.png)
 
-The option to deploy to internal is not there when deploying to `Production`.  Only deployments the Illinois and Texas Data Center are allowed.
+The option to deploy to internal is not there when deploying to `Production`.  Only deployments to the Illinois and Texas Data Center are allowed.
 
 ![](images/datacenter-trafficcoppreprod.png)
 
