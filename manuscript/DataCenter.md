@@ -12,7 +12,7 @@ Finally, a lot of our customers started treating their Octopus Servers like pets
 
 ## Data Center Overview
 
-The standard edition of Octopus Deploy allowed you to have three (3) unique instances running.  We determine uniqueness based on the database it is pointing to.  With standard edition, you could only connect one instance to a database.  Octopus Deploy Data Center allows you to connect several instances to the same database.  The limit of three instances is gone which allows you to create clusters of Octopus Deploy servers.  The only kicker is the total number of targets, across all clusters the total number of targets must be below your license count.  If you have a 1000 Machine Data Center license you can have 10 clusters with 100 targets each.  Or, 1 cluster with 1000 targets.
+The standard edition of Octopus Deploy allowed you to have three (3) unique instances running.  We determine uniqueness based on the database it is pointing to.  With standard edition, you can only connect each instance of Octopus server to a single database.  Octopus Deploy Data Center allows you to connect several instances to the same database.  The limit of three instances is gone which allows you to create clusters of Octopus Deploy servers.  The only kicker is the total number of targets, across all clusters the total number of targets must be below your license count.  If you have a 1000 Machine Data Center license you can have 10 clusters with 100 targets each.  Or, 1 cluster with 1000 targets.
 
 All the servers in the cluster use the same master key.  They both point to the same database.  All the task logs, artifacts, and packages must be on a file share which both servers can access.  Typically the file share is on a NAS or on a DFS share.  
 
