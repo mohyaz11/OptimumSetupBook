@@ -1,6 +1,6 @@
 # Spaces
 
-Do you have multiple teams or departments using Octopus Deploy? Are you creating team specific environments or lifecycles to keep your teams as separate as possible? In the past, you might have also considered configuring a completely different Octopus server for your teams. Spaces might be the solution you didn't know you needed.
+Do you have multiple teams or departments using Octopus Deploy? Are you creating team specific environments or lifecycles to keep your teams as separate as possible? In the past, you might have also considered configuring a completely different Octopus Server for your teams. Spaces might be the solution you didn't know you need.
 
 Spaces is a new way to organize your Octopus Server. They make it easy to group your projects, environments, and most other things into a space for each team. It’s like moving teams from a large open plan office to private offices.
 
@@ -12,7 +12,7 @@ You might find Spaces useful if:
 
 ## For Admins
 
-It's not hard to create a good separation between teams in one server with some effort and configuration. It might lead to less than optimal practices like creating a new set of environments and lifecycles per team or product. Your teams will have nice views of Octopus; your Octopus Administrators will not be as lucky.
+It's not hard to create a good separation between teams in one server with some effort and configuration. It might lead to less than optimal practices like creating a new set of environments and lifecycles per team or product. Your teams will have nice views of Octopus; your Octopus Administrators will not be so lucky.
 
 Octopus Administrators see everything in the Octopus server. They will see all of the projects, environments, tenants, and targets. That flexibility leads to highly populated pages that make it hard to find a specific item.
 
@@ -20,13 +20,13 @@ Octopus Administrators see everything in the Octopus server. They will see all o
 
 ### Give Teams Their Own Space
 
-Depending on the permissions you have already configured, your teams may not notice a change in their day to day usage of Octopus. Other configurations, where permissions haven't been configured, and each team has their projects and environments will see a big difference.  
+Depending on the permissions you have already configured, your teams may not notice a change in their day to day usage of Octopus. Other configurations, where permissions haven't been configured, and each team has their projects and environments, will see a big difference.  
 
 At the time of writing, all Octopus items are unique per space. The mantra of spaces is "hard walls."  Hard walls mean that each Space has separate projects, environments, targets, tenants, templates, variable sets, and so on. In the future, some of these items may span across spaces, but for now, they are all unique per space and cannot be shared.
 
 ### Put Team Leads in Control
 
-Often, permissions are very locked down for teams that are sharing an Octopus server.  Locking down makes sense, as you wouldn't want someone to accidentally remove the wrong machine from the production environment or change some variables used by another team. Most of the time, these restrictions are in place to keep one team from inadvertently breaking deployments for another team.
+Often, permissions are very locked down for teams that are sharing an Octopus Server.  Locking down makes sense, as you wouldn't want someone to accidentally remove the wrong machine from the production environment or change some variables used by another team. Most of the time, these restrictions are in place to keep one team from inadvertently breaking deployments for another team.
 
 Locking down the Octopus Server can lead to bottlenecks.  Teams may need to wait for their request for a new target or project to be added before they can continue their work.
 
@@ -36,19 +36,19 @@ Designated permissions are great because now you can put teams in control of the
 
 ## The Default Space
 
-When you configure a new Octopus server, it will come with a single space named "Default." Not only will it be named "Default," but it will be designated as the Default Space. The Default Space is important because if you are using any API requests that do not specify the Space ID, the server will assume that you are acting on the Default Space.
+When you configure a new Octopus Server, it will come with a single space named "Default." Not only will it be named "Default," but it will be designated as the Default Space. The Default Space is important because if you are using any API requests that do not specify the Space ID, the server will assume that you are acting on the Default Space.
 
 Everything we have done so far has been added to the Default Space. Let's look at how we can set up new spaces.
 
 ## Switching Between Spaces
 
-You can easily jump between spaces using the navigation bar, which is the leftmost item on the navigation bar and displays the name of the current space. If you click on that name, you can choose to switch to one of your other spaces.
+You can easily jump between spaces using the space switcher, which is the leftmost item on the navigation bar and displays the name of the current space. If you click on that name, you can choose to switch to one of your other spaces.
 
 ![](images/spaces-add-space.png)
 
 ## Creating Your First Space
 
-Since we haven't created any other spaces yet, you have the option to add a new space when you click the space switcher. This button will take you to the Spaces page and from there you can click Add Space to bring up the Add Space Dialog.
+Since we haven't created any other spaces yet, you have the option to add a new space when you click the space switcher. This button will take you to the Spaces page, and from there you can click Add Space to bring up the Add Space Dialog.
 
 ![](images/spaces-add-space-dialog.png)
 

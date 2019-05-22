@@ -1,6 +1,6 @@
 # Performance & Maintenance 101
 
-Octopus are generally hygienic creatures; they clean up after themselves.  Octopus Deploy is no different.  It does its best to clean up after itself.  However, it still needs your help.  In this chapter we will walk through some common tweaks you can make to Octopus Deploy to keep it running lean and mean.
+Octopus are generally hygienic creatures; they clean up after themselves.  Octopus Deploy is no different.  It does its best to clean up after itself.  However, it still needs your help.  In this chapter, we will walk through some common tweaks you can make to Octopus Deploy to keep it running lean and mean.
 
 ## Routine Maintenance
 
@@ -41,13 +41,13 @@ We offer three options for scaling your Octopus Server:
 
 ### Task Caps
 
-An ideal situation would be an Octopus server that's performing as many parallel deployments as it can while staying just under these limits. We tried several techniques to throttle Octopus Server automatically, but in practice, this kind of approach proved to be unreliable.
+An ideal situation would be an Octopus Server that's performing as many parallel deployments as it can while staying just under these limits. We tried several techniques to throttle Octopus Server automatically, but in practice, this kind of approach proved to be unreliable.
 
-Instead, we decided to put control into your hands, allowing you to control how many tasks each Octopus server node will execute concurrently. This way, you can measure server metrics for your deployments, and then increase/decrease the task cap appropriately. Administrators can change the task cap in **Configuration > Nodes**.
+Instead, we decided to put control into your hands, allowing you to control how many tasks each Octopus Server node will execute concurrently. This way, you can measure server metrics for your deployments, and then increase/decrease the task cap appropriately. Administrators can change the task cap in **Configuration > Nodes**.
 
 ![](images/maintenance-changetaskcap.png)
 
-The default task cap is set to 5 out of the box. Based on our load testing, this offered the best balance of throughput and stability for most scenarios.  The highest we'd recommend you set the task cap to is 20.  Anything more and you will start running into resource contention.
+The default task cap is set to five out of the box. Based on our load testing, this offered the best balance of throughput and stability for most scenarios.  The highest we'd recommend you set the task cap to is twenty.  Anything more and you will start running into resource contention.
 
 ### Leverage Workers
 
@@ -64,7 +64,7 @@ Follow these tips to tune and maintain the performance of your Octopus:
 1. Configure your Octopus Server and SQL Server on separate servers.
 2. Avoid hosting your Octopus Server and its SQL Database on shared servers to prevent Octopus or the other applications from becoming "noisy neighbors".
 3. Provide sufficient resources to your Octopus Server and SQL Server. Measure resource utilization during typical and/or heavy load, and decide whether you need to provision more resources.
-   * We don't provide a one-size-fits-all set of specifications, your resource requirements will vary heavily depending on your specific scenario. The best way to determine what "sufficient resources" means, is to measure then adjust until you are satisfied.
+   * We don't provide a one-size-fits-all set of specifications. Your resource requirements will vary heavily depending on your specific scenario. The best way to determine what "sufficient resources" means, is to measure then adjust until you are satisfied.
 4. Configure short retention policies. Less history == faster Octopus.
 5. Maintain your SQL Server.
    * See above.
@@ -75,7 +75,7 @@ Follow these tips to tune and maintain the performance of your Octopus:
    * Consider using Workers and worker pools if deployment load is affecting your server. See this blog post for a way to begin looking at workers for performance.
    * Consider separating your teams/projects into "spaces" using the Spaces feature.
 7. Try not to do too much work in parallel, especially without thorough testing. Performing lots of deployment tasks in parallel can be a false economy more often than not:
-   * You can configure how many tasks from the task queue will run at the same time on any given Octopus Server node by going to **Configuration > Nodes**. The default task cap is 5 (safe-by-default). You can increase this cap to push your Octopus to work harder.
+   * You can configure how many tasks from the task queue will run at the same time on any given Octopus Server node by going to **Configuration > Nodes**. The default task cap is five (safe-by-default). You can increase this cap to push your Octopus to work harder.
    * Learn about tuning your deployment processes for performance.
 8. Consider how you transfer your packages:
    * If network bandwidth is the limiting factor, consider using delta compression for package transfers.
@@ -83,7 +83,7 @@ Follow these tips to tune and maintain the performance of your Octopus:
    * If Octopus Server CPU and disk IOPS is a limiting factor, avoid using delta compression for package transfers. Instead, consider downloading the packages directly on the agent. This alleviates a lot of resource contention on the Octopus Server.
 9. Consider the size of your packages:
    * Larger packages require more network bandwidth to transfer to your deployment targets.
-   * When using delta compression for package transfers, larger packages require more CPU and disk IOPS on the Octopus Server to calculate deltas, this is a tradeoff you can determine through testing.
+   * When using delta compression for package transfers, larger packages require more CPU and disk IOPS on the Octopus Server to calculate deltas. This is a tradeoff you can determine through testing.
 10. Consider the size of your Task Logs:
    * Larger task logs put the entire Octopus pipeline under more pressure.
    * We recommend printing messages required to understand progress and deployment failures. The rest of the information should be streamed to a file, then published as a deployment artifact.
@@ -101,7 +101,7 @@ The best way to start troubleshooting your Octopus Server is to inspect the Octo
    * Look for trends in which requests are taking a long time.
    * Look to see if the performance problem occurs, and goes away, regularly. This can indicate another process hogging resources periodically.
 2. The dashboard or project overview is taking a long time to load: long retention policies usually cause this. Consider tightening up your retention policies to keep fewer releases. It can also be caused by the sheer number of projects you are using to model your deployments.
-3. {Insert/Delete/Update/Reader} took 8123ms in transaction '{transaction-name}': If a particular database operation takes a long time you'll see a message like this. The timer is started when the operation starts, ending when the operation is completed (including any retries for transient failure recovery).
+3. {Insert/Delete/Update/Reader} took 8123ms in transaction '{transaction-name}': If a particular database operation takes a long time, you'll see a message like this. The timer is started when the operation starts, ending when the operation is completed (including any retries for transient failure recovery).
    * If see these operations take a long time it indicates your SQL Server is struggling under load, or your network connection from Octopus to the SQL Server is saturated.
    * Check the maintenance plan for your SQL Server. See the tips above.
    * Test a straightforward query like SELECT * FROM OctopusServerNode. If this query is slow, it indicates a problem with your SQL Server.
@@ -110,11 +110,11 @@ The best way to start troubleshooting your Octopus Server is to inspect the Octo
 4. Task Logs are taking a long time to load, or your deployments are taking a long time: The size of your task logs might be to blame. See the tips above.
    * Make sure the disks used by your Octopus Server have sufficient throughput/IOPS available for processing the demand required by your scenario. Task logs are written and read directly from disk.
 5. If you are experiencing overly high CPU or memory usage during deployments which may be causing your deployments to become unreliable:
-   * Try reducing your Task Cap back towards the default of 5 and then increase progressively until your server is reliable again.
+   * Try reducing your Task Cap back towards the default of five and then increase progressively until your server is reliable again.
    * Look for potential performance problems in your deployment processes, especially:
    * Consider how you transfer your packages.
    * Consider reducing the amount of parallelism in your deployments by reducing the number of steps you run in parallel or the number of machines you deploy to in parallel.
-6. System.InvalidOperationException: Timeout expired. The timeout period elapsed prior to obtaining a connection from the pool. This may have occurred because all pooled connections were in use and max pool size was reached. This error indicates two possible scenarios:
+6. System.InvalidOperationException: Timeout expired. The timeout period elapsed prior to obtaining a connection from the pool. This may have occurred because all pooled connections were in use, and max pool size was reached. This error indicates two possible scenarios:
    * Your SQL Queries are taking a long time, exhausting the SQL Connection Pool. Investigate what might be making your SQL Queries take longer than they should and fix that if possible, see earlier troubleshooting points.
    * If your SQL Query performance is fine, and your SQL Server is running well below its capacity, perhaps your Octopus Server is under high load. This is perfectly normal in many situations at scale. If your SQL Server can handle more load from Octopus, you can increase the SQL Connection Pool size of your Octopus Server node(s). This will increase the number of active connections Octopus is allowed to open against your SQL Server at any point in time, effectively allowing your Octopus Server to handle more concurrent requests. Try increasing the Max Pool Size in your SQL Connection String in the Octopus.Server.config file to something like 200 (the default is 100) and see how everything performs. Learn about Connection Strings and Max Pool Size.
    * Octopus is leaking SQL Connections. This should be very rare but has happened in the past, and we fix every instance we find. We recommend upgrading to the latest version of Octopus and get help from us if the problem persists.
@@ -123,7 +123,7 @@ The best way to start troubleshooting your Octopus Server is to inspect the Octo
 
 If none of these troubleshooting steps work, please get in contact with our support team and send along the following details (feel free to ignore points if they don't apply):
 
-1. Are you running Octopus as an HA cluster or single node?
+1. Are you running Octopus as an HA cluster or a single node?
 2. Is the SQL Database Server on the same machine as Octopus or a different machine?
 3. Are you hosting any other applications on the same machine as Octopus or its SQL database?
 4. What kind of server specs are you running for Octopus and SQL Server?
@@ -132,7 +132,7 @@ If none of these troubleshooting steps work, please get in contact with our supp
 7. Approximately how many deployments do you perform at the same time?
 8. Do you notice any correlation between deployments of specific projects and the performance problem?
 9. Do you notice any correlation between other Octopus Server tasks (like package retention policy processing) and the performance problem?
-10. Does the Octopus Server ever become unresponsive and how frequently does it become unresponsive?
+10. Does the Octopus Server ever become unresponsive, and how frequently does it become unresponsive?
 11. Does the Octopus Server recover after the performance degrades, or does it need to be manually restarted to recover?
 
 In addition to answering those questions, please collect and attach the following diagnostics to your support request (probably the most important part):
@@ -149,4 +149,4 @@ Please email mailto:Support@Octopus.com
 
 ## Conclusion
 
-Regular maintenance and keeping Octopus Deploy up to date will go a long way in ensuring your experience with Octopus Deploy is positive.  If you do start to see a dip in performance please reach out to us.  We will do our best to help out.  We want your experience with Octopus Deploy to be great.
+Regular maintenance and keeping Octopus Deploy up to date will go a long way in ensuring your experience with Octopus Deploy is positive.  If you do start to see a dip in performance, please reach out to us.  We will do our best to help out.  We want your experience with Octopus Deploy to be great.

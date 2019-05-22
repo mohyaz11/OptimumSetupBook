@@ -1,6 +1,6 @@
 ## Spinning up Deployment Targets and Automatic Deployments Using Infrastructure as Code
 
-The Tentacle is an MSI you have to install on a VM.  To get your POC going, you went the manual route.  Downloaded the MSI onto the VM, installed it and configured it.  Then you went back to the Octopus Deploy UI and registered the target with the Octopus Deploy server.  For a few Tentacles that works.  Once you get above 25 or so machines, you realize that doesn't scale.
+The Tentacle is an MSI you have to install on a VM.  To get your POC going, you went the manual route.  Downloaded the MSI onto the VM, installed it, and configured it.  Then you went back to the Octopus Deploy UI and registered the target with the Octopus Deploy server.  For a few Tentacles that works.  When you get above 25 or so machines, you realize that doesn't scale.
 
 We recommend creating a process to automate Tentacle installation.  If you're using Azure, you can leverage Azure Resource Manager Templates (ARM Templates).  For AWS, you can leverage CloudFormation to spin up new virtual machines.  Both processes support running a PowerShell script to bootstrap them.
 
@@ -125,19 +125,19 @@ Write-Output "Installing .NET Core"
 choco install dotnetcore-windowshosting -y
 ```
 
-> ![](images/professoroctopus.png) For other deployment target types (Kubernetes, SSH, Azure Web Apps, etc), you should leverage the Octopus Deploy API to register the target.  Octopus Deploy is an API first application.  Everything you can do in the UI you can do in the API.
+> ![](images/professoroctopus.png) For other deployment target types (Kubernetes, SSH, Azure Web Apps, etc.), you should leverage the Octopus Deploy API to register the target.  Octopus Deploy is an API first application.  Everything you can do in the UI you can do in the API.
 
 ## Project Triggers
 
-The creation of the deployment targets is now automated.  The next step is to set up a project trigger which will see when a new machine is added for a specific role and then automatically deploy to that machine.  This way the entire process is automated, from machine creation to deployment.  
+The creation of the deployment targets is now automated.  The next step is to set up a project trigger which will see when a new machine is added for a specific role and then automatically deploy to that machine.  This way, the entire process is automated, from machine creation to deployment.  
 
-Before we get going creating the triggers, let's take a quick step back and think about what this means.  In the previous chapters, we set up three projects.  
+Before we create the triggers, let's take a quick step back and think about what this means.  In the previous chapters, we set up three projects.  
 
 ![](images/deploymenttargets-allprojects.png)
 
-Of those three projects which one is most likely going to have a new machine added to it for scale?  The OctoFX-WebUI project.  If you add a new machine to a SQL Server cluster a DBA is required.  There is quite a bit of work on the back-end for them to do.  And you are not adding new machines willy-nilly to a SQL Cluster.  But adding new machines into a web farm for the OctoFX-WebUI project is a lot more plausible.  Maybe to handle some additional load.  Maybe to replace an existing machine.  OctoFX-WebUI is where we are going to add the trigger.
+Of those three projects, which one is most likely going to have a new machine added to it for scale?  The OctoFX-WebUI project.  If you add a new machine to a SQL Server cluster, a DBA is required.  There is quite a bit of work on the back-end for them to do.  And you are not adding new machines willy-nilly to a SQL Cluster.  But adding new machines into a web farm for the OctoFX-WebUI project is a lot more plausible.  Maybe to handle some additional load.  Maybe to replace an existing machine.  OctoFX-WebUI is where we are going to add the trigger.
 
-This is done by going to the project and selecting the triggers option on the left-hand menu.
+We do this by going to the project and selecting the triggers option on the left-hand menu.
 
 ![](images/deploymenttargets-notriggers.png)
 
@@ -145,7 +145,7 @@ From here you need to select the add triggers button in the top right corner of 
 
 ![](images/deploymenttargets-addtriggeroptions.png)
 
-On the next screen, you will want to select the event, which should be "machine becomes available for deployment."  Next select the machine role.  This is also a great reason to have a specific role per project.  It allows the trigger to monitor for machines it cares about.
+On the next screen, you need to select the event, which should be "machine becomes available for deployment."  Next, select the machine role.  This is also a great reason to have a specific role per project.  It allows the trigger to monitor for machines it cares about.
 
 ![](images/deploymenttargets-addtriggerform.png)
 
@@ -155,4 +155,4 @@ And with a simple click of the save button, we have the trigger configured.
 
 ## Conclusion
 
-You can leverage technology to automatically spin up and down deployment targets.  This can be done whether you are using a cloud provider such as AWS and Azure or if all your deployment targets are on-premises you running Hyper-V or VMWare.  With deployment triggers, you can then tell Octopus Deploy to automatically deploy code when new machines come online.  This allows you to scale up your application in a few minutes, and when you no longer need that extra horsepower, scale it back down.
+You can leverage technology to automatically spin up and down deployment targets.  This can be done whether you are using a cloud provider such as AWS and Azure or if all your deployment targets are on-premises and you're running Hyper-V or VMWare.  With deployment triggers, you can then tell Octopus Deploy to automatically deploy code when new machines come online.  This allows you to scale up your application in a few minutes, and when you no longer need that extra horsepower, scale it back down.
