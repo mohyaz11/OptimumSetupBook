@@ -72,7 +72,7 @@ Follow these tips to tune and maintain the performance of your Octopus:
    * Quite often negative performance symptoms are caused by outdated statistics or other common SQL Server maintenance problems.
 6. If you have saturated your current servers you may want to consider scaling up, by increasing the resources available to the Octopus and SQL Servers, or scaling out:
    * Consider Octopus High Availability if you are reaching saturation on your current infrastructure, or want to improve the uptime of your Octopus Server, especially across Operating System patches. Octopus High Availability is designed to scale linearly as you add nodes to your cluster.
-   * Consider using Workers and worker pools if deployment load is affecting your server. See this blog post for a way to begin looking at workers for performance.
+   * Consider using Workers and worker pools if deployment load is affecting your server. See this [blog post](https://octopus.com/blog/workers-performance) for a way to begin looking at workers for performance.
    * Consider separating your teams/projects into "spaces" using the Spaces feature.
 7. Try not to do too much work in parallel, especially without thorough testing. Performing lots of deployment tasks in parallel can be a false economy more often than not:
    * You can configure how many tasks from the task queue will run at the same time on any given Octopus Server node by going to **Configuration > Nodes**. The default task cap is five (safe-by-default). You can increase this cap to push your Octopus to work harder.
