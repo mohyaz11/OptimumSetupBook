@@ -1,5 +1,5 @@
-# Configuring your Octopus Deploy Server to scale with you
-This repo is used to store the open source book on how to setup an Octopus Deploy Server to scale up and out.  
+# Configuring Your Octopus Deploy Server to Scale With You
+This repo is used to store the open source book on how to setup an Octopus Deploy server to scale up and out.  
 
 - [Introduction](manuscript/Introduction.md)
 - [Terms](manuscript/Terms.md)
@@ -30,4 +30,4 @@ To add to this book please do the following.  These are requirements in order fo
 1) To add a new chapter please please create a file in the manuscript folder called [sectionname].md
 2) All images must be added into the folder images found in the manuscript folder
 3) The file name for the image should be [sectionname]-[imagename].png
-4) Add that chapter to book.txt in the manuscript folder.  Please follow the existing examples. 
+4) Add that chapter to book.txt in the manuscript folder.  Please follow the existing examples.
